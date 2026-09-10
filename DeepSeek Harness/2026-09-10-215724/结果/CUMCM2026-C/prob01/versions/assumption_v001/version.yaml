@@ -1,0 +1,327 @@
+version: assumption_v001
+status: accepted
+created_at: '2026-09-10T10:58:14.706032+00:00'
+parent_version: null
+problem_id: CUMCM2026-C
+question_id: prob01
+scope: 问题1：固定电价/负载下的单日（代表日）计划购电模型，144 个 10 分钟时段
+assumptions:
+- id: asm-01
+  title: 确定性单日日前 MILP 主框架
+  statement: 问题1按单一代表日的完全信息确定性优化建模；决策变量为 q_t、C_t、D_t、E_t（必要时加 curtail_t 与 y_t），目标为全天购电费最小，约束为逐时段功率平衡、储电量递推、容量与功率上下限、终端储电量相等、非负与充放电互斥。
+  category: 建模框架
+  key: true
+  evidence_type: literature_fact
+  reference_ids:
+  - ref-prob01-dayahead-silva-2020
+  - ref-prob01-milp-tenfen-2015
+  - ref-prob01-arbitrage-grimaldi-2024
+  evidence: F1：微网日前调度可用确定性 MILP 建模，储能、光伏与弃光均可显式进入模型（Silva 2020 摘要级；Tenfen 2015 题录级）；F4：恒定效率下问题保持
+    LP/MILP（Grimaldi 2024 摘要级）。
+  applicability: 单日、参数与预测视为已知、无随机性、无预测误差、单一储能。
+  bias_direction: 若实际存在预测误差或电价波动，确定性解会低估所需购电量并使实际费用高于计划值（问题3/4 处理）。
+  affected_symbols:
+  - q_t
+  - C_t
+  - D_t
+  - E_t
+  - Cost_day
+  validation_method: formulation 阶段与 Silva 2020 的明确模型结构逐项对照（删除孤岛/切负荷变量）；computation
+    阶段检查求解器状态、MILP gap 与约束残差。
+  status: accepted
+- id: asm-02
+  title: 终端储电量共同取 6000 kWh
+  statement: E_0 = E_144 = 6000 kWh：0:00 储电量取附录1 给定的 6000 kWh，24:00 按题面「0:00 与 24:00
+    储电量相同」取同一值。
+  category: 边界条件
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob01-dayahead-silva-2020
+  - ref-prob01-arbitrage-grimaldi-2024
+  evidence: 附录1 明确规定 2025-01-01 0:00 储电量为 6000 kWh；题面要求两端相同。文献只支持「日前储能调度通常施加终端/循环边界」这一结构（Silva
+    2020；Grimaldi 2024 的循环套利口径），不能决定本题共同取值，故共同取值属 project_assumption。
+  applicability: 单日代表日模型；6000 kWh 位于允许区间 [1200, 10800] 内部。
+  bias_direction: 若 24:00 允许取更高值，相当于把低价储存的能量留到次日，本日购电费下降；取更低值则上升。端点值每变动 1 kWh，购电费变化量级约为该电量乘以峰谷价差（本数据约
+    0.37~1.40 元/kWh）。
+  affected_symbols:
+  - E_0
+  - E_144
+  - C_t
+  - D_t
+  - Cost_day
+  validation_method: sanity 检查 E_0=E_144=6000 的边界残差；robustness 对 E_0∈{4800, 6000,
+    7200}（同步改 E_144）做敏感性对照，报告 Cost_day 变化方向与幅度。
+  status: accepted
+- id: asm-03
+  title: 余电以弃光处理，不向外部电网反送
+  statement: 当光伏出力与储能放电之和超过负载时，超出部分记为弃光量 curtail_t ≥ 0（零收益），不建模向外网售电或反送。
+  category: 边界条件
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob01-dayahead-silva-2020
+  - ref-prob01-ieee1547-2018
+  evidence: 题面与附录均未提供上网电价或反送计量要求；F1 表明弃光(curtailment)是日前调度的常规建模手段（Silva 2020 摘要级）；IEEE
+    1547-2018 只规定并网互联要求，不规定本题是否允许余电上网。由于上网电价缺失，零收益反送与弃光在目标函数上等价，差别仅在物理解释与交付口径。
+  applicability: 附件1 代表日；题面仅要求「微网提供的电能不可低于小区负载」，未禁止余电。
+  bias_direction: 若实际存在正的上网电价，当前模型会低估收益、高估购电费；在零收益假设下偏差可忽略。
+  affected_symbols:
+  - curtail_t
+  - q_t
+  - C_t
+  validation_method: computation 统计全天弃光总量，并给出「若必须弃光，弃光发生时段与原因」；robustness 对照「允许零收益反送」并验证
+    Cost_day 不变；交付前确认 result1.xlsx 只登记购电量。
+  status: accepted
+- id: asm-04
+  title: 效率口径为单向 90%（eta_ch = eta_dis = 0.90）
+  statement: 附录1 的「充放电效率 90%」解释为充电效率与放电效率各为 0.90（往返效率约 0.81），效率作用于储电量状态转移。
+  category: 机理简化
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob01-arbitrage-grimaldi-2024
+  - ref-prob01-storage-luo-2015
+  evidence: Grimaldi 2024（摘要级）区分恒定额定效率与功率相关动态效率，并指出恒定效率下问题保持 LP/MILP；Luo 2015（摘要级）给出电化学储能效率的常见技术范围，用于量级核对。附录1
+    只写「效率 90%」，未指明单侧或往返，故口径选择属 project_assumption。
+  applicability: 恒定效率、与功率/温度/SOC 无关；单侧（非往返）解释。
+  bias_direction: 若 90% 实为往返效率，则单侧效率应为 sqrt(0.9)≈0.9487；当前口径会高估损耗，使 Cost_day 偏高（偏高量级为多计的充放电损耗乘以峰谷价差）。
+  affected_symbols:
+  - eta_ch
+  - eta_dis
+  - E_t
+  - C_t
+  - D_t
+  - Cost_day
+  validation_method: robustness 以往返 0.9（单侧 0.9487）重算并对比 Cost_day 与充放电总量；sanity 检查
+    E_t 递推残差与量纲。必须与 asm-05 的计量侧口径联动。
+  status: accepted
+- id: asm-05
+  title: 功率上限折算与计量侧口径统一
+  statement: 5000 kW 为充/放电功率上限，折算为每 10 分钟能量上限 Pmax×dt = 5000/6 ≈ 833.33 kWh；C_t 与
+    D_t 统一取储能变流器（并网点侧）电量口径，限额、状态转移与功率平衡使用同一口径。
+  category: 数值近似与单位口径
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob01-storage-luo-2015
+  - ref-prob01-capacity-gitizadeh-2014
+  evidence: 附录1 给出最大充放电功率 5000 kW，与 10 分钟离散化通过 Pmax×dt 换算；Luo 2015（摘要级）给出功率/能量量级范围用于核对；Gitizadeh
+    2014（题录级）说明容量与调度相互耦合，只作约束刻画先例。计量侧（并网点侧或电池侧）题面未指明，属 project_assumption。
+  applicability: 10 分钟均匀离散、时段内功率恒定；单一储能变流器。
+  bias_direction: 若 5000 kW 实为电池侧口径而当前按并网点侧解释，则达到同样并网功率需要更大的电池侧功率，可行域被高估约 1/eta；反之若按电池侧解释而实际为并网点侧，则可行域被低估。
+  affected_symbols:
+  - Pmax
+  - C_t
+  - D_t
+  - E_t
+  - q_t
+  validation_method: sanity 检查 0 ≤ C_t, D_t ≤ 833.33 与量纲一致性；robustness 对照电池侧计量口径（状态转移改为
+    E_t=E_{t-1}+C_t−D_t 且功率平衡含效率）并报告 Cost_day 差异。
+  status: accepted
+- id: asm-06
+  title: 充放电互斥（C_t·D_t = 0）
+  statement: 同一时段不允许同时充电与放电，作为硬约束进入模型（可用 0-1 指示变量加 big-M，或经证明成立的目标罚函数/凸松弛）。
+  category: 物理约束
+  key: true
+  evidence_type: literature_fact
+  reference_ids:
+  - ref-prob01-complementarity-garifi-2020
+  - ref-prob01-complementarity-fortuny-1981
+  evidence: F2：储能同时充放电物理不可实现，必须显式排除；big-M 整数化以互补条件离散化为依据（Fortuny-Amat 1981 摘要级），松弛路线的有效性依赖特定条件、不能默认成立（Garifi
+    2020 摘要级）。
+  applicability: 单储能、恒定效率；big-M 必须由 C_t、D_t 的真实上下界 [0, 833.33] 导出。
+  bias_direction: 若不施加互斥约束，线性松弛可能出现同时充放的虚假解，在 eta<1 时低估购电费；但该虚假解通常因损耗而次优，仍不能默认无害。
+  affected_symbols:
+  - C_t
+  - D_t
+  - y_t
+  - q_t
+  validation_method: formulation 阶段对「是否可省去 0-1 变量」给出条件证明或反例（对应 agent_inference I1），不得直接引用文献的条件性结论；computation
+    检查 min(C_t, D_t) = 0 与求解器整数性状态。
+  status: accepted
+- id: asm-07
+  title: 附件1 代表日与单日模型口径
+  statement: 附件1 的日曲线视为题面「每天的电价和小区负载相同」的典型日；问题1 只解该单日，不外推全年，也不声明其统计代表性。
+  category: 数据生成与适用范围
+  key: true
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob01-dayahead-silva-2020
+  - ref-prob01-tou-modu-2025
+  evidence: 题面明示「若每天的电价和小区负载相同，同时给出光伏发电功率一天的预测数据」；problem-decomposer 已核验附件1 为 2025
+    全年日均代表日曲线。Silva 2020、Modu 2025（均摘要级）显示日前调度研究普遍使用代表日，但不能反推附件1 的统计定义。
+  applicability: 问题1 单日结果；对外部有效性的声明范围。
+  bias_direction: 若真实日间波动显著，单日最优策略与费用不能直接代表全年；逐日差异由问题2~4 用附件2 数据承担。
+  affected_symbols:
+  - price_t
+  - load_t
+  - pv_t
+  - Cost_day
+  validation_method: 交付与论文中显式标注「单日代表日」；问题2 起用附件2 逐日数据对照，检验单日结论的方向是否被推翻。
+  status: accepted
+- id: asm-08
+  title: 储能容量与电量区间硬约束
+  statement: 运行电量区间为 1200 ≤ E_t ≤ 10800 kWh；最大容量 12000 kWh 不作为运行上界，运行上界取 10800 kWh。
+  category: 边界条件
+  key: false
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob01-capacity-gitizadeh-2014
+  evidence: 附录1 明确规定最大容量 12000 kWh 与允许区间 1200~10800 kWh（防过充过放）。
+  applicability: 全部时段，含 t=0 与 t=144。
+  bias_direction: 若误用 12000 kWh 作为运行上界，会放宽可行域并低估 Cost_day。
+  affected_symbols:
+  - Ecap
+  - Emin
+  - Emax
+  - E_t
+  validation_method: sanity 逐时段检查 1200 ≤ E_t ≤ 10800 的残差与越界计数。
+  status: accepted
+- id: asm-09
+  title: 10 分钟时段均值与功率-电量换算
+  statement: 每个 10 分钟时段内功率视为恒定；电量 = 功率 × dt（dt = 1/6 h）；光伏按预测值 pv_t 出力且不可超过该值（不可超发），负载按
+    load_t 刚性满足。
+  category: 数值近似与数据生成
+  key: false
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob01-dayahead-silva-2020
+  evidence: 附件1 为 10 分钟间隔数据；题面与交付模板均以 10 分钟与 4 小时块给出电量（kWh），功率单位为 kW。
+  applicability: 问题1 的 10 分钟离散热。
+  bias_direction: 把时段内功率视为恒值会平滑掉 10 分钟内的波动，可能低估瞬时功率越限的风险；对电量平衡影响很小。
+  affected_symbols:
+  - dt
+  - T
+  - q_t
+  - C_t
+  - D_t
+  - pv_t
+  - load_t
+  validation_method: sanity 检查功率平衡残差（kWh 口径）与量纲一致性；delivery 中 4 小时块汇总必须等于所含 24 个时段的代数和。
+  status: accepted
+- id: asm-10
+  title: 不引入电池退化与循环寿命成本
+  statement: 目标函数只含购电费用，不加入电池退化成本、循环次数惩罚或弃光惩罚；该省略必须在论文边界中声明。
+  category: 决策偏好
+  key: false
+  evidence_type: team_decision
+  reference_ids:
+  - ref-prob01-arbitrage-grimaldi-2024
+  evidence: 题面目标为「尽可能节省微网的购电费用」；Grimaldi 2024（摘要级）指出退化项可显著改变经济结论（年净收益下降约 13%~24%），忽略须声明；本题未提供循环/老化/温度数据，故不进入主模型（对应
+    D3）。
+  applicability: 问题1 主模型；退化影响作为 robustness 讨论。
+  bias_direction: 忽略退化会高估频繁充放电的经济性，使最优策略偏向更多循环、Cost_day 偏低。
+  affected_symbols:
+  - Cost_day
+  - C_t
+  - D_t
+  validation_method: robustness 或论文边界章节定量引用退化影响量级并说明未建模理由；不得为贴合期望结果而事后加入。
+  status: accepted
+- id: asm-11
+  title: 静态日前信息结构（0:00 一次决策）
+  statement: 0:00 依据当天电价、负载与光伏预测一次性确定全天计划，全天不更新信息、不做滚动重优化。
+  category: 决策偏好与信息结构
+  key: false
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob01-rolling-palma-2013
+  - ref-prob01-mpc-parisio-2014
+  evidence: 题面「请在每天 0:00 制定微网当天的计划购电策略」；F5 表明静态日前计划与滚动重优化是不同信息结构，重优化需显式定义信息集（Palma-Behnke
+    2013、Parisio 2014，均摘要级），本问固定为前者。
+  applicability: 问题1；问题3 起才引入其他时刻预报的调整策略。
+  bias_direction: 固定计划在预测误差下会产生偏差；问题3/4 的调整与紧急购电即为对该偏差的补救。
+  affected_symbols:
+  - q_t
+  - Cost_day
+  validation_method: formulation 中显式写明信息集与决策时点；与问题3 的调整模型对比时保持信息结构差异可解释。
+  status: accepted
+- id: asm-12
+  title: 时间标签口径统一（歧义 A9）
+  statement: 附件1 的时间标签为时段右端点（0:00+1 即当天 24:00），第 t 行对应区间 ((t-1)/6, t/6]；附件5 result1.xlsx「计划购电量」模板的时间段标签整体后移一个间隔（首行
+    0:10-0:20，末行 0:00+1-0:10+1）。因此按行序一一对应填写（模板第 t 行 = 第 t 时段），并统一在交付中按「0:00-0:10 …
+    23:50-24:00」重写时间段标签，禁止按标签字面逐行对齐。
+  category: 数据口径
+  key: false
+  evidence_type: project_assumption
+  reference_ids: []
+  evidence: 附录2 明确「表中的 0:00+1 表示第二天凌晨 0:00，即当天 24:00」，故标签为右端点；result1.xlsx 模板末行为 0:00+1-0:10+1（超出
+    24 小时），可证实模板标签存在一个间隔的整体偏移。此歧义无文献可援引。
+  applicability: result1.xlsx 计划购电量工作表、论文表1 的指定时段取值。
+  bias_direction: 若按标签字面逐行对齐，全部 144 个时段会整体错位一个间隔（10 分钟），表1 指定时段与全天购电量、购电费均会取错。
+  affected_symbols:
+  - q_t
+  - Q_day
+  - Cost_day
+  validation_method: 交付前核对 表1 的 10:00-10:10 购电量取自第 61 行（附件1 标签 10:10）；随机抽查 3 个时段做标签-区间一致性检查；在全天购电量汇总处验证
+    144 行齐全且无重复。
+  status: accepted
+rejected_alternatives:
+- id: alt-01
+  title: 往返效率 90% 口径（单向 sqrt(0.9)≈0.9487）
+  statement: 把附录1 的 90% 解释为往返效率，充放电各约 0.9487。
+  status: rejected
+  reason: 题面以「充放电效率」表述且未提往返；单侧口径更符合储能状态转移的常规写法。保留为 robustness 情景与 asm-04 对照，不进入主模型。
+  reference_ids:
+  - ref-prob01-arbitrage-grimaldi-2024
+- id: alt-02
+  title: 允许向外部电网反送并获得上网电价
+  statement: 引入余电上网变量与上网电价收益。
+  status: rejected
+  reason: 题面与附件均未提供上网电价或反送计量要求，参数不可辨识；交付表也只统计购电量。在零收益情形下与 asm-03 目标等价，故不单独建模。
+  reference_ids:
+  - ref-prob01-ieee1547-2018
+- id: alt-03
+  title: 引入电池退化/循环寿命成本
+  statement: 在目标函数中加入与充放电循环或吞吐量相关的退化成本项。
+  status: rejected
+  reason: 本题未提供循环次数、老化与温度工况，退化模型不可辨识（pool 中 Reniers 2019 的摘要级结论已作为依据并在文献阶段拒绝该引用）；且目标应贴合题面「购电费用」。保留为
+    robustness 扩展线索。
+  reference_ids:
+  - ref-prob01-arbitrage-grimaldi-2024
+- id: alt-04
+  title: 自由终端储电量（不施加 E_144 = E_0）
+  statement: 去掉 0:00 与 24:00 储电量相等的约束。
+  status: rejected
+  reason: 与题面硬约束「储能设备在 0:00 和 24:00 的储电量相同」直接冲突，仅记录为不可选方案。
+  reference_ids: []
+conflicts:
+  blocking: []
+  resolutions:
+  - asm-04 与 asm-05 必须联动：若采用并网点侧计量，则状态转移为 E_t = E_{t-1} + eta_ch·C_t − D_t/eta_dis，功率平衡中
+    D_t 以并网点电量口径直接参与；若改为电池侧计量，则状态转移为 E_t = E_{t-1} + C_t − D_t 且功率平衡含 eta。两条口径不得混用，formulation
+    必须二选一并写明。
+  - asm-02 与 asm-07 一致：只有单日代表日模型下，终端储电量相等约束才有明确含义。
+  - asm-03 与 asm-04 无冲突：弃光是能量处置口径，效率是损耗口径，二者正交。
+  - asm-10 与 asm-06 无冲突但需并提：不含退化成本会在鼓励多循环时与互斥约束的物理保护意图相左，须在论文边界中说明。
+  with_prior_conclusions:
+  - prob01 为整题起点，无前问结论，故不存在跨问冲突；prob02 起以本版本结论为基线。
+  with_problem_constraints:
+  - 全部假设均不削弱题面硬约束 H1~H10；asm-02 直接来自题面终端条件与附录1 数据。
+coverage:
+  A1: asm-02
+  A4: asm-03
+  A5: asm-06
+  A9: asm-12
+  A13: asm-07
+  A14: asm-04, asm-05
+open_items:
+- I1（agent_inference，待 formulation 证实）：在 eta<1 且电价非负时同时充放电通常次优，但「LP 松弛是否已隐含互斥」需给出条件证明或反例，不得直接引用文献的条件性结论。
+- I2（agent_inference，待 computation 证实）：本问 144 时段、单一储能、线性目标与约束，MILP 分支规模很小，精确求解应能给出最优解与
+  gap 证据。
+- I3（agent_inference，待 computation 证实）：附件1 全天光伏电量约 55482.8 kWh 小于负载电量约 111024.8 kWh，余电时段集中在
+  09:40~14:30，单时段最大余电约 352.9 kWh（小于 833.33 kWh），全天正余电合计约 6248.0 kWh（小于可用区间 9600 kWh），据此预期存在弃光量为
+  0 的可行调度；formulation/computation 必须验证该预期，若实际出现弃光须给出发生时段与原因。
+formulation_versions:
+- formulation_v001
+active_formulation: formulation_v001
+accepted_formulation: formulation_v001
+tasks: []
+sanity_status: pending
+conclusion_id: ''
+conclusion_version: 0
+conclusion_hash: ''
+decision_reason: assumption_v001 覆盖 prob01 全部待裁定歧义（A1/A4/A5/A9/A13/A14）：7 条关键假设均具备题面依据与
+  verified+used 摘要级来源，引用门禁 check_key_assumptions 通过；无阻塞冲突，取值口径类选择已显式标为 project_assumption
+  并配套 robustness 对照，被否决路线保留为对照而不进入主模型。
+decided_at: '2026-09-10T11:02:36.983153+00:00'

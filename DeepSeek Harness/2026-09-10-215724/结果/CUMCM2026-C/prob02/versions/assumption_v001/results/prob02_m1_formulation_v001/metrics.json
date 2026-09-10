@@ -1,0 +1,616 @@
+{
+  "annual": {
+    "days_total": 334,
+    "days_with_incumbent": 334,
+    "days_failed": 0,
+    "failed_days": [],
+    "cost_plan": 12570533.91378646,
+    "cost_em": 4828772.4162658,
+    "cost_total": 17399306.33005226,
+    "q_plan": 20385219.03615807,
+    "charge_total": 6563006.6217018515,
+    "discharge_total": 5316035.363578499,
+    "curtail_plan_total": 961173.6809847201,
+    "curtail_act_total": 2355847.6824096707,
+    "emergency_energy": 1156789.3993416172,
+    "emergency_periods": 10877,
+    "emergency_segments": 1919,
+    "days_with_zero_emergency": 0,
+    "curtail_act_period_count": 16440
+  },
+  "residuals": {
+    "balance_plan_max_abs": 9.458744898438454e-11,
+    "balance_exec_max_abs": 9.458744898438454e-11,
+    "soc_max_abs": 1.3642420526593924e-10,
+    "energy_bound_violation": 5.95719029661268e-11,
+    "terminal_residual": 0.0,
+    "power_upper_violation": 2.3874235921539366e-12,
+    "complementarity_max_min": 1.8530954548623413e-11,
+    "exec_complementarity_max": 0.0,
+    "nonnegativity_violation": 2.1100277081131935e-10,
+    "kappa_upper_violation": 0.0,
+    "kappa_act_upper_violation": 0.0,
+    "integrality_violation": 0.0,
+    "nan_inf_count": 0
+  },
+  "gates": {
+    "all_days_have_incumbent": true,
+    "hard_constraints": true,
+    "cost_plan_in_bounds": true,
+    "cost_em_le_upper": true,
+    "cost_total_ge_lower": true,
+    "q_plan_ge_lower": true,
+    "terminal_daily_ok": true,
+    "finite": true,
+    "all_pass": true
+  },
+  "key_dates": {
+    "2025-03-20": {
+      "available": true,
+      "load_kwh": 117648.38173333334,
+      "pv_actual_kwh": 55439.41991666667,
+      "pv_fc0_kwh": 54253.3901,
+      "forecast_shortfall_kwh": 6059.487266666667,
+      "metrics": {
+        "periods": 144,
+        "q_plan": 67445.61404686215,
+        "cost_plan": 41663.25466204185,
+        "cost_em": 27352.341274825005,
+        "emergency_energy": 6059.487266666667,
+        "emergency_cost_segments": 27352.341274824998,
+        "emergency_periods": 36,
+        "emergency_segments": [
+          {
+            "start": 37,
+            "end": 72,
+            "energy": 6059.487266666668
+          }
+        ],
+        "charge_total": 21319.065334362138,
+        "discharge_total": 17268.442920833328,
+        "curtail_plan_total": 0.0,
+        "curtail_act_total": 7245.517083333332,
+        "curtail_act_periods": [
+          25,
+          28,
+          31,
+          34,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          110,
+          113,
+          116,
+          119
+        ],
+        "E_0": 6000.0,
+        "E_144": 6000.0,
+        "table1_q": {
+          "10:00-10:10": 0.0,
+          "12:00-12:10": 769.3563833333333,
+          "14:00-14:10": 0.0,
+          "16:00-16:10": 817.3061166666668,
+          "18:00-18:10": 697.9972833333333,
+          "20:00-20:10": 0.0
+        },
+        "table2_blocks": [
+          {
+            "label": "0:00-4:00",
+            "charge": 4499.999999999999,
+            "discharge": 0.0
+          },
+          {
+            "label": "4:00-8:00",
+            "charge": 833.3333333333333,
+            "discharge": 5396.701920833331
+          },
+          {
+            "label": "8:00-12:00",
+            "charge": 4700.859,
+            "discharge": 1134.5268666666661
+          },
+          {
+            "label": "12:00-16:00",
+            "charge": 5951.539667695474,
+            "discharge": 2097.214133333333
+          },
+          {
+            "label": "16:00-20:00",
+            "charge": 0.0,
+            "discharge": 5709.783516666664
+          },
+          {
+            "label": "20:00-24:00",
+            "charge": 5333.333333333332,
+            "discharge": 2930.2164833333336
+          }
+        ],
+        "cost_total": 69015.59593686686
+      }
+    },
+    "2025-06-21": {
+      "available": true,
+      "load_kwh": 81408.0648,
+      "pv_actual_kwh": 62073.3244,
+      "pv_fc0_kwh": 61615.903099999996,
+      "forecast_shortfall_kwh": 3812.2664166666664,
+      "metrics": {
+        "periods": 144,
+        "q_plan": 33899.991716666664,
+        "cost_plan": 19522.167056405,
+        "cost_em": 6273.298203683334,
+        "emergency_energy": 1670.8310833333333,
+        "emergency_cost_segments": 6273.298203683334,
+        "emergency_periods": 28,
+        "emergency_segments": [
+          {
+            "start": 25,
+            "end": 29,
+            "energy": 5.2416
+          },
+          {
+            "start": 31,
+            "end": 35,
+            "energy": 362.6615999999999
+          },
+          {
+            "start": 37,
+            "end": 41,
+            "energy": 655.7191500000001
+          },
+          {
+            "start": 43,
+            "end": 44,
+            "energy": 85.20998333333335
+          },
+          {
+            "start": 71,
+            "end": 73,
+            "energy": 172.5012499999998
+          },
+          {
+            "start": 78,
+            "end": 78,
+            "energy": 8.32011666666661
+          },
+          {
+            "start": 84,
+            "end": 90,
+            "energy": 381.17738333333347
+          }
+        ],
+        "charge_total": 15999.999999999996,
+        "discharge_total": 12959.999999999996,
+        "curtail_plan_total": 11067.83001666667,
+        "curtail_act_total": 13196.082400000003,
+        "curtail_act_periods": [
+          19,
+          22,
+          30,
+          36,
+          42,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          74,
+          75,
+          76,
+          77,
+          79,
+          80,
+          81,
+          82,
+          83,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          108,
+          109,
+          110,
+          111,
+          112,
+          113,
+          114,
+          116,
+          119,
+          122,
+          125
+        ],
+        "E_0": 6000.0,
+        "E_144": 6000.0,
+        "table1_q": {
+          "10:00-10:10": 0.0,
+          "12:00-12:10": 0.0,
+          "14:00-14:10": 0.0,
+          "16:00-16:10": 255.22543333333329,
+          "18:00-18:10": 0.0,
+          "20:00-20:10": 0.0
+        },
+        "table2_blocks": [
+          {
+            "label": "0:00-4:00",
+            "charge": 0.0,
+            "discharge": 761.4409166666663
+          },
+          {
+            "label": "4:00-8:00",
+            "charge": 0.0,
+            "discharge": 3558.559083333333
+          },
+          {
+            "label": "8:00-12:00",
+            "charge": 2098.5641333333297,
+            "discharge": 0.0
+          },
+          {
+            "label": "12:00-16:00",
+            "charge": 8568.102533333335,
+            "discharge": 0.0
+          },
+          {
+            "label": "16:00-20:00",
+            "charge": 0.0,
+            "discharge": 6154.100616666665
+          },
+          {
+            "label": "20:00-24:00",
+            "charge": 5333.333333333332,
+            "discharge": 2485.8993833333334
+          }
+        ],
+        "cost_total": 25795.465260088335
+      }
+    },
+    "2025-09-23": {
+      "available": true,
+      "load_kwh": 121182.28133333335,
+      "pv_actual_kwh": 59065.66574999999,
+      "pv_fc0_kwh": 56935.96339999999,
+      "forecast_shortfall_kwh": 3500.28855,
+      "metrics": {
+        "periods": 144,
+        "q_plan": 68149.93810955966,
+        "cost_plan": 43341.14766613097,
+        "cost_em": 15243.816230966668,
+        "emergency_energy": 3500.28855,
+        "emergency_cost_segments": 15243.816230966668,
+        "emergency_periods": 31,
+        "emergency_segments": [
+          {
+            "start": 37,
+            "end": 53,
+            "energy": 2545.9680166666667
+          },
+          {
+            "start": 55,
+            "end": 62,
+            "energy": 516.4521999999998
+          },
+          {
+            "start": 67,
+            "end": 72,
+            "energy": 437.86833333333425
+          }
+        ],
+        "charge_total": 20545.36934855967,
+        "discharge_total": 16641.749172333337,
+        "curtail_plan_total": 0.0,
+        "curtail_act_total": 5629.990900000001,
+        "curtail_act_periods": [
+          25,
+          28,
+          31,
+          34,
+          54,
+          63,
+          64,
+          65,
+          66,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99,
+          100,
+          101,
+          102,
+          103,
+          104,
+          105,
+          106,
+          107,
+          110,
+          113,
+          116,
+          119
+        ],
+        "E_0": 6000.0,
+        "E_144": 6000.0,
+        "table1_q": {
+          "10:00-10:10": 0.0,
+          "12:00-12:10": 501.29498333333333,
+          "14:00-14:10": 0.0,
+          "16:00-16:10": 902.7969499999999,
+          "18:00-18:10": 764.3298499999999,
+          "20:00-20:10": 0.0
+        },
+        "table2_blocks": [
+          {
+            "label": "0:00-4:00",
+            "charge": 4499.999999999999,
+            "discharge": 0.0
+          },
+          {
+            "label": "4:00-8:00",
+            "charge": 833.3333333333333,
+            "discharge": 5551.490689000002
+          },
+          {
+            "label": "8:00-12:00",
+            "charge": 3495.0939,
+            "discharge": 870.8172499999996
+          },
+          {
+            "label": "12:00-16:00",
+            "charge": 6383.608781893005,
+            "discharge": 1579.441233333333
+          },
+          {
+            "label": "16:00-20:00",
+            "charge": 0.0,
+            "discharge": 5602.909066666667
+          },
+          {
+            "label": "20:00-24:00",
+            "charge": 5333.333333333333,
+            "discharge": 3037.0909333333357
+          }
+        ],
+        "cost_total": 58584.96389709764
+      }
+    },
+    "2025-12-21": {
+      "available": true,
+      "load_kwh": 124376.44096666668,
+      "pv_actual_kwh": 35338.6591,
+      "pv_fc0_kwh": 35461.5675,
+      "forecast_shortfall_kwh": 2272.0668666666666,
+      "metrics": {
+        "periods": 144,
+        "q_plan": 93776.07118950617,
+        "cost_plan": 59565.76703284561,
+        "cost_em": 9786.440797283332,
+        "emergency_energy": 2272.066866666667,
+        "emergency_cost_segments": 9786.440797283332,
+        "emergency_periods": 33,
+        "emergency_segments": [
+          {
+            "start": 43,
+            "end": 53,
+            "energy": 1275.8069666666668
+          },
+          {
+            "start": 55,
+            "end": 58,
+            "energy": 386.06651666666636
+          },
+          {
+            "start": 61,
+            "end": 71,
+            "energy": 437.53833333333347
+          },
+          {
+            "start": 76,
+            "end": 78,
+            "energy": 87.49165000000009
+          },
+          {
+            "start": 84,
+            "end": 84,
+            "energy": 11.034483333333355
+          },
+          {
+            "start": 89,
+            "end": 90,
+            "energy": 68.09290000000001
+          },
+          {
+            "start": 96,
+            "end": 96,
+            "energy": 6.036016666666645
+          }
+        ],
+        "charge_total": 25585.251172839504,
+        "discharge_total": 20724.05345,
+        "curtail_plan_total": 0.0,
+        "curtail_act_total": 2149.1584666666663,
+        "curtail_act_periods": [
+          31,
+          34,
+          37,
+          40,
+          54,
+          59,
+          60,
+          72,
+          73,
+          74,
+          75,
+          79,
+          80,
+          81,
+          82,
+          83,
+          85,
+          86,
+          87,
+          88,
+          91,
+          92,
+          93,
+          94,
+          95,
+          97,
+          98,
+          99,
+          100,
+          101,
+          104,
+          107,
+          110,
+          113
+        ],
+        "E_0": 6000.0,
+        "E_144": 6000.0,
+        "table1_q": {
+          "10:00-10:10": 0.0,
+          "12:00-12:10": 962.0869499999999,
+          "14:00-14:10": 0.0,
+          "16:00-16:10": 1001.2239999999999,
+          "18:00-18:10": 715.41445,
+          "20:00-20:10": 0.0
+        },
+        "table2_blocks": [
+          {
+            "label": "0:00-4:00",
+            "charge": 4499.999999999999,
+            "discharge": 0.0
+          },
+          {
+            "label": "4:00-8:00",
+            "charge": 1666.6666666666665,
+            "discharge": 1508.3333333333333
+          },
+          {
+            "label": "8:00-12:00",
+            "charge": 5833.333333333333,
+            "discharge": 7806.666666666668
+          },
+          {
+            "label": "12:00-16:00",
+            "charge": 8251.917839506172,
+            "discharge": 2769.05345
+          },
+          {
+            "label": "16:00-20:00",
+            "charge": 0.0,
+            "discharge": 5797.474233333332
+          },
+          {
+            "label": "20:00-24:00",
+            "charge": 5333.333333333333,
+            "discharge": 2842.5257666666666
+          }
+        ],
+        "cost_total": 69352.20783012894
+      }
+    }
+  },
+  "lp_comparison": {
+    "milp_objective_total": 12570533.913786462,
+    "lp_objective_total": 12570533.913786462,
+    "lp_minus_milp_max": 3.637978807091713e-11,
+    "lp_le_milp": true,
+    "lp_strictly_better_days": 0,
+    "lp_max_min_charge_discharge": 0.0
+  },
+  "analytic_bounds": {
+    "applied": true,
+    "cost_plan_lower": 6749147.6122,
+    "cost_plan_feasible_upper": 16565407.2763,
+    "cost_em_upper": 5815010.6013,
+    "cost_total_lower": 6660821.0595,
+    "q_plan_lower": 18177074.097
+  }
+}

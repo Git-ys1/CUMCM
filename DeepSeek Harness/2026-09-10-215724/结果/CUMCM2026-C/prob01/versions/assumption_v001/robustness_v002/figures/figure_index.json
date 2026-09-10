@@ -1,0 +1,73 @@
+{
+  "font": "Microsoft YaHei",
+  "dpi": 180,
+  "figures": [
+    {
+      "file": "robustness_tornado.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_tornado.png",
+      "kind": "sensitivity_tornado",
+      "title": "prob01 参数与口径扰动的购电费变化（相对基线）",
+      "caption": "每个情景相对接受版本基线的 Cost_day 变化百分比；红色为费用上升、蓝色为下降，0 线为基线。区间情景覆盖 asm-02 端点、asm-04 效率、asm-05 计量/功率、asm-03 反送与 ±5/10/20% 数据扰动。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "Cost_day 变化率"
+      ]
+    },
+    {
+      "file": "robustness_mc_hist.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_mc_hist.png",
+      "kind": "monte_carlo_histogram",
+      "title": "输入 ±5% 均匀噪声下的 Cost_day 分布（200 次）",
+      "caption": "price/load/pv 独立 ±5% 均匀乘性噪声下 200 次独立求解的 Cost_day 直方图；虚线为 2.5%/97.5% 分位，实线为接受版本基线。该探针超出 asm-01 的确定性口径，仅用于给出区间。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "Cost_day 频数"
+      ]
+    },
+    {
+      "file": "robustness_endpoint_sensitivity.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_endpoint_sensitivity.png",
+      "kind": "endpoint_sensitivity",
+      "title": "储电量端点与运行边界敏感性（asm-02 / asm-08）",
+      "caption": "E_0=E_144 ∈ {4800, 6000, 7200}、E_max ∈ {9600, 10800, 12000} 与 E_min=1800 下 Cost_day 相对变化；基线最优解贴运行上下界，贴界不等于设备余量。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "Cost_day 变化率"
+      ]
+    },
+    {
+      "file": "robustness_efficiency_metering.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_efficiency_metering.png",
+      "kind": "efficiency_metering",
+      "title": "效率口径与计量侧对照（asm-04 / asm-05 / asm-03）",
+      "caption": "往返效率 0.9（单侧 0.9487）、单向效率 ±5%/±10%、电池侧计量与允许零收益反送对 Cost_day 的影响；零收益反送应与基线完全一致（差值 ≤1e-6 元）。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "Cost_day 变化率"
+      ]
+    },
+    {
+      "file": "robustness_stress_combos.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_stress_combos.png",
+      "kind": "stress_combinations",
+      "title": "组合压力情景与储能节省量（K3）",
+      "caption": "多参数同向/反向压力情景的 Cost_day 与基线、无储能参照线对比；所有情景均应严格低于无储能费用（C4b）。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "Cost_day"
+      ]
+    },
+    {
+      "file": "robustness_dispatch_endpoint.png",
+      "path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_dispatch_endpoint.png",
+      "kind": "dispatch_endpoint_compare",
+      "title": "终端储电量端点情景的储电量轨迹（asm-02）",
+      "caption": "E_0=E_144 ∈ {4800, 6000, 7200} 三种终端取值下的最优储电量轨迹与运行上下界；轨迹贴界处说明最优解受边界强约束，不得解读为设备余量。",
+      "source_data": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "y": [
+        "储电量 E_t"
+      ]
+    }
+  ],
+  "errors": []
+}

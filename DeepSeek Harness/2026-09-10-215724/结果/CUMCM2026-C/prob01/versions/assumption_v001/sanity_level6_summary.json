@@ -1,0 +1,106 @@
+{
+  "schema": "automm.sanity.level6.summary.v1",
+  "checked_at": "2026-09-10T12:43:00Z",
+  "problem_id": "CUMCM2026-C",
+  "question_id": "prob01",
+  "assumption_version": "assumption_v001",
+  "formulation_version": "formulation_v001",
+  "checked_stage": "robustness",
+  "authoritative_scan_task_id": "66b12e7cd283813a098e",
+  "baseline_task_id": "13bf04ee604e54581fa2",
+  "checked_directory": "problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002",
+  "checker": "sanity-checker",
+  "level_6_status": "PASS_WITH_WARNING",
+  "failure_type": null,
+  "return_stage": null,
+  "hard_gates": {
+    "key_assumption_citation": "passed",
+    "physical_and_economic_common_sense": "passed",
+    "cross_question_consistency": "not_applicable_level5"
+  },
+  "independent_probe": {
+    "path": "runtime/tmp/prob01_level6_verify.py",
+    "result_path": "runtime/tmp/prob01_level6_verify.json",
+    "checks_total": 81,
+    "failures": 0,
+    "method": "从 raw/scenarios.jsonl、raw/monte_carlo_samples.csv 与原始附件 1 独立重算 C1-C6、锚定、方向与同条件无储能参照；不复用被检 Agent 的验证脚本"
+  },
+  "criteria_recheck": {
+    "C1_pass": true,
+    "baseline_anchor_abs_diff": 7.275957614183426e-12,
+    "worst_residuals": {
+      "balance_max_abs": 3.410605131648481e-12,
+      "soc_max_abs": 2.7284841053187847e-12,
+      "energy_bound_violation": 4.547473508864641e-13,
+      "terminal_residual": 0.0,
+      "power_upper_violation": 0.0,
+      "curtail_upper_violation": 0.0,
+      "nonnegativity_violation": 0.0,
+      "complementarity_max_min": 1.5697893616552628e-12
+    },
+    "C2_pass": true,
+    "C2_max_abs_pct": 0.0377332247832012,
+    "C3_pass": false,
+    "C3_violations": ["E_load_-20pct", "E_load_+20pct"],
+    "C3_max_delta_pct": {
+      "E_load_-20pct": -0.3691615229963594,
+      "E_load_+20pct": 0.44988071506812016
+    },
+    "C3_eta_group_max_abs_pct": 0.0786091773593353,
+    "C4a_no_curtail_share": 0.8837209302325582,
+    "C4a_posthoc_excluding_A2": 0.9047619047619048,
+    "C4b_uniform_reference_violations": ["E_load_+20pct", "F1_price+20_load+20", "F3_pv-20_load+20"],
+    "C4c_baseline_m1_m2_gap": 0.0,
+    "C5_delta_yuan": -0.10000000000582077,
+    "C5_delta_pct": -2.846817159527236e-06,
+    "C6_width_ratio": 0.28207248685606623,
+    "C6_mean_bias_ratio": 0.00046664528312624404,
+    "C6_draws": 200,
+    "C6_all_solved": true,
+    "C6_curtail_positive_draws": 0,
+    "direction_checks_passed": 41,
+    "direction_checks_total": 43,
+    "direction_failed": ["A3_meter_battery_side", "B3_Emax_9600"]
+  },
+  "structural_recheck": {
+    "baseline_cost_day": 35126.948589289634,
+    "no_storage_cost_day_analytic": 48052.046590846665,
+    "no_storage_cost_matches_task": true,
+    "storage_saving_day": 12925.098001557031,
+    "same_condition_no_storage_strictly_cheaper_scenarios": 42,
+    "K3_violations": [],
+    "min_saving_day": 9266.176602436244,
+    "posthoc_same_condition_references": {
+      "E_load_+20pct": 62512.606,
+      "F1_price+20_load+20": 75015.127,
+      "F3_pv-20_load+20": 70539.185
+    }
+  },
+  "traceability": {
+    "code_sha256_match": true,
+    "accepted_solver_sha256_match": true,
+    "data_sha256_match": true,
+    "attempt001_referenced": false,
+    "figures_registered": 6,
+    "figures_hash_and_review_recheck": "passed",
+    "accepted_version_figures_quality_plus_review_passed": "15/15"
+  },
+  "technical_debts": [
+    "U1 交付 y_binary 的 -1.52e-15 噪声，交付阶段对 |y|<1e-9 归零",
+    "U2 formulation.md §3.6 约束计数措辞（实际 289 等式 = 288 + 终端 E_144、288 不等式）",
+    "U3 asm-12 时间标签口径映射须在 result1.xlsx 与论文同步登记",
+    "U4 asm-10（不计退化使 Cost_day 偏低）、asm-07（代表日不外推）、asm-03（不反送、无上网电价）须在论文边界声明",
+    "R1 C4(a)/C4(b) 口径问题仅在 stability_conclusion.md §8 作 post-hoc 解释，须双记且不得回改预注册阈值",
+    "R2 C3 包络组实现未含 C_efficiency（η）；纳入后最大 7.861% 不改变 verdict，建议下一版本显式修正",
+    "R3 B3 预注册方向 not_up 与可行域单调性矛盾，属登记缺陷",
+    "R4 本环境不支持图像输入，6 张图仅程序化审计，建议对有图像能力终端补 15 张 PNG 目检",
+    "R5 可用内存约 1 GB、effective_workers=1，重跑/扩样按 infrastructure_transient/code_runtime 新 attempt",
+    "R6 stability_conclusion.md §10 中 prob01_fig_efficiency_metering 的 stable_id 笔误（6ec5b3f7fb 应为 6ec5b3b7fb）；figures.yaml 登记本身正确，属文档级追踪笔误"
+  ],
+  "paper_boundary_required": [
+    "load ±20% 预测误差对应 Cost_day ∈ [22159.431, 50929.885] 元（-36.916%/+44.988%），25% 费用包络在需求侧 ±20% 误差下不成立",
+    "组合压力 F1 +73.986%、F3 +68.539%",
+    "C6 95% 分位宽度 +28.207%（200 次 ±5% 均匀乘性噪声）仅作 K1 区间附加",
+    "贴运行上下界为最优性质，不等于设备余量；E_max 收紧至 9600 kWh 使费用 +2.575%"
+  ]
+}

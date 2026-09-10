@@ -1,0 +1,129 @@
+# prob02 computation 任务规格（由 implementation-agent 编写）
+#
+# 重要：implementation 阶段禁止创建正式 task。本文件只是供 computation 阶段的
+# Runner/dispatcher（scripts/compute_dispatcher.py submit → automm.tasks.make_task_spec）
+# 使用的确定性输入；task_id 由 tasks.compute_task_id 根据下列身份字段计算。
+# 本 spec 已于 implementation 阶段做过一次 make_task_spec 干跑（不提交、不产生 runtime/tasks 目录），
+# 预检结果 compileall=passed、ruff=passed，预测 task_id 见 dry_run.expected_task_id。
+
+problem_id: CUMCM2026-C
+question_id: prob02
+stage: computation
+assumption_version: assumption_v001
+formulation_version: formulation_v001
+
+# 路径一律相对项目根；禁止绝对路径
+working_directory: .
+code_path: problems/CUMCM2026-C/prob02/versions/assumption_v001/code/prob02_solver.py
+# 本问有 4 个输入文件（附件1 电价、附件2 负载/光伏实际、附件3 0:00 预报、附件5 交付模板）；
+# 为避免遗漏，input_path 取 data/ 目录，hash_path(data) 覆盖目录内全部输入文件，
+# 任一输入变化都会改变 input_hash 与 task_id。各文件 sha256 见 dry_run.input_files。
+input_path: data
+config_path: config/compute.yaml
+output_directory: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001
+
+command:
+  - .venv/Scripts/python.exe
+  - problems/CUMCM2026-C/prob02/versions/assumption_v001/code/prob02_solver.py
+  - --price
+  - data/附件1.xlsx
+  - --load-pv
+  - data/附件2.xlsx
+  - --forecast
+  - data/附件3.xlsx
+  - --template
+  - data/附件5/result2.xlsx
+  - --output
+  - problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001
+  - --mode
+  - both
+  - --seed
+  - "20260102"
+  - --time-limit
+  - "120"
+  - --total-budget
+  - "1500"
+  - --mip-gap
+  - "0.000001"
+
+# 求解与可复现参数（全部登记，便于任务身份核验）
+seed: 20260102
+timeout_seconds: 3600
+backend: local
+solver: scipy.optimize.milp
+solver_backend: HiGHS
+required_scipy: ">=1.11"
+observed_scipy: "1.18.1"
+mode: both               # milp = M1 计划层（交付解）；lp = M2 真松弛（仅下界与退化诊断）
+time_limit_seconds_per_day: 120
+total_budget_seconds: 1500
+mip_rel_gap: 0.000001    # 必须显式设定；HiGHS 默认 1e-4 会把 gap 内可行解报为 status=0
+
+# implementation 阶段干跑得到的身份字段（源代码/配置/输入未变化时应保持一致）
+dry_run:
+  expected_task_id: ea71568e2cf6c5326ded
+  code_hash: 16a4effa5b47bbecd795edd5ab48bf28daaaf0e75399a7b385c1c440145934d9
+  config_hash: 88a3d11012bf2ebe28404d8d55896db1b7ca0da0337e081978745eacfda5ed0b
+  source_config_hash: 9f076ef018b3f05c039d1ee56d978ab95c041bd7b425d353e0c16592abb8f0b4
+  input_hash: 4343d799b5830093d7a61d566219e1d2592f5bc39c8b7a9297286fa9e02d9434
+  preflight: {language: python, compileall: passed, ruff: passed}
+  code_sha256: b2e85d61d01a6e8d3abb66827585e55ed31745bbec1725ca6951ac4e72549bb0
+  input_files:
+    - {file: data/附件1.xlsx, sha256: 66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377}
+    - {file: data/附件2.xlsx, sha256: 2e95fd446bfafa0d8c59577b5c2e2ea8b3f1def20dde54a3062556f4da9b4c72}
+    - {file: data/附件3.xlsx, sha256: 8a61b06c52bd0d639a1cc37c61a7d9f5b75edcbca718f64c1bd3498ec9f9d843}
+    - {file: data/附件5/result2.xlsx, sha256: 1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47}
+
+# 期望输出（全部写入 output_directory；worker 另存 attempt-*.log 于 runtime/tasks/<task_id>/）
+expected_outputs:
+  - file: solver_status.json
+    note: >-
+      年度汇总状态；含 solver/mode/days_total/days_with_incumbent/days_optimal/
+      days_feasible_not_optimal/days_failed/max_mip_gap/total_runtime_seconds/
+      每日规模/pbar_kwh/big_m/seed/mip_rel_gap/feasible_incumbent/incumbent_found/
+      cost_plan/cost_em/cost_total。task_worker 以 feasible_incumbent 判定可行解。
+  - file: metrics.json
+    note: >-
+      年度指标（Cost_plan/Cost_em/Cost_total/Q_plan/充放电/弃光两层/紧急购电总量、次数、
+      段数与零紧急购电天数）、全部硬门禁残差、4 个指定日期（表 1/表 2/表 3 口径）的
+      逐项取值、M1 vs M2 比较与解析界登记。
+  - file: daily_metrics.csv
+    note: 334 行逐日指标与逐日 solver status/best_bound/mip_gap/node_count/门禁。
+  - file: solution.csv
+    note: 334×144 = 48 096 行逐时段 price/load/pv/pvfc/q/C/D/E/kappa_plan/u/kappa_act/surplus/y（M1 解，utf-8-sig）。
+  - file: emergency_segments.csv
+    note: 按 asm-17 合并后的紧急购电连续时段（日期、起止时段、物理区间、购电量）。
+  - file: result2.xlsx
+    note: >-
+      交付模板三表：计划购电量（334 行×144 列按 asm-15 列序一一对应并重写为物理区间标签
+      0:00-0:10…23:50-24:00，末两列全天购电量/全天购电费取计划口径）、充放电量（每日 7 行：
+      6 个 4 小时块 + 0:00/24:00 储电量）、紧急购电量（按实际段数增删行，日期列只在首段出现，
+      u=0 的日期显式登记为 0）。
+  - file: run_report.json
+    note: milp/lp 两种模式的汇总（天数、目标合计、状态计数、max mip_gap、运行时间）、M1 vs M2 比较与年度汇总。
+  - file: run_manifest.json
+    note: 代码/输入 sha256、版本、种子、时限、gap、输出目录、生成时间、Python/numpy/scipy/pandas 版本与交付映射。
+
+# 失败条件（任一触发即让 worker 以非零退出码结束并等待 implementation/资源路由）
+failure_conditions:
+  - 附件 1 行数≠144 或时间标签不符合右端点口径；附件 2 工作表/列数/日期不符；附件 3 缺少 0:00 报表或列缺失；附件 5 缺少三张表或规模不符（退出码 2/异常）
+  - 交付窗口不是 2025-02-01~2025-12-31 共 334 天（退出码 2/异常）
+  - 任一日 M1 无可行 incumbent（退出码 3，solver_status.json 记 days_failed>0）
+  - 硬门禁违反：计划层/执行层平衡、SOC 递推、终端、储电量边界、功率上限、非负性残差 > 1e-6，互斥或执行层互补性违反 > 1e-9，kappa 上界越界，或出现 NaN/Inf（退出码 3）
+  - Cost_plan 越出解析界 [6749147.6122, 16565407.2763]，Cost_em > 5815010.6013，或 Cost_total < 6660821.0595
+  - 实现与 formulation_v001 不一致（例如把执行层缺口式误用计划层 kappa*、或把实际 pv 放进计划层目标/平衡）
+  - 输出目录与 --output 不一致（由 tasks.make_task_spec 在提交前拦截）
+
+# 复现与边界声明
+provenance:
+  written_by: implementation-agent
+  stage: implementation
+  ran_full_instance: false
+  static_checks:
+    - compileall（code/ 目录，通过）
+    - ruff check（All checks passed!）
+    - CLI --help（通过）
+    - --smoke 小规模合成实例接口探针（T=12、3 天；MILP 与 LP 均 status=0、门禁全过，返回码 0）
+    - 只读数据/接口探针 prob02_implementation_probe.py（模型规模 864/289/288 与 720/289/0、Pbar=833.3333、四个指定日期与年度数据事实与 formulation 校准值一致、执行层投影平衡 1.14e-12）
+    - make_task_spec 干跑（未提交任何 task，runtime/tasks/ 未新增目录）
+  note: 竞赛实例（334 天 × 144 时段 MILP + LP）只能由 computation 阶段的隔离 task 异步执行；本阶段不做任何数值结论。

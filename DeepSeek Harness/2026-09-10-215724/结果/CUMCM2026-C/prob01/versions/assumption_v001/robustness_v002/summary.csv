@@ -1,0 +1,44 @@
+﻿scenario_id,group,description,cost_day,delta_cost,delta_pct,curtail_total,milp_status,gates_all_pass,expect,observed_direction,direction_pass
+A1_baseline,A_structure,接受版本基线（锚定 Cost_day=35126.94858928963）,35126.948589289634,0.0,0.0,0.0,0,True,same,same,True
+A2_no_storage,A_structure,无储能参照（Pmax=0），用于 K3 节省量,48052.046590846665,12925.098001557031,0.3679539077726197,6247.962966666666,0,True,up,up,True
+A3_meter_battery_side,A_structure,电池侧计量：充电上限 Pmax*dt/eta_ch，放电上限 Pmax*dt*eta_dis,35101.567554155496,-25.381035134138074,-0.0007225516634222212,0.0,0,True,up,down,False
+A4_allow_zero_revenue_export,A_structure,允许零收益反送：反送上限放宽为 pv*dt + Pmax*dt,35126.948589289634,0.0,0.0,0.0,0,True,same,same,True
+A5_lp_relaxation,A_structure,基线 + M2 真 LP 松弛（下界与退化诊断，K4/I1）,35126.948589289634,0.0,0.0,0.0,0,True,same,same,True
+B1_E0_4800,B_terminal_bounds,E_0 = E_144 = 4800 kWh,35133.23192262296,6.283333333325572,0.00017887501151299517,0.0,0,True,up,up,True
+B2_E0_7200,B_terminal_bounds,E_0 = E_144 = 7200 kWh,35122.4652559563,-4.483333333337214,-0.00012763230264481904,0.0,0,True,down,down,True
+B3_Emax_9600,B_terminal_bounds,E_max = 9600 kWh（收紧运行上界）,36031.369451026796,904.4208617371623,0.02574720828477895,0.0,0,True,not_up,up,False
+B4_Emax_12000,B_terminal_bounds,E_max = 12000 kWh（= E_cap，非运行上界，仅量化误用方向）,34342.27089214296,-784.6776971466752,-0.022338339328054443,0.0,0,True,not_up,down,True
+B5_Emin_1800,B_terminal_bounds,E_min = 1800 kWh（收紧运行下界）,35536.459370622964,409.51078133333067,0.01165802319243273,0.0,0,True,not_down,up,True
+C1_roundtrip_0.90,C_efficiency,往返效率 0.9：单向 eta = sqrt(0.9) = 0.9486833,33801.495542222016,-1325.4530470676182,-0.0377332247832012,0.0,0,True,down,down,True
+C2_eta_0.855,C_efficiency,单向效率 -5%：eta = 0.855,36447.9221090376,1320.9735197479677,0.0376057008308071,0.0,0,True,up,up,True
+C3_eta_0.945,C_efficiency,单向效率 +5%：eta = 0.945,33898.269805588876,-1228.6787837007578,-0.0349782384478277,0.0,0,True,down,down,True
+C4_eta_0.81,C_efficiency,单向效率 -10%：eta = 0.81,37888.249121037356,2761.300531747722,0.0786091773593353,0.0,0,True,up,up,True
+C5_eta_0.99,C_efficiency,单向效率 +10%：eta = 0.99,32695.447407456344,-2431.5011818332896,-0.06922039287450847,0.0,0,True,down,down,True
+D1_Pmax_-10pct,D_power_cap,Pmax ×0.90 = 4500 kW,35156.49995290284,29.551363613209105,0.0008412732901661561,0.0,0,True,not_down,up,True
+D2_Pmax_-20pct,D_power_cap,Pmax ×0.80 = 4000 kW,35247.87089961686,120.92231032722339,0.003442437079891794,0.0,0,True,not_down,up,True
+D3_Pmax_+10pct,D_power_cap,Pmax ×1.10 = 5500 kW,35103.85181341475,-23.096775874881132,-0.0006575229788653901,0.0,0,True,not_up,down,True
+D4_Pmax_+20pct,D_power_cap,Pmax ×1.20 = 6000 kW,35083.29348008142,-43.655109208215436,-0.001242781139877492,0.0,0,True,not_up,down,True
+E_price_-5pct,E_data_perturbation,price 整体 ×0.95,33370.60115982515,-1756.3474294644839,-0.050000000000000065,0.0,0,True,down,down,True
+E_price_-10pct,E_data_perturbation,price 整体 ×0.90,31614.25373036067,-3512.694858928964,-0.10000000000000002,0.0,0,True,down,down,True
+E_price_-20pct,E_data_perturbation,price 整体 ×0.80,28101.558871431705,-7025.389717857928,-0.20000000000000004,0.0,0,True,down,down,True
+E_price_+5pct,E_data_perturbation,price 整体 ×1.05,36883.29601875412,1756.3474294644839,0.050000000000000065,0.0,0,True,up,up,True
+E_price_+10pct,E_data_perturbation,price 整体 ×1.10,38639.6434482186,3512.6948589289677,0.10000000000000013,0.0,0,True,up,up,True
+E_price_+20pct,E_data_perturbation,price 整体 ×1.20,42152.338307147555,7025.389717857921,0.19999999999999984,0.0,0,True,up,up,True
+E_load_-5pct,E_data_perturbation,load 整体 ×0.95,31552.184280896938,-3574.764308392696,-0.10176700373805478,0.0,0,True,down,down,True
+E_load_-10pct,E_data_perturbation,load 整体 ×0.90,28073.627584719536,-7053.321004570098,-0.20079515266295256,0.0,0,True,down,down,True
+E_load_-20pct,E_data_perturbation,load 整体 ×0.80,22159.430749852654,-12967.51783943698,-0.3691615229963594,2166.7959699999983,0,True,down,down,True
+E_load_+5pct,E_data_perturbation,load 整体 ×1.05,38834.16769585598,3707.219106566343,0.10553774966085984,0.0,0,True,up,up,True
+E_load_+10pct,E_data_perturbation,load 整体 ×1.10,42745.80854907041,7618.859959780777,0.2168950126827641,0.0,0,True,up,up,True
+E_load_+20pct,E_data_perturbation,load 整体 ×1.20,50929.88533880035,15802.936749510714,0.44988071506812016,0.0,0,True,up,up,True
+E_pv_-5pct,E_data_perturbation,pv 整体 ×0.95,36697.18748585531,1570.2388965656792,0.044701830350400894,0.0,0,True,up,up,True
+E_pv_-10pct,E_data_perturbation,pv 整体 ×0.90,38422.56108838365,3295.612499094015,0.09382006213027176,0.0,0,True,up,up,True
+E_pv_-20pct,E_data_perturbation,pv 整体 ×0.80,42269.092135314124,7142.14354602449,0.2033237680144572,0.0,0,True,up,up,True
+E_pv_+5pct,E_data_perturbation,pv 整体 ×1.05,33630.57996634062,-1496.3686229490122,-0.042598878725414305,0.0,0,True,down,down,True
+E_pv_+10pct,E_data_perturbation,pv 整体 ×1.10,32211.93345657375,-2915.015132715882,-0.08298515099614098,0.0,0,True,down,down,True
+E_pv_+20pct,E_data_perturbation,pv 整体 ×1.20,30873.958969548345,-4252.989619741289,-0.12107483828065968,3258.3953566666646,0,True,down,down,True
+F1_price+20_load+20,F_stress_combinations,price ×1.20 且 load ×1.20,61115.86240656042,25988.91381727079,0.7398568580817443,0.0,0,True,up,up,True
+F2_price-20_load+20,F_stress_combinations,price ×0.80 且 load ×1.20,40743.90827104029,5616.9596817506535,0.15990457205449637,0.0,0,True,any,up,True
+F3_pv-20_load+20,F_stress_combinations,pv ×0.80 且 load ×1.20（供给最紧）,59202.57107378466,24075.622484495027,0.685388952111707,0.0,0,True,up,up,True
+F4_pv+20_load-20,F_stress_combinations,pv ×1.20 且 load ×0.80（余电最多）,20769.678515883334,-14357.2700734063,-0.4087252280656082,11166.599473333328,0,True,down,down,True
+F5_price+20_pv+20_load-20,F_stress_combinations,price ×1.20、pv ×1.20、load ×0.80,24923.614219059997,-10203.334370229637,-0.29047027367872996,11166.599473333328,0,True,any,down,True
+G1_cyclic_shift_1,G_time_label,price/load/pv 三条曲线整体循环移位 1 个时段（10 分钟）,35126.84858928963,-0.10000000000582077,-2.846817159527236e-06,0.0,0,True,any,down,True

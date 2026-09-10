@@ -1,0 +1,536 @@
+question_id: prob01
+dry: true
+items:
+- id: ref-prob01-milp-tenfen-2015
+  title: A mixed integer linear programming model for the energy management problem
+    of microgrids
+  source: Electric Power Systems Research, 122, 19-28 (Elsevier)
+  doi: 10.1016/j.epsr.2014.12.019
+  url: https://doi.org/10.1016/j.epsr.2014.12.019
+  authors: Tenfen, D.; Finardi, E. C.
+  year: 2015
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 仅有题录）
+  supports: 以 MILP 统一建模微网内可控机组、储能与外网的日前能量管理，给出确定性日前调度的框架先例。
+  applies_to: prob01 建模框架；A5 充放电互斥所依赖的 MILP 结构
+  boundary: 面向含可控机组/热电的微网，电池效率与功率口径与本题（单向 90%、5000 kW）不同；仅作框架先例，不提供本题参数。
+  fingerprint: 10.1016/j.epsr.2014.12.019
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:46.901851+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:48.092421+00:00'
+  verified_title:
+  - A mixed integer linear programming model for the energy management problem of
+    microgrids
+  decision_reason: 支撑 prob01 采用确定性 MILP 做日前调度的框架；仅题录级核验，故只作方法先例，不用于支撑关键参数取值。
+  decided_at: '2026-09-10T10:56:48.124815+00:00'
+- id: ref-prob01-dayahead-silva-2020
+  title: Optimal Day-Ahead Scheduling of Microgrids with Battery Energy Storage System
+  source: Energies, 13(19), 5188 (MDPI)
+  doi: 10.3390/en13195188
+  url: https://doi.org/10.3390/en13195188
+  authors: Silva, V. A.; Aoki, A. R.; Lambert-Torres, G.
+  year: 2020
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 给出微网日前最优调度的详细数学建模：电池储能、光伏发电、直接可控负荷、切负荷、计划孤岛与发电削减(curtailment)；采用实际分时电价仿真，说明分时电价下套利可降低微网成本，储能容量与自给率影响电费。
+  supports: (1) 日前调度可写成确定性优化/MILP；(2) 电池储能、光伏、弃光(curtailment)与切负荷均可显式建模；(3) 分时电价下储能套利是降本主线。
+  applies_to: prob01 核心建模；A4 弃光可作为可建模手段
+  boundary: 含计划孤岛与切负荷变量，且面向分时电价市场；本题 prob01 不允许低于负载、无孤岛、购电费一次性结算，需删去对应变量。
+  fingerprint: 10.3390/en13195188
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:48.236717+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:49.386574+00:00'
+  verified_title:
+  - Optimal Day-Ahead Scheduling of Microgrids with Battery Energy Storage System
+  decision_reason: 与 prob01 的建模对象最接近（日前调度+BESS+光伏+curtailment+TOU），支撑核心结构与弃光处理；已读摘要核对主张。
+  decided_at: '2026-09-10T10:56:49.420555+00:00'
+- id: ref-prob01-milp-morais-2010
+  title: Optimal scheduling of a renewable micro-grid in an isolated load area using
+    mixed-integer linear programming
+  source: Renewable Energy, 35(1), 151-156 (Elsevier)
+  doi: 10.1016/j.renene.2009.02.031
+  url: https://doi.org/10.1016/j.renene.2009.02.031
+  authors: Morais, H.; Kadar, P.; Faria, P.; Vale, Z.; Khodr, H. M.
+  year: 2010
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 仅有题录）
+  supports: 可再生微网的最优调度可用 MILP 在统一框架内协同处理储能与可再生出力。
+  applies_to: prob01 方法族先例
+  boundary: 孤岛运行场景，不含购电电价套利；与本题并网购电结构不同。
+  fingerprint: 10.1016/j.renene.2009.02.031
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:49.518740+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:50.505109+00:00'
+  verified_title:
+  - Optimal scheduling of a renewable micro-grid in an isolated load area using mixed-integer
+    linear programming
+  decision_reason: 佐证 MILP 在可再生微网调度中的适用性；仅题录级核验，不用于支撑关键参数。
+  decided_at: '2026-09-10T10:56:50.552947+00:00'
+- id: ref-prob01-mpc-parisio-2014
+  title: A Model Predictive Control Approach to Microgrid Operation Optimization
+  source: IEEE Transactions on Control Systems Technology, 22(5), 1813-1827
+  doi: 10.1109/tcst.2013.2295737
+  url: https://doi.org/10.1109/tcst.2013.2295737
+  authors: Parisio, A.; Rikos, E.; Glielmo, L.
+  year: 2014
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 把微网运行优化建模为 MILP 并用商用求解器求解，避免复杂启发式；含储能与可控负荷、时变需求约束；在雅典实验微网上验证在线优化策略的有效性与计算负担改善。
+  supports: (1) 微网运行优化可写成 MILP 并由商用求解器高效求解；(2) 储能、可控负荷与时变需求可置于同一 MILP；(3) 在线滚动优化与静态日前计划是不同信息结构。
+  applies_to: prob01 的 MILP 结构与求解策略；prob03 调整策略的方法先例
+  boundary: 含可控负荷与热电设备，目标与结算结构不同于本题；未含 5 倍紧急购电与违约金。
+  fingerprint: 10.1109/tcst.2013.2295737
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:50.675861+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:51.656596+00:00'
+  verified_title:
+  - A Model Predictive Control Approach to Microgrid Operation Optimization
+  decision_reason: 支撑 prob01 用 MILP 精确建模与求解的策略选择；已读摘要核对主张。
+  decided_at: '2026-09-10T10:56:51.711826+00:00'
+- id: ref-prob01-rolling-palma-2013
+  title: A Microgrid Energy Management System Based on the Rolling Horizon Strategy
+  source: IEEE Transactions on Smart Grid, 4(2), 996-1006
+  doi: 10.1109/tsg.2012.2231440
+  url: https://doi.org/10.1109/tsg.2012.2231440
+  authors: Palma-Behnke, R.; Benavides, C.; Lanas, F.; Severino, B.; Reyes, L.; Llanos,
+    J.
+  year: 2013
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 提出基于滚动时域(RH)的微网能量管理系统，每个决策步基于预报模型求解混合整数优化并给出在线设定点；含光伏/风电/柴油/储能与需求侧管理；给出
+    RH 与标准机组组合的经济性比较与预报更新机制。
+  supports: (1) 日前固定计划与滚动重优化属于不同信息结构；(2) 预报更新后重求解可改善经济性；(3) 必须显式定义每个决策时点的信息集与已承诺量。
+  applies_to: prob01 决策时点/信息集界定；prob03 调整购电策略的方法先例
+  boundary: 含柴油机组与需求侧管理，预报误差处理方式与本题不同；不涉及计划/调整量的违约电价结算。
+  fingerprint: 10.1109/tsg.2012.2231440
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:51.863518+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:52.841116+00:00'
+  verified_title:
+  - A Microgrid Energy Management System Based on the Rolling Horizon Strategy
+  decision_reason: 支撑 prob01 对“0:00 单点决策、信息集固定”的形式化，并为 prob03 提供滚动重优化先例；已读摘要。
+  decided_at: '2026-09-10T10:56:52.882756+00:00'
+- id: ref-prob01-nottrott-2013
+  title: Energy dispatch schedule optimization and cost benefit analysis for grid-connected,
+    photovoltaic-battery storage systems
+  source: Renewable Energy, 55, 230-240 (Elsevier)
+  doi: 10.1016/j.renene.2012.12.036
+  url: https://doi.org/10.1016/j.renene.2012.12.036
+  authors: Nottrott, A.; Kleissl, J.; Washom, B.
+  year: 2013
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 仅有题录）
+  supports: 并网光伏-电池系统的能量调度可做优化并配合成本效益分析（题名级主张）。
+  applies_to: prob01 并网购电+储能同构应用先例
+  boundary: 仅题录级核验、未获正文，主张严格限于题名范围；不能据此引用任何具体公式或参数。
+  fingerprint: 10.1016/j.renene.2012.12.036
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:53.017350+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:54.048014+00:00'
+  verified_title:
+  - Energy dispatch schedule optimization and cost benefit analysis for grid-connected,
+    photovoltaic-battery storage systems
+  decision_reason: 提供并网 PV+BESS 调度优化的同构应用先例；因未获正文，标记为低强度支持，不进入关键假设引用。
+  decided_at: '2026-09-10T10:56:54.110143+00:00'
+- id: ref-prob01-complementarity-fortuny-1981
+  title: A Representation and Economic Interpretation of a Two-Level Programming Problem
+  source: Journal of the Operational Research Society, 32(9), 783-792
+  doi: 10.1057/jors.1981.156
+  url: https://doi.org/10.1057/jors.1981.156
+  authors: Fortuny-Amat, J.; McCarl, B.
+  year: 1981
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 将下层问题替换为 Kuhn-Tucker 条件，并利用互补松弛条件的析取性质，把问题转化为混合整数（二次）规划求解。
+  supports: 互补/析取约束可用 0-1 变量与大 M 线性化，从而化为混合整数规划；M 的取值必须由变量真实上下界导出。
+  applies_to: A5 充放电互斥约束 C_t*D_t=0 的 big-M 线性化依据
+  boundary: 原始语境为双层规划，不是储能系统；只提供互补条件离散化方法，不提供储能参数或效率口径。
+  fingerprint: 10.1057/jors.1981.156
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:54.233053+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:55.278244+00:00'
+  verified_title:
+  - A Representation and Economic Interpretation of a Two-Level Programming Problem
+  decision_reason: 为 A5 的 big-M 线性化提供经典方法依据；已读摘要，主张限于“互补条件可整数化”。
+  decided_at: '2026-09-10T10:56:55.354306+00:00'
+- id: ref-prob01-complementarity-garifi-2020
+  title: Convex Relaxation of Grid-Connected Energy Storage System Models With Complementarity
+    Constraints in DC OPF
+  source: IEEE Transactions on Smart Grid, 11(5), 4070-4079
+  doi: 10.1109/tsg.2020.2987785
+  url: https://doi.org/10.1109/tsg.2020.2987785
+  authors: Garifi, K.; Baker, K.; Christensen, D.; Touri, B.
+  year: 2020
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 储能模型中的互补约束用于避免同时充放电的不可实现策略，但通常需要非凸方法；本文提出基于罚函数的凸松弛，省略互补约束并在目标中加入惩罚项，给出保证同时充放电为次优解的条件，并在
+    MPC-DC OPF 上验证。
+  supports: (1) 同时充放电物理不可实现，必须显式排除；(2) 除 big-M 整数化外，可用罚函数/凸松弛避免整数变量；(3) 松弛的有效性依赖特定条件，不能默认成立。
+  applies_to: A5 建模方式选择与求解策略；是否需要 0-1 变量的判据
+  boundary: DC OPF/MPC 语境，条件与本题 LP/MILP 结构不完全等同；采用罚函数前必须自查其成立条件。
+  fingerprint: 10.1109/tsg.2020.2987785
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:55.605906+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:56.732729+00:00'
+  verified_title:
+  - Convex Relaxation of Grid-Connected Energy Storage System Models With Complementarity
+    Constraints in DC OPF
+  decision_reason: 直接支撑 A5：同时充放电必须排除、且提供了整数化之外的替代路径及其条件；已读摘要。
+  decided_at: '2026-09-10T10:56:56.830511+00:00'
+- id: ref-prob01-storage-luo-2015
+  title: Overview of current development in electrical energy storage technologies
+    and the application potential in power system operation
+  source: Applied Energy, 137, 511-536 (Elsevier)
+  doi: 10.1016/j.apenergy.2014.09.081
+  url: https://doi.org/10.1016/j.apenergy.2014.09.081
+  authors: Luo, X.; Wang, J.; Dooner, M.; Clarke, J.
+  year: 2015
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 按储能介质分六大类综述电气储能技术的运行原理、技术与经济性能特征，并给出综合比较与应用潜力分析。
+  supports: 电化学储能的效率、响应与寿命存在可比较的技术口径，可用于核对本题 90% 效率与 12000 kWh/5000 kW 量级是否处于常见范围。
+  applies_to: A14 效率取值的合理性核对（仅作范围核对，不替代附录 1 给定值）
+  boundary: 综述给出技术类别范围而非具体设备参数，不能据此替换附录 1 的效率、容量与功率数值。
+  fingerprint: 10.1016/j.apenergy.2014.09.081
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:57.260813+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:56:58.735902+00:00'
+  verified_title:
+  - Overview of current development in electrical energy storage technologies and
+    the application potential in power system operation
+  decision_reason: 用于 A14 效率量级的合理性核对与 sanity 对照；已读摘要，明确不替代题目参数。
+  decided_at: '2026-09-10T10:56:58.831777+00:00'
+- id: ref-prob01-arbitrage-grimaldi-2024
+  title: Profitability of energy arbitrage net profit for grid-scale battery energy
+    storage considering dynamic efficiency and degradation using a linear, mixed-integer
+    linear, and mixed-integer non-linear optimization approach
+  source: Journal of Energy Storage, 95, 112380 (Elsevier)
+  doi: 10.1016/j.est.2024.112380
+  url: https://doi.org/10.1016/j.est.2024.112380
+  authors: Grimaldi, A.; Minuto, F. D.; Brouwer, J.; Lanzini, A.
+  year: 2024
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 套利净收益=套利收入-购电成本-退化成本；无退化为 LP，含退化为 MILP，含功率相关动态效率为 MINLP；用 CAISO 历史电价，退化使年净收益下降约
+    13%-24%。
+  supports: (1) 储能套利的经济口径（收入、购电成本、退化成本）可明确分离；(2) 恒定效率下问题保持线性/混合整数线性；(3) 退化项可显著改变结论，若忽略必须在边界中声明。
+  applies_to: prob01 目标函数（仅购电费用）与效率处理；A14；robustness 的退化敏感性
+  boundary: 面向电网侧套利且含售电收入与退化成本；本题 prob01 不售电、不建模退化，不能直接套用其收益口径。
+  fingerprint: 10.1016/j.est.2024.112380
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:56:59.135236+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:00.407315+00:00'
+  verified_title:
+  - Profitability of energy arbitrage net profit for grid-scale battery energy storage
+    considering dynamic efficiency and degradation using a linear, mixed-integer linear,
+    and mixed-integer non-linear optimization approach
+  decision_reason: 支撑“恒定效率保持 LP/MILP”与退化成本的边界说明；已读摘要，未把其收益口径迁移到本题目标。
+  decided_at: '2026-09-10T10:57:00.515686+00:00'
+- id: ref-prob01-unitcommit-nguyenduc-2022
+  title: A Mixed-Integer Programming Approach for Unit Commitment in Micro-Grid with
+    Incentive-Based Demand Response and Battery Energy Storage System
+  source: Energies, 15(19), 7192 (MDPI)
+  doi: 10.3390/en15197192
+  url: https://doi.org/10.3390/en15197192
+  authors: Nguyen-Duc, T.; Hoang-Tuan, L.; Ta-Xuan, H.; Do-Van, L.; Takano, H.
+  year: 2022
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 提出含 BESS 与需求响应的微网机组组合 MIP 模型，引入激励型需求响应与液流电池详细模型，目标最小化发电、排放与维护成本并考虑负荷与可再生不确定性，并与遗传算法对比验证。
+  supports: (1) 微网调度/机组组合可用 MIP 建模并包含详细电池模型；(2) 精确 MIP 可作为启发式结果的验证基准；(3) 多成本项目标需谨慎处理单位与量级。
+  applies_to: prob01 求解策略（精确 MILP 优先）与后续不确定性处理
+  boundary: 含柴油机组、排放与需求响应，电池为液流电池模型；与本题单向 90% 效率、单一购电费目标不同。
+  fingerprint: 10.3390/en15197192
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:00.810319+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:02.139711+00:00'
+  verified_title:
+  - A Mixed-Integer Programming Approach for Unit Commitment in Micro-Grid with Incentive-Based
+    Demand Response and Battery Energy Storage System
+  decision_reason: 支撑 prob01 以精确 MIP 为基线与验证基准的求解策略；已读摘要。
+  decided_at: '2026-09-10T10:57:02.261009+00:00'
+- id: ref-prob01-microgrid-review-hirsch-2018
+  title: 'Microgrids: A review of technologies, key drivers, and outstanding issues'
+  source: Renewable and Sustainable Energy Reviews, 90, 402-411 (Elsevier)
+  doi: 10.1016/j.rser.2018.03.040
+  url: https://doi.org/10.1016/j.rser.2018.03.040
+  authors: Hirsch, A.; Parag, Y.; Guerrero, J. M.
+  year: 2018
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 界定微网概念，综述技术、驱动因素、应用、挑战与前景，强调微网可提高供电可靠性与韧性、消纳分布式清洁能源。
+  supports: 微网由分布式电源、储能与负荷构成，可作为单一可控系统并网或孤岛运行；经济性与可靠性是主要驱动。
+  applies_to: 术语与背景界定（微网/外网/并网模式）
+  boundary: 综述性文献，无优化模型与本题参数，不能支撑任何定量结论。
+  fingerprint: 10.1016/j.rser.2018.03.040
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:02.540910+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:03.861840+00:00'
+  verified_title:
+  - 'Microgrids: A review of technologies, key drivers, and outstanding issues'
+  decision_reason: 用于统一术语与背景，支撑“微网—外网”问题设定；已读摘要，仅作背景引用。
+  decided_at: '2026-09-10T10:57:03.997358+00:00'
+- id: ref-prob01-ems-review-abbasi-2023
+  title: 'Recent developments of energy management strategies in microgrids: An updated
+    and comprehensive review and classification'
+  source: Energy Conversion and Management, 297, 117723 (Elsevier)
+  doi: 10.1016/j.enconman.2023.117723
+  url: https://doi.org/10.1016/j.enconman.2023.117723
+  authors: Abbasi, A. R.; et al.
+  year: 2023
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 仅有题录）
+  supports: 微网能量管理策略已有系统分类（数学规划、MPC、启发式、随机规划等）可作方法定位。
+  applies_to: 方法族定位；prob03/prob04 的策略类别
+  boundary: 仅题录级核验；只能支撑“存在系统分类”这一弱主张，不能支撑具体算法优劣。
+  fingerprint: 10.1016/j.enconman.2023.117723
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:04.502865+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:06.187154+00:00'
+  verified_title:
+  - 'Recent developments of energy management strategies in microgrids: An updated
+    and comprehensive review and classification'
+  decision_reason: 用于方法族定位与检索入口；仅题录级核验，不支撑定量或优劣结论。
+  decided_at: '2026-09-10T10:57:06.317290+00:00'
+- id: ref-prob01-tou-modu-2025
+  title: The role of hybrid hydrogen-battery storage in a grid-connected renewable
+    energy microgrid considering time-of-use electricity tariffs
+  source: Journal of Energy Storage, 105, 114729 (Elsevier)
+  doi: 10.1016/j.est.2024.114729
+  url: https://doi.org/10.1016/j.est.2024.114729
+  authors: Modu, B.; Abdullah, M. P.; AlKassem, A.; Hamza, M. F.; Bukar, A. L.
+  year: 2025
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 针对并网可再生微网的混合储能在两种分时电价情景下做最优能量管理与容量优化，比较“Time of Use-Flat”与“Flat-Time of
+    Use”两情景的年系统成本与平准化度电成本。
+  supports: 并网微网在分时电价下，储能“何时充、何时放”是决定系统成本的核心决策，且电价结构情景会改变最优结果。
+  applies_to: prob01 分时电价套利逻辑；prob04 电价波动情景
+  boundary: 含氢储与容量优化，设备构成与目标不同于本题；不含 5 倍紧急购电与违约金结算。
+  fingerprint: 10.1016/j.est.2024.114729
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:06.649408+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:07.980272+00:00'
+  verified_title:
+  - The role of hybrid hydrogen-battery storage in a grid-connected renewable energy
+    microgrid considering time-of-use electricity tariffs
+  decision_reason: 支撑分时电价下储能充放时点决策的经济重要性；已读摘要（来自机构仓储页）。
+  decided_at: '2026-09-10T10:57:08.327937+00:00'
+- id: ref-prob01-capacity-gitizadeh-2014
+  title: Battery capacity determination with respect to optimized energy dispatch
+    schedule in grid-connected photovoltaic (PV) systems
+  source: Energy, 65, 665-674 (Elsevier)
+  doi: 10.1016/j.energy.2013.12.018
+  url: https://doi.org/10.1016/j.energy.2013.12.018
+  authors: Gitizadeh, M.; Fakharzadegan, S.; et al.
+  year: 2014
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 仅有题录）
+  supports: 并网光伏系统中电池容量与最优能量调度相互耦合（题名级主张）。
+  applies_to: prob01 储能容量/功率约束为关键约束的合理性；robustness 容量敏感性
+  boundary: 研究容量规划；本题容量固定为 12000 kWh、功率 5000 kW，故只能作约束刻画先例。
+  fingerprint: 10.1016/j.energy.2013.12.018
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:08.675154+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:09.810332+00:00'
+  verified_title:
+  - Battery capacity determination with respect to optimized energy dispatch schedule
+    in grid-connected photovoltaic (PV) systems
+  decision_reason: 佐证储能容量/功率约束在调度问题中的关键性；仅题录级核验，不支撑参数取值。
+  decided_at: '2026-09-10T10:57:09.954685+00:00'
+- id: ref-prob01-ieee1547-2018
+  title: IEEE Standard for Interconnection and Interoperability of Distributed Energy
+    Resources with Associated Electric Power Systems Interfaces
+  source: IEEE Std 1547-2018 (IEEE Standards Association)
+  doi: 10.1109/ieeestd.2018.8332112
+  url: https://doi.org/10.1109/ieeestd.2018.8332112
+  authors: IEEE Standards Association
+  year: 2018
+  item_type: standard
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （标准文本；Crossref 仅有题录，未取正文）
+  supports: 分布式能源并网互联与互操作性存在正式标准要求，可作为并网接口约束的规范背景。
+  applies_to: A4 并网/反送电问题的规范背景
+  boundary: 标准规定互联与互操作性要求，并不直接规定本题是否允许余电上网；“不向外部电网反送”仍是 project_assumption。
+  fingerprint: 10.1109/ieeestd.2018.8332112
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:10.418912+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:11.985175+00:00'
+  verified_title:
+  - IEEE Standard for Interconnection and Interoperability of Distributed Energy Resources
+    with Associated Electric Power Systems Interfaces
+  decision_reason: 提供并网接口的规范背景（A 级标准）；未据此断言禁止反送电，A4 仍标记为 project_assumption。
+  decided_at: '2026-09-10T10:57:12.199486+00:00'
+- id: ref-prob01-degcost-koller-2013
+  title: Defining a degradation cost function for optimal control of a battery energy
+    storage system
+  source: 2013 IEEE Grenoble Conference (PowerTech), 1-6
+  doi: 10.1109/ptc.2013.6652329
+  url: https://doi.org/10.1109/ptc.2013.6652329
+  authors: Koller, M.; Borsche, T.; Ulbig, A.; Andersson, G.
+  year: 2013
+  item_type: proceedings-article
+  authority_tier: B
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref 仅有题录）
+  supports: 电池退化成本可写成与循环/功率相关的费用项并进入最优控制目标。
+  applies_to: prob04 / robustness 的退化成本扩展候选
+  boundary: 会议论文且未获摘要；prob01 目标不含退化成本，本题也无循环老化数据。
+  fingerprint: 10.1109/ptc.2013.6652329
+  status: rejected
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:12.678570+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:13.882236+00:00'
+  verified_title:
+  - Defining a degradation cost function for optimal control of a battery energy storage
+    system
+  decision_reason: prob01 目标函数仅含购电费用，未建模容量退化，且题目未给循环/日历老化数据；标记 rejected（本问不采用），仅作为
+    prob04/robustness 的扩展线索保留。
+  decided_at: '2026-09-10T10:57:14.109167+00:00'
+- id: ref-prob01-degradation-reniers-2019
+  title: Review and Performance Comparison of Mechanical-Chemical Degradation Models
+    for Lithium-Ion Batteries
+  source: Journal of The Electrochemical Society, 166(14), A3189-A3200
+  doi: 10.1149/2.0281914jes
+  url: https://doi.org/10.1149/2.0281914jes
+  authors: Reniers, J. M.; Mulder, G.; Howey, D. A.
+  year: 2019
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 在单粒子模型框架内实现并比较多种锂离子电池退化模型，指出小数据集下多种模型都能拟合，模型间存在相互作用，只有大数据集才能正确选择模型。
+  supports: 锂离子电池退化模型在数据不足时不可辨识，多个模型都可能拟合同一小数据集。
+  applies_to: prob01 不引入容量退化成本的依据（数据条件）
+  boundary: 面向电池老化机理与模型辨识，不提供调度模型或本题参数。
+  fingerprint: 10.1149/2.0281914jes
+  status: rejected
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T10:57:14.605770+00:00'
+  round_id: rnd-819e01fdf066
+  verified_at: '2026-09-10T10:57:15.788862+00:00'
+  verified_title:
+  - Review and Performance Comparison of Mechanical-Chemical Degradation Models for
+    Lithium-Ion Batteries
+  decision_reason: prob01 无循环/日历老化与温度工况数据，退化模型不可辨识，且目标不含退化成本；标记 rejected（本问不采用），结论用于支持“不建模退化”的边界说明。
+  decided_at: '2026-09-10T10:57:15.952686+00:00'
+rounds:
+- round_id: rnd-819e01fdf066
+  query: microgrid day-ahead optimal scheduling under time-of-use tariff; battery
+    energy storage mixed-integer linear programming; state-of-charge dynamics and
+    charge/discharge efficiency; charge-discharge complementarity big-M linearization;
+    grid-connected photovoltaic-battery dispatch with curtailment; rolling horizon
+    / MPC energy management
+  status: completed
+  started_at: '2026-09-10T10:56:46.832092+00:00'
+  added_ids:
+  - ref-prob01-milp-tenfen-2015
+  - ref-prob01-dayahead-silva-2020
+  - ref-prob01-milp-morais-2010
+  - ref-prob01-mpc-parisio-2014
+  - ref-prob01-rolling-palma-2013
+  - ref-prob01-nottrott-2013
+  - ref-prob01-complementarity-fortuny-1981
+  - ref-prob01-complementarity-garifi-2020
+  - ref-prob01-storage-luo-2015
+  - ref-prob01-arbitrage-grimaldi-2024
+  - ref-prob01-unitcommit-nguyenduc-2022
+  - ref-prob01-microgrid-review-hirsch-2018
+  - ref-prob01-ems-review-abbasi-2023
+  - ref-prob01-tou-modu-2025
+  - ref-prob01-capacity-gitizadeh-2014
+  - ref-prob01-ieee1547-2018
+  - ref-prob01-degcost-koller-2013
+  - ref-prob01-degradation-reniers-2019
+  finished_at: '2026-09-10T10:57:16.415428+00:00'
+  dry_reason: all_candidates_decided
+dry_reason: all_candidates_decided

@@ -1,0 +1,11 @@
+version: formulation_v001
+status: accepted
+created_at: '2026-09-10T11:02:37.465204+00:00'
+parent_version: null
+content_hash: dc298b2e99adac6833bd3d12276dffec5285be3bb5f1064b0302fb6a97ecd5bb
+decision_reason: formulation_v001 完整闭合：主模型 M1 的目标、决策变量、状态转移、容量/功率/终端/互斥/弃光约束与交付映射齐备，关键公式均可追溯到题面、附录1
+  或摘要级来源，big-M 由真实上下界导出；公式验证（量纲、符号一致性、守恒、边界极限、单调方向、可行性与有界性、数值规模）全部通过；I1 以交换论证加 6470
+  实例数值检查给出条件性结论并据此决定保留 0-1，未引用文献的条件性结论充当定理；比较标准与求解策略已预先固定，未受任何计算结果影响。无 NEEDS_REVISION
+  项，故接受并进入 implementation。
+decided_at: '2026-09-10T11:12:04.640935+00:00'
+assumption_version: assumption_v001

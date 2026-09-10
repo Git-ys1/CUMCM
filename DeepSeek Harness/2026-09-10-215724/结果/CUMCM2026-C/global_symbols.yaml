@@ -1,0 +1,360 @@
+# 全局符号表（CUMCM2026-C）
+# 规则：跨小问同名符号必须同义；带日期下标的符号与单日符号表示同一物理量，仅作用域不同。
+symbols:
+- symbol: t
+  meaning: 每日 10 分钟时段索引
+  unit: '-'
+  kind: index
+  domain: 整数，t = 1..144
+  first_question: prob01
+  note: 时段 t 对应区间 ((t-1)/6 小时, t/6 小时]，末端 t=144 即当天 24:00。
+
+- symbol: d
+  meaning: 日期索引
+  unit: '-'
+  kind: index
+  domain: 整数，d = 1..334（2025-02-01 至 2025-12-31）
+  first_question: prob02
+  note: 问题 1 为单日代表日，无日期索引。
+
+- symbol: h
+  meaning: 光伏预报发布时刻
+  unit: '-'
+  kind: index
+  domain: h ∈ {0, 6, 12, 18}（整点）
+  first_question: prob03
+  note: 每日 0:00、6:00、12:00、18:00 各发布一次未来 24 小时整点预报。
+
+- symbol: k
+  meaning: 预报提前的整点小时数
+  unit: '-'
+  kind: index
+  domain: 整数，k = 1..24
+  first_question: prob03
+  note: 预报 k 小时 = 区间 ((h+k-1):00, (h+k):00] 的小时平均功率预报；已用附件 2 小时均值核验。
+
+- symbol: dt
+  meaning: 调度时段长度
+  unit: h
+  kind: parameter
+  domain: 1/6
+  first_question: prob01
+  note: 10 分钟；功率(kW) × dt = 电量(kWh)。
+
+- symbol: T
+  meaning: 每日调度时段数
+  unit: 个
+  kind: parameter
+  domain: 144
+  first_question: prob01
+  note: 24 小时 × 6 个 10 分钟时段。
+
+- symbol: D
+  meaning: 交付日期数
+  unit: 天
+  kind: parameter
+  domain: 334
+  first_question: prob02
+  note: 2025-02-01 至 2025-12-31；与附件 5 模板行数一致。
+
+- symbol: price_t
+  meaning: 时段 t 的电价（问题 1/2/3 的固定电价曲线）
+  unit: 元/kWh
+  kind: parameter
+  domain: 0.3713 ~ 1.3952（附件 1，全年日均曲线）
+  first_question: prob01
+  note: 问题 2 各天电价相同，故不带日期下标。
+
+- symbol: price_dt
+  meaning: 日期 d 时段 t 的实时波动电价
+  unit: 元/kWh
+  kind: parameter
+  domain: 0.0076 ~ 1.7936（附件 4）
+  first_question: prob04
+  note: 小时均值曲线与 price_t 一致，逐日围绕该形状波动。
+
+- symbol: load_t
+  meaning: 时段 t 的小区负载功率
+  unit: kW
+  kind: parameter
+  domain: 3309.39 ~ 5958.97（附件 1 代表日）
+  first_question: prob01
+  note: 问题 1 电价与负载每天相同。
+
+- symbol: load_dt
+  meaning: 日期 d 时段 t 的小区负载功率
+  unit: kW
+  kind: parameter
+  domain: 1995.72 ~ 7978.88（附件 2）
+  first_question: prob02
+  note: 随时间逐日变化。
+
+- symbol: pv_t
+  meaning: 时段 t 的光伏发电功率（问题 1 使用预测数据）
+  unit: kW
+  kind: parameter
+  domain: 0 ~ 7612.32（附件 1）
+  first_question: prob01
+  note: 附件 1 该列等于 2025 全年实际光伏的日均曲线。
+
+- symbol: pv_dt
+  meaning: 日期 d 时段 t 的光伏发电实际功率
+  unit: kW
+  kind: parameter
+  domain: 0 ~ 10216.20（附件 2）
+  first_question: prob02
+  note: 瞬时最大值超过储能最大充电功率 5000 kW，可能出现弃光。
+
+- symbol: pvfc_dhk
+  meaning: 日期 d 在时刻 h 发布的、对未来第 k 个小时的光伏发电功率预报
+  unit: kW
+  kind: parameter
+  domain: ≥ 0（附件 3）
+  first_question: prob03
+  note: 附件 3 预报与附件 2 实际存在系统性偏差，须在问题 3/4 显式处理。
+
+- symbol: Ecap
+  meaning: 储能设备最大容量
+  unit: kWh
+  kind: parameter
+  domain: 12000
+  first_question: prob01
+  note: 附录 1。
+
+- symbol: Emin
+  meaning: 储电量允许下界
+  unit: kWh
+  kind: parameter
+  domain: 1200
+  first_question: prob01
+  note: 防止过度放电。
+
+- symbol: Emax
+  meaning: 储电量允许上界
+  unit: kWh
+  kind: parameter
+  domain: 10800
+  first_question: prob01
+  note: 防止过度充电。
+
+- symbol: Pmax
+  meaning: 储能最大充放电功率
+  unit: kW
+  kind: parameter
+  domain: 5000
+  first_question: prob01
+  note: 单时段能量上限 Pmax × dt = 833.33 kWh；计量侧待明确（见 A14）。
+
+- symbol: eta_ch
+  meaning: 储能充电效率
+  unit: '-'
+  kind: parameter
+  domain: 0.90
+  first_question: prob01
+  note: 效率作用位置待公式阶段固定（见 A14）。
+
+- symbol: eta_dis
+  meaning: 储能放电效率
+  unit: '-'
+  kind: parameter
+  domain: 0.90
+  first_question: prob01
+  note: 与 eta_ch 数值相同但物理含义不同，禁止合并为同一符号。
+
+- symbol: E0
+  meaning: 初始储电量（2025-01-01 0:00）
+  unit: kWh
+  kind: parameter
+  domain: 6000
+  first_question: prob01
+  note: 附录 1；问题 1 代表日两端取值待明确（见 A1）。
+
+- symbol: alpha_em
+  meaning: 紧急购电电价相对交易时刻电价的倍数
+  unit: '-'
+  kind: parameter
+  domain: 5
+  first_question: prob02
+  note: 供电低于负载时的补购电价系数。
+
+- symbol: alpha_short
+  meaning: 计划购电量高于调整购电量部分的电价系数（违约电价）
+  unit: '-'
+  kind: parameter
+  domain: 0.5
+  first_question: prob03
+  note: 相对交易时刻电价；计费基数与时段粒度待明确（见 A6）。
+
+- symbol: alpha_over
+  meaning: 调整购电量高于计划购电量部分的电价系数
+  unit: '-'
+  kind: parameter
+  domain: 1.5
+  first_question: prob03
+  note: 相对交易时刻电价。
+
+- symbol: q_t
+  meaning: 时段 t 的计划购电量
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob01
+  note: 问题 2 起记 q_dt，含义相同。
+
+- symbol: q_dt
+  meaning: 日期 d 时段 t 的计划购电量
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob02
+  note: 每天 0:00 制定的计划量；价格为 price_t。
+
+- symbol: C_t
+  meaning: 时段 t 的储能充电量
+  unit: kWh
+  kind: decision
+  domain: 0 ≤ C_t ≤ Pmax × dt
+  first_question: prob01
+  note: 与 D_t 不得同时为正；问题 2 起记 C_dt。
+
+- symbol: C_dt
+  meaning: 日期 d 时段 t 的储能充电量
+  unit: kWh
+  kind: decision
+  domain: 0 ≤ C_dt ≤ Pmax × dt
+  first_question: prob02
+  note: 输出时按 4 小时块汇总。
+
+- symbol: D_t
+  meaning: 时段 t 的储能放电量
+  unit: kWh
+  kind: decision
+  domain: 0 ≤ D_t ≤ Pmax × dt
+  first_question: prob01
+  note: 与 C_t 互斥；问题 2 起记 D_dt。
+
+- symbol: D_dt
+  meaning: 日期 d 时段 t 的储能放电量
+  unit: kWh
+  kind: decision
+  domain: 0 ≤ D_dt ≤ Pmax × dt
+  first_question: prob02
+  note: 输出时按 4 小时块汇总。
+
+- symbol: E_t
+  meaning: 时段 t 末的储电量
+  unit: kWh
+  kind: decision
+  domain: Emin ≤ E_t ≤ Emax
+  first_question: prob01
+  note: 含效率的状态转移；问题 2 起记 E_dt。
+
+- symbol: E_dt
+  meaning: 日期 d 时段 t 末的储电量
+  unit: kWh
+  kind: decision
+  domain: Emin ≤ E_dt ≤ Emax
+  first_question: prob02
+  note: 跨日是否连续待明确（见 A2）。
+
+- symbol: u_t
+  meaning: 时段 t 的紧急购电量
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob02
+  note: 电价系数 alpha_em；问题 1 无此变量。
+
+- symbol: u_dt
+  meaning: 日期 d 时段 t 的紧急购电量
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob02
+  note: 表 3/表 4 的填写对象。
+
+- symbol: delta_t
+  meaning: 时段 t 的调整购电量（相对计划量的变化，正号表示增加）
+  unit: kWh
+  kind: decision
+  domain: 无符号约束，且 q_t + delta_t ≥ 0
+  first_question: prob03
+  note: 符号约定须在公式阶段固定并与交付表口径一致（见 A6）；问题 4 沿用。
+
+- symbol: delta_pos_t
+  meaning: 时段 t 调整量高于计划量的部分
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob03
+  note: 按 alpha_over 计费。
+
+- symbol: delta_neg_t
+  meaning: 时段 t 计划量高于调整量的部分
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob03
+  note: 按 alpha_short 计费。
+
+- symbol: curtail_t
+  meaning: 时段 t 的弃光量（若允许）
+  unit: kWh
+  kind: decision
+  domain: ≥ 0
+  first_question: prob01
+  note: 是否允许弃光/余电处理方式待明确（见 A4）；不允许时该变量不引入。
+
+- symbol: y_t
+  meaning: 时段 t 充放电互斥的二进制指示变量
+  unit: '-'
+  kind: decision
+  domain: {0, 1}
+  first_question: prob01
+  note: 用于禁止同时充放电；是否采用连续松弛待求解策略确定（见 A5）。
+
+- symbol: Q_day
+  meaning: 全天计划购电量
+  unit: kWh
+  kind: metric
+  domain: ≥ 0
+  first_question: prob01
+  note: 表 1 与 result*.xlsx 的"全天购电量"。
+
+- symbol: Cost_day
+  meaning: 全天购电费用
+  unit: 元
+  kind: metric
+  domain: ≥ 0
+  first_question: prob01
+  note: 表 1 与 result*.xlsx 的"全天购电费"。
+
+- symbol: Cost_plan
+  meaning: 计划购电费用
+  unit: 元
+  kind: metric
+  domain: ≥ 0
+  first_question: prob02
+  note: 按计划购电量与对应电价结算。
+
+- symbol: Cost_em
+  meaning: 紧急购电费用
+  unit: 元
+  kind: metric
+  domain: ≥ 0
+  first_question: prob02
+  note: 按 alpha_em 倍交易时刻电价结算。
+
+- symbol: Cost_adj
+  meaning: 调整购电相关费用（违约与超额部分合计）
+  unit: 元
+  kind: metric
+  domain: ≥ 0
+  first_question: prob03
+  note: 总费用 = Cost_plan + Cost_em + Cost_adj。
+
+conventions:
+- 所有功率参数单位为 kW，电量单位为 kWh；两者通过 dt = 1/6 h 换算。
+- 附件时间标签 0:10..0:00+1 表示时段右端点，0:00+1 即当天 24:00；交付模板时间段标签存在一个间隔的偏移，须按 A9 统一后再填写。
+- 附件 1 与附件 2/4 的数据口径不同：前者为全年日均代表日，后者为逐日实际值，跨问引用时必须注明来源。
+- 附件 3 的预报为整点小时平均功率，展开到 10 分钟粒度的规则在 prob03 公式阶段固定。

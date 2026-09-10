@@ -1,0 +1,95 @@
+{
+  "checked_at": "2026-09-10T13:45:40.182338+00:00",
+  "directory": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001",
+  "task_id": "ea71568e2cf6c5326ded",
+  "task_status": "succeeded",
+  "automated_scope": [
+    "L1",
+    "L2-finite"
+  ],
+  "automated_status": "PASS_WITH_WARNING",
+  "failures": [],
+  "warnings": [
+    "L3 量纲与公式、L4 常识与文献、L5 跨小问一致性和条件性 L6 实验须由 sanity-checker 审查"
+  ],
+  "quality_status": "degraded_review",
+  "numeric_files": [
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/daily_metrics.csv",
+      "numeric_count": 6346,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 0.0,
+      "maximum": 96996.18376666664
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/emergency_segments.csv",
+      "numeric_count": 7676,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 0.0013833333333333,
+      "maximum": 9443.651433333333
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/metrics.json",
+      "numeric_count": 430,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 0.0,
+      "maximum": 20385219.03615807
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/run_manifest.json",
+      "numeric_count": 6,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 1e-06,
+      "maximum": 20260102.0
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/run_report.json",
+      "numeric_count": 48,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 0.0,
+      "maximum": 20385219.03615807
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv",
+      "numeric_count": 673344,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": -440.8256833,
+      "maximum": 10800.0
+    },
+    {
+      "path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solver_status.json",
+      "numeric_count": 20,
+      "finite": true,
+      "missing_numeric_count": 0,
+      "infinite_numeric_count": 0,
+      "empty_numeric": false,
+      "minimum": 0.0,
+      "maximum": 20260102.0
+    }
+  ],
+  "manual_levels_pending": [
+    "L2-model-constraints",
+    "L3",
+    "L4",
+    "L5",
+    "L6-conditional"
+  ]
+}

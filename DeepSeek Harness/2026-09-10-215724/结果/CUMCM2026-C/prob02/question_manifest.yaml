@@ -1,0 +1,64 @@
+problem_id: CUMCM2026-C
+question_id: prob02
+status: active
+stage: robustness
+dependencies:
+- prob01
+active_assumption_version: 1
+active_formulation_version: 1
+accepted_formulation_version: 1
+consecutive_rejections: 0
+literature_refreshes: 0
+literature_refresh_required: false
+conclusion:
+  conclusion_id: ''
+  version: 0
+  content_hash: ''
+sanity:
+  level_1_4: PASS_WITH_WARNING
+  level_5: pending
+  level_6: not_applicable
+optional_stages:
+  robustness:
+    decision: pending
+    reason: ''
+  ablation:
+    decision: pending
+    reason: ''
+artifacts:
+  problem_understanding: true
+  literature: true
+  assumptions: true
+  formulation: true
+  implementation: true
+  computation: true
+  visualization: true
+  sanity_check: true
+  robustness: false
+  ablation: false
+  cross_question_review: false
+notification:
+  sent: false
+  attempts: 0
+stale:
+  value: false
+  caused_by: []
+accepted_assumption_version: 1
+sanity_history:
+- at: '2026-09-10T13:46:42.483633+00:00'
+  level: level_1_4
+  status: PASS_WITH_WARNING
+  reason: L1-L4 硬门禁全部通过：task ea71568e2cf6c5326ded 终态 succeeded(rc=0)、8 个交付产物非空且 code/input/source_config/config
+    hash 与 run_manifest 裸 sha256 独立重算一致（data/ 4 个附件与 request/attachments/ 逐字节相同）；从
+    solution.csv 独立回代 (C1)(C2)(R)(C3)~(C8) 得计划层平衡 5.00e-07、执行层平衡 5.33e-07、SOC 1.00e-05、终端
+    0.0、储电量/功率越界 0.0、互斥 1.85e-11、执行层互补 0.0、κ 上界越界 0.0、非负 −2.11e-10、整性 0.0、NaN/Inf
+    0（内存精度残差 ≤1.4e-10）；334/334 status=0、max mip_gap=2.01e-16、best_bound=objective
+    证实 I2，弃光 961 173.6810/2 355 847.6824 kWh 证实 I4；Cost_plan=12 570 533.9138 元落在解析界
+    [6 749 147.6122, 16 565 407.2763] 内、Cost_em=4 828 772.4163≤5 815 010.6013、Cost_total=17
+    399 306.3301≥6 660 821.0595、Q_plan=20 385 219.0362≥18 177 074.097，两条能量恒等式闭合；式
+    (E) 展开、电价/负载/光伏与附件 1/2/3 逐位一致，量纲与 big-M=Pbar 由 (C5) 导出自洽，result2.xlsx 三表按 asm-15/asm-17
+    正确映射且与 solution 一致；18 个引用 ID 均 verified+used、关键假设门禁 passed；u>0 的 10 877 时段全部满足
+    pv<pvfc。判定 PASS_WITH_WARNING 仅因 8 项非阻断技术债：W1 formulation §3.7 (D-ex) 符号笔误（实现正确、须在论文前修正）、W2
+    asm-02 口径张力需边界声明与 alt-01 对照、W3 计划口径 vs Cost_total 须双报、W4 asm-06/09 待 robustness
+    端点与效率对照、W5 asm-08/14 边界声明、W6 asm-15 标签映射登记、W7 零弃光预期修正、W8 surplus 负值读数说明。无失败类型、无需回退。
+  failure_type: null

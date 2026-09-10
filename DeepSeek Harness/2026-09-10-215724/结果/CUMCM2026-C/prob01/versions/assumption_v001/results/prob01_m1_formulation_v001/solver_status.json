@@ -1,0 +1,19 @@
+{
+  "solver": "scipy.optimize.milp/HiGHS",
+  "mode": "milp",
+  "status": 0,
+  "success": true,
+  "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+  "objective": 35126.94858928963,
+  "best_bound": 35126.94858928963,
+  "mip_gap": 0.0,
+  "node_count": 1.0,
+  "runtime_seconds": 0.1046228000013798,
+  "num_variables": 864,
+  "num_equalities": 289,
+  "num_inequalities": 288,
+  "pbar_kwh": 833.3333333333333,
+  "seed": 20260101,
+  "feasible_incumbent": true,
+  "incumbent_found": true
+}

@@ -1,0 +1,103 @@
+# prob01 robustness 任务规格（由 robustness-analyst 编写）
+
+# 预注册方案见同目录 plan.md（运行前写定，运行后不得修改）。
+# task_id 由 tasks.compute_task_id 依据下列身份字段计算；本 spec 已通过
+# scripts/compute_dispatcher.py submit 登记（attempt=1，status=queued，supervised worker）。
+
+problem_id: CUMCM2026-C
+question_id: prob01
+stage: robustness
+assumption_version: assumption_v001
+formulation_version: formulation_v001
+
+# 路径一律相对项目根；禁止绝对路径
+working_directory: .
+code_path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+input_path: data/附件1.xlsx
+config_path: config/compute.yaml
+output_directory: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness
+
+command:
+  - .venv/Scripts/python.exe
+  - problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  - --data
+  - data/附件1.xlsx
+  - --output
+  - problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness
+  - --time-limit
+  - "300"
+  - --mip-gap
+  - "0.0001"
+
+# 求解与可复现参数
+seed: 20260101
+timeout_seconds: 900
+backend: local
+solver: scipy.optimize.milp
+solver_backend: HiGHS
+observed_scipy: "1.18.1"
+
+# 已登记任务的身份字段（提交后回填，禁止改写）
+registered_task:
+  task_id: cd463874338e3f8a7f16
+  attempt: 1
+  status_at_submit: queued
+  worker_mode: supervised
+  submitted_at: "2026-09-10T11:59:10.231375+00:00"
+  code_hash: 532c03c01d4dce50a87abb9c48163e1c722cbe31384ff3d8d304108cca352121
+  config_hash: 88a3d11012bf2ebe28404d8d55896db1b7ca0da0337e081978745eacfda5ed0b
+  input_hash: 9784ee20f4315a757806885b5795d01e08da414e6abe40dade3d76f7ff111903
+  preflight: {language: python, compileall: passed, ruff: passed}
+  baseline_task_id: 13bf04ee604e54581fa2
+  baseline_cost_day: 35126.94858928963
+
+# 期望输出（全部写入 output_directory）
+expected_outputs:
+  - file: raw/scenarios.jsonl
+    note: 逐情景原始记录（参数覆盖、MILP/LP 状态、指标、残差、门禁、方向核验）。
+  - file: raw/monte_carlo_samples.csv
+    note: 200 次 ±5% 均匀乘性噪声的逐次样本（price/load/pv 因子、Cost_day、弃光、门禁）。
+  - file: raw/equivalence_check.json
+    note: I1 广义构造器 vs 已接受 build_model/evaluate_solution 的逐项等价性校验。
+  - file: raw/series/
+    note: A1/B1/B2 三个终端端点情景的储电量与充放电轨迹（出图用）。
+  - file: summary.json
+    note: 基线锚定、C1–C6 判据、方向核验、情景表、稳定性 verdict。
+  - file: summary.csv
+    note: 情景汇总表（Cost_day、Δ%、弃光、方向核验）。
+  - file: ci.json
+    note: 假设口径与参数包络、蒙特卡洛 95% 区间与 bootstrap 均值区间。
+  - file: summary.md
+    note: 人类可读汇总与后续聚合动作步骤。
+  - file: figures/*.png
+    note: 敏感性图（tornado、端点、效率/计量、组合压力、端点轨迹；MC 分布图在正式扫描中生成）。
+  - file: figures/figure_index.json
+    note: 图表登记片段，供聚合动作以 --register-figures 登记到题目 figure manifest。
+  - file: solver_status.json
+    note: 扫描级求解状态与 feasible_incumbent 标记（供 task_worker 判定）。
+  - file: run_manifest.json
+    note: 代码/接受实现/输入 sha256、情景数、MC 参数、版本、时限、gap、输出目录。
+
+# 失败条件（任一触发即非零退出，按 failure_class 路由，不直接人工阻塞）
+failure_conditions:
+  - 附件 1 缺失、列名不符、行数≠144、NaN/Inf 或负值、时间标签不符右端点口径（异常 → code_runtime）
+  - 基线锚定失败：|Cost_day - 35126.94858928963| > 1e-6 元（实现或环境变化 → code_runtime / harness_invariant）
+  - 任一情景违反 C1 硬门禁（status≠0、残差超容差、互斥违反、NaN/Inf）（退出码 3 → quality_warning）
+  - 输出目录与 --output 不一致（由 tasks.make_task_spec 在提交前拦截）
+
+# 复现与边界声明
+provenance:
+  written_by: robustness-analyst
+  action_id: act-8b2c66739c044890
+  stage: robustness
+  ran_full_sweep_in_agent: false
+  static_checks:
+    - compileall（通过）
+    - ruff check（All checks passed）
+    - "--probe 小规模探针（5 情景 + 等价性校验 + 完整输出管线，写入 runtime/tmp，不产出正式结果）"
+  probe_result:
+    anchor_ok: true
+    anchor_abs_diff: 7.275957614183426e-12
+    equivalence_max_abs_diff: 0.0
+    C1_pass: true
+  note: 正式扫描（43 情景 + 200 次蒙特卡洛）只能由本隔离 task 的 supervised worker 执行。

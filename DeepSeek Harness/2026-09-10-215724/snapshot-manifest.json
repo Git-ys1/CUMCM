@@ -1,0 +1,958 @@
+{
+  "snapshot_id": "2026-09-10-215724",
+  "captured_at": "2026-09-10T21:57:24+08:00",
+  "source": "AutoMM CUMCM2026-C",
+  "control": "paused",
+  "current_question": "prob02",
+  "current_stage": "robustness",
+  "publication_class": "interim_research_snapshot",
+  "file_count_excluding_manifest": 189,
+  "total_bytes_excluding_manifest": 15748504,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1537,
+      "sha256": "45e9ca95e8f585c192e326eb0582e434cdd97d043629d21f8c8f0f84d011f86d"
+    },
+    {
+      "path": "交付文件/result1.xlsx",
+      "bytes": 8409,
+      "sha256": "dae192594ad0f4ce43fe1fac54529cb81c10733a6da7a05615826756853445dd"
+    },
+    {
+      "path": "交付文件/result2.xlsx",
+      "bytes": 374785,
+      "sha256": "a81a8f9940eee3b547d864e7d36dcce2f2c501727204b35d07076c94dfbab0d7"
+    },
+    {
+      "path": "审查与决策.md",
+      "bytes": 6470,
+      "sha256": "285b2c9e8c66debacb8afdce7989fc8282b6960259a9b01070166cbeeda85e8d"
+    },
+    {
+      "path": "对照依据/C题-建模主线-2.1补充版（评审修订与口径锁定）.md",
+      "bytes": 16382,
+      "sha256": "2fb5505a350d9ddee76f5b3ebbf65c59ed2724436c92e1349c7184443abf7553"
+    },
+    {
+      "path": "对照依据/C题-建模主线与分问模型选型.md",
+      "bytes": 59062,
+      "sha256": "b5c33760c0a0f4e235ca01bc02dfb3644eaab24d5ce06cd3b715b96df58e124c"
+    },
+    {
+      "path": "对照依据/C题-微网与外部电网电力调控策略-题意逐句翻译.md",
+      "bytes": 59720,
+      "sha256": "aedaced5b33c7079cf6b58c76d9b2de9f067d719d094422f6e30e070d44a90c7"
+    },
+    {
+      "path": "状态/experiment_ledger.md",
+      "bytes": 31160,
+      "sha256": "2bebce0dc8ddde6f5c3a7ec75931f3b7e18a7b07de12a96080f5d3bc844ad193"
+    },
+    {
+      "path": "状态/manifests/prob01.yaml",
+      "bytes": 4447,
+      "sha256": "60df8dd5ac0590af0518a6dfcf85d82fd3f12478afe1e73b9cc353c625173d9e"
+    },
+    {
+      "path": "状态/manifests/prob02.yaml",
+      "bytes": 2767,
+      "sha256": "91736f32329ebc30219ab21293873f8f60bd9c34cf8e0321680dee4e7798e353"
+    },
+    {
+      "path": "状态/manifests/prob03.yaml",
+      "bytes": 890,
+      "sha256": "afc0971f3afb29690b0c17d9770cac6a02f67ca5a693de3454844214dfadf167"
+    },
+    {
+      "path": "状态/manifests/prob04.yaml",
+      "bytes": 899,
+      "sha256": "1287a4425fbb86a15073047fa0f5956fea1c908fcff0573a4ef05dbac4061a08"
+    },
+    {
+      "path": "状态/problem_state.json",
+      "bytes": 371,
+      "sha256": "0ae1abfb4c15de4fd9ce8be8fe4e3e7d1b52225f057ac872e08f526df370a8e6"
+    },
+    {
+      "path": "状态/STATE.md",
+      "bytes": 47785,
+      "sha256": "16c427f317d2e13e762fb3d2b150874067678e02468d6531b2f39268c644a6d7"
+    },
+    {
+      "path": "状态/workflow_state.json",
+      "bytes": 48997,
+      "sha256": "566c020ff2b43589225f4b582bd47fdb531a368b604515d72b14f23a880ec933"
+    },
+    {
+      "path": "结果/CUMCM2026-C/citations.yaml",
+      "bytes": 56979,
+      "sha256": "55114871f52f9c9e3571aef5263bc42e479cadde9fabfd210d7b1ada4f793e36"
+    },
+    {
+      "path": "结果/CUMCM2026-C/dependency_graph.yaml",
+      "bytes": 1227,
+      "sha256": "df1752b35520215e9751df5dc4970bd2e13ee5db770f20700b4ae87397e73d4c"
+    },
+    {
+      "path": "结果/CUMCM2026-C/figures.yaml",
+      "bytes": 51649,
+      "sha256": "70edf973fb0b8cba3506dc5e430b5a05bc5e7db2c6b24bfb4407259e0fc54c84"
+    },
+    {
+      "path": "结果/CUMCM2026-C/global_symbols.yaml",
+      "bytes": 9763,
+      "sha256": "d9b9020222c456cfef2d9983753ca7a0faf9759b5228639b4c4773fb211f3800"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/question_manifest.yaml",
+      "bytes": 4447,
+      "sha256": "60df8dd5ac0590af0518a6dfcf85d82fd3f12478afe1e73b9cc353c625173d9e"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/shared/literature.md",
+      "bytes": 20205,
+      "sha256": "c5c5168b3b23b408a74882c8ebcbdf090a79097437aa9c28ee6deb3f20347136"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/shared/literature_pool.yaml",
+      "bytes": 29637,
+      "sha256": "1715bb4419e2fbeacd3378314c52bce8e486d694f3d7790c57fcf038049e8ec4"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/shared/problem_understanding.md",
+      "bytes": 2992,
+      "sha256": "30315ee44302f7ba87a4376d6e32ecd626e9e27550ea1d3a5579af2206039ad5"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/assumptions.md",
+      "bytes": 17164,
+      "sha256": "1811587d7cc80bc4e8833bb6b805f871748ecabb274bd59f5120532fa90b58fc"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/code/prob01_solver.py",
+      "bytes": 27922,
+      "sha256": "4c22a3049b103eb4187b667949dc71f4878337b983eee6a015e82d44c003abaa"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py",
+      "bytes": 44323,
+      "sha256": "f08916d197fbd700ebe06771d51d87ff83925c14cc883638612b64a1698f85a2"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_arbitrage_e99ae14bd7.png",
+      "bytes": 176185,
+      "sha256": "f1ae136ba02fd1713aded030b234994bb3e25af28ca2fd7008aaa5bbf1d6985b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_arbitrage_e99ae14bd7.quality.json",
+      "bytes": 304,
+      "sha256": "30ca81eef3a81b866c41f4498a1a9bfefcf814d5a51febc8ad14d1cbac2913a3"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_cumulative_cost_bfd2cc2a57.png",
+      "bytes": 154003,
+      "sha256": "d78c2e87116811284dbd30d60f5d1c574c40baf3bc107811917c383395ee3c17"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_cumulative_cost_bfd2cc2a57.quality.json",
+      "bytes": 310,
+      "sha256": "eada2e8fbc6f9ac817f7598db07ee23e2e4bcd1e42a4152568a106dec733896b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_day_profile_98e7bc98b7.png",
+      "bytes": 211352,
+      "sha256": "ce1b2e57a6c135a32ac96828d1d34d987effb831ed0935d2e1312492ac463857"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_day_profile_98e7bc98b7.quality.json",
+      "bytes": 306,
+      "sha256": "b07898ffc1735e359356489c25af7d176ff57db62bd454a68dbbbdd8f1956ad5"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_delivery_audit_a2257b367f.png",
+      "bytes": 240217,
+      "sha256": "4d9e57efd6b35215dba42fa56498b358cd83f0302f3b50fe521e2b5713390968"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_delivery_audit_a2257b367f.quality.json",
+      "bytes": 309,
+      "sha256": "6fc00a4aab84f847861bfc361254eb30805d3dc00b1843713e05c92750022a7b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_netload_purchase_ea5dd09d3f.png",
+      "bytes": 184410,
+      "sha256": "3eeb8ed428e5677a30518d9026d5cd6b31f5c907a439f0f292e0911a8ac60b8a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_netload_purchase_ea5dd09d3f.quality.json",
+      "bytes": 311,
+      "sha256": "290fb6ff87ccb20d964c2ba2562f28a4f84865112faf5882a2f7df017e21f12a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_price_soc_phase_ecc766e65c.png",
+      "bytes": 168008,
+      "sha256": "a96114b9045fb935629ba0306d02768dd6d772d8303b12785285f8d065b28665"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_price_soc_phase_ecc766e65c.quality.json",
+      "bytes": 310,
+      "sha256": "08f296b0c477d2b33c9ece1594ccbd574935a988ad907219c05c5618e766fdc3"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_residual_diagnostics_f987826556.png",
+      "bytes": 179325,
+      "sha256": "23e4a354c35df2a829253cde1d136389b9517267dbdbea086ec3b62f7238a33a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_residual_diagnostics_f987826556.quality.json",
+      "bytes": 315,
+      "sha256": "26072f27422c8a7ce0462dee48b648d60707074412b3b2fb6ba9ff81f5486858"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_soc_trajectory_5ff0f90d06.png",
+      "bytes": 152375,
+      "sha256": "57569611d7bedaf06e92bba0ec4d4f0d0d69f935dadc3fd3af2fe3974063c414"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_soc_trajectory_5ff0f90d06.quality.json",
+      "bytes": 309,
+      "sha256": "5e408db5eb3153ad6d14369bfb91ba313a946f42554eb1a41c7d247bb76b194d"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_state_price_trajectory_3d_0608ca3079.png",
+      "bytes": 233023,
+      "sha256": "6ee47e67bf1f83e91e798a083a14c9379650f5e9859702383ec4f8a800ba84ba"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_state_price_trajectory_3d_0608ca3079.quality.json",
+      "bytes": 320,
+      "sha256": "f58d1c01171d3ef42162c65d5b584468666d9f30aee6ce9e03f8c58ea2b4687e"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/visual_review.json",
+      "bytes": 7813,
+      "sha256": "bd2461aa89b64d7cb971a17cbd1cf1cb0b0329701c3a74364b409b0f58f5cf56"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/figures/visual_review_report.md",
+      "bytes": 8499,
+      "sha256": "72b3301aedfd47e0449a367037b382cf888f6239de20b728590060b383f37a69"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formula_validation.md",
+      "bytes": 29,
+      "sha256": "1878261f8cbd4718e46ff62f473b5d2e6754ef3216d9d412fd91f650ab33d2ba"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formulation.md",
+      "bytes": 29,
+      "sha256": "b243b56c8b38ae5047b7d67cc868772a130b32382a13d021ab489ceb03397fbc"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formulations/formulation_v001/formula_validation.md",
+      "bytes": 10525,
+      "sha256": "f06e5931c97fa9ed6f7e4f654bd543b34a92cff74279ef5fde1f723349bd9385"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formulations/formulation_v001/formulation.md",
+      "bytes": 19549,
+      "sha256": "6540780c23fbd4c9b7ef323ba3cfc027501e02b4333b1c196a0ba9859223ee47"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formulations/formulation_v001/formulation.yaml",
+      "bytes": 962,
+      "sha256": "60b6f274678782c60df706981562ffee7352ccd1f2b14c2afaac22324f1c8452"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/formulations/formulation_v001/parameters.yaml",
+      "bytes": 9344,
+      "sha256": "332c41f687103f3574b57debdccd8b10e76a2e575b3b6a3ef9f8341190c88811"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/implementation.md",
+      "bytes": 10635,
+      "sha256": "bd8ecac6509d7eabc0b547c3d6007f19ede4be93ae30bbf987a26fbcbd24302b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/question_summary.md",
+      "bytes": 29,
+      "sha256": "198560957c5f7bd5326e880f2c66958f2a65237c7b3f5c503bdbff2fcd12f8d7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/machine_sanity.json",
+      "bytes": 2694,
+      "sha256": "6a019f7adb5a014567164fab12a6adcce56526802f00bbc1351d8d66eddf64e5"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/metrics.json",
+      "bytes": 2002,
+      "sha256": "a013bd371ecf105a2f9a91c3a4de0efb71fe81f62d17704065f189253cd46c0c"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/result1.xlsx",
+      "bytes": 8409,
+      "sha256": "dae192594ad0f4ce43fe1fac54529cb81c10733a6da7a05615826756853445dd"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/run_manifest.json",
+      "bytes": 786,
+      "sha256": "f71903a2237ce108b1cbf62ad987a7c9fae5171b9039f711e80b960eec24ad27"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/run_report.json",
+      "bytes": 2999,
+      "sha256": "b3e246e5dfa59e6c92745d5a02c29bb502427492d9587cf959e6f7b7df392b92"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/sanity_report.md",
+      "bytes": 679,
+      "sha256": "7218597631324ee4dd727ba99c403d3174a34fc4b95ac66cb84e143aff5637a9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv",
+      "bytes": 13856,
+      "sha256": "7417972c5e16aed2863733c13369cf5762b2d466092b2481d70298c3ebe66745"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.json",
+      "bytes": 15112,
+      "sha256": "8b16108cfaabbbb43e8e417f74a47dc5b61bc454ef4f47a189242ca9e193489d"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solver_status.json",
+      "bytes": 528,
+      "sha256": "ba95bc988f9aa2f5eb92a8fdb6e35c0d50ce14a03efa7c1e818fc1564e846e0b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/ci.json",
+      "bytes": 7167,
+      "sha256": "f57cfae925ea9d1a948549458f159b2cf1b22d0e9643154c4456466df2ca79bb"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/figure_index.json",
+      "bytes": 4082,
+      "sha256": "bf95ee09fc67106ca651d4083a8369edd4ad957cf52c3572f8df22f2cd582d8a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_dispatch_endpoint.png",
+      "bytes": 101197,
+      "sha256": "b08625d4e73ab2e5aefd1b25ae6b54906fe8a8dd2ffbc6c8bd9355897a681399"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_efficiency_metering.png",
+      "bytes": 74285,
+      "sha256": "228de1cc9c4bdbce4ac8b4081e3e35c4749e7fcef3dfb7a994ed14db4c81a063"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_endpoint_sensitivity.png",
+      "bytes": 58515,
+      "sha256": "15f8e2cd1ba9668f9b301d6f7bebeae562c872ae05f75296152591b4989d72bd"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_mc_hist.png",
+      "bytes": 71229,
+      "sha256": "e5a51bd59740cc4c4cd6129c1fb6241dbcdc5b1e824267c5e0db5d47f1ccb17b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_stress_combos.png",
+      "bytes": 69151,
+      "sha256": "cfbb3d9f7819c526e690bd9f9b3804ec6b24b26798e541e41289e8f51c21edc8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/figures/robustness_tornado.png",
+      "bytes": 241553,
+      "sha256": "f4d2cd22074be27fef67b513d090f5d3739dd29b4bc105d23888cfee70c9a452"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/plan.md",
+      "bytes": 11274,
+      "sha256": "10eb4cb18027bd7976b0eccd0ee82ac46907f244a8298dec676d9451b894e224"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py",
+      "bytes": 72798,
+      "sha256": "416a6903105a64313a7216113f912eaee37301bd0415c87bea7ac013b31ac207"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/equivalence_check.json",
+      "bytes": 1622,
+      "sha256": "198a9d2be590effb6fb5f7e7424d120f3980995e53608193e1e46a49dfc006e7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/monte_carlo_samples.csv",
+      "bytes": 22571,
+      "sha256": "0a61ed766f17a45ba3fa8b63b0a320765e092f98df0e6d937b384d4ce3be4f51"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/scenarios.jsonl",
+      "bytes": 112166,
+      "sha256": "97da591e9e6c6f5998c6a8bb2e6c223c568736c4b8dab85d51e04cd106d24f2d"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/series/A1_baseline.json",
+      "bytes": 16898,
+      "sha256": "ae5cea10303f9b3bc307868aaaafb954d99d89cc79671e6e7a5ec812e642e650"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/series/B1_E0_4800.json",
+      "bytes": 16875,
+      "sha256": "59109657aec81cd497e0ba012cdb2c2f362733bac82eab2f7d560432a825b430"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/raw/series/B2_E0_7200.json",
+      "bytes": 16888,
+      "sha256": "f4c2a5c57973d2aba6197d05f9d481ca38745d7c5163d95b2b8349fd51cb5eb9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/retry_note.md",
+      "bytes": 1878,
+      "sha256": "b28b4156f4d06f31d55b3a031b18d3f5988dcfc283b9e721c0095db3f38b71da"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/solver_status.json",
+      "bytes": 308,
+      "sha256": "45c0b39a6dee4df38010bcb60270b9f32045ed2b815f5afdc00620516b0780f7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/summary.csv",
+      "bytes": 6488,
+      "sha256": "327f5b8929b107253a0ddba96677ea6d9e80fbe8603e91bcd9864c9a9e5f39f0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/summary.json",
+      "bytes": 29039,
+      "sha256": "fde8df6e0da3d6fca82fc7a2c4122450ee0d51f6fb8d91e06fe1f54e8e10b01f"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/summary.md",
+      "bytes": 5485,
+      "sha256": "40a1775b06083f16947fdbb62162012c9c5371a188c5ae319e1cf2f58b976f19"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/task_spec.yaml",
+      "bytes": 4656,
+      "sha256": "9decbd7ce4b96e257d109beb86991a90e963d42cb4edae318fe61e01a3a99226"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness/task_spec_v002.yaml",
+      "bytes": 6112,
+      "sha256": "525759ae7a3d1511586f5245cb183af423a1e398fe55ffd4caa5363791c894c9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/ci.json",
+      "bytes": 7167,
+      "sha256": "f57cfae925ea9d1a948549458f159b2cf1b22d0e9643154c4456466df2ca79bb"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/figure_index.json",
+      "bytes": 4142,
+      "sha256": "afa5972e35f1889960548e2cbd2e4a6f10a2eab8a730d8be9374d2934ab0fe72"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_dispatch_endpoint.png",
+      "bytes": 101197,
+      "sha256": "b08625d4e73ab2e5aefd1b25ae6b54906fe8a8dd2ffbc6c8bd9355897a681399"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_dispatch_endpoint.quality.json",
+      "bytes": 316,
+      "sha256": "0005723fa36148eef75f5cfc93dfb0e3133dafeb43167408da1b12415682ce7c"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_efficiency_metering.png",
+      "bytes": 74285,
+      "sha256": "228de1cc9c4bdbce4ac8b4081e3e35c4749e7fcef3dfb7a994ed14db4c81a063"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_efficiency_metering.quality.json",
+      "bytes": 318,
+      "sha256": "21807bfc9f315190935da0c61d537eb54f0f07b19ea91b2ec4ec119771540f25"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_endpoint_sensitivity.png",
+      "bytes": 58515,
+      "sha256": "15f8e2cd1ba9668f9b301d6f7bebeae562c872ae05f75296152591b4989d72bd"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_endpoint_sensitivity.quality.json",
+      "bytes": 319,
+      "sha256": "1e197104da021c276cecdd3e02a7305f34b7b36bc4b392877ece09a55786b448"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_mc_hist.png",
+      "bytes": 71229,
+      "sha256": "e5a51bd59740cc4c4cd6129c1fb6241dbcdc5b1e824267c5e0db5d47f1ccb17b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_mc_hist.quality.json",
+      "bytes": 306,
+      "sha256": "3e1792b97889663ce0fb223e24c2fa999e5159d881857be3457179fb225970c8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_stress_combos.png",
+      "bytes": 69151,
+      "sha256": "cfbb3d9f7819c526e690bd9f9b3804ec6b24b26798e541e41289e8f51c21edc8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_stress_combos.quality.json",
+      "bytes": 312,
+      "sha256": "34f8fc9a1fbc002acb905efe38fca5c167fc78bfce4b4dd99b955f9b9739be3b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_tornado.png",
+      "bytes": 241553,
+      "sha256": "f4d2cd22074be27fef67b513d090f5d3739dd29b4bc105d23888cfee70c9a452"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_tornado.quality.json",
+      "bytes": 307,
+      "sha256": "a60adca7bb87686f7b0af6ae4ccd15f533f9d555e01279aff9c093b307a7cfce"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/equivalence_check.json",
+      "bytes": 1622,
+      "sha256": "198a9d2be590effb6fb5f7e7424d120f3980995e53608193e1e46a49dfc006e7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/monte_carlo_samples.csv",
+      "bytes": 22571,
+      "sha256": "0a61ed766f17a45ba3fa8b63b0a320765e092f98df0e6d937b384d4ce3be4f51"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/scenarios.jsonl",
+      "bytes": 112170,
+      "sha256": "3930f61926e5ffe52b374f0326cf9543d1fca62f1c569a6e813754cba2539dc1"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/series/A1_baseline.json",
+      "bytes": 16898,
+      "sha256": "ae5cea10303f9b3bc307868aaaafb954d99d89cc79671e6e7a5ec812e642e650"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/series/B1_E0_4800.json",
+      "bytes": 16875,
+      "sha256": "59109657aec81cd497e0ba012cdb2c2f362733bac82eab2f7d560432a825b430"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/series/B2_E0_7200.json",
+      "bytes": 16888,
+      "sha256": "f4c2a5c57973d2aba6197d05f9d481ca38745d7c5163d95b2b8349fd51cb5eb9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/run_manifest.json",
+      "bytes": 1305,
+      "sha256": "6d28b52d951a6069fc36953c7cc1aa05dc08aa4539541802501102df08ae2668"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/solver_status.json",
+      "bytes": 308,
+      "sha256": "45c0b39a6dee4df38010bcb60270b9f32045ed2b815f5afdc00620516b0780f7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/stability_conclusion.md",
+      "bytes": 15463,
+      "sha256": "fd00f1cc238020435a92808f7ff7e3151d7da9ff89b2b4a7998bff24b6785eb0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.csv",
+      "bytes": 6488,
+      "sha256": "327f5b8929b107253a0ddba96677ea6d9e80fbe8603e91bcd9864c9a9e5f39f0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json",
+      "bytes": 29038,
+      "sha256": "029faa677f38340eed7ab24d4c317f12bfab1e23c4c3f68b7768786962c1e759"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.md",
+      "bytes": 5485,
+      "sha256": "40a1775b06083f16947fdbb62162012c9c5371a188c5ae319e1cf2f58b976f19"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/sanity_level6_report.md",
+      "bytes": 9257,
+      "sha256": "ca04ecb4d7b2ab42d48dd38d7d39a7bf91ba984a85189c5b8d71a8ec9977bfb2"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/sanity_level6_summary.json",
+      "bytes": 5067,
+      "sha256": "612ce08f2a4a499e44b7226fa0d7cbbc77ead5637e4d26f2297f68fce14a5371"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/sanity_report.md",
+      "bytes": 12479,
+      "sha256": "6702436eeb76cf7d9f1dbd2beefa734d89613162a6e5aae0dac63fd7bbf455f0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/task_spec.yaml",
+      "bytes": 4980,
+      "sha256": "959241c13197cd2b77d5c3a833bb18428bbe05a536996bf7c07517c07485291a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob01/versions/assumption_v001/version.yaml",
+      "bytes": 19397,
+      "sha256": "7495d2b5228001c499f349f083ad80e7113287d245f596d1456015b14e5941f8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/question_manifest.yaml",
+      "bytes": 2767,
+      "sha256": "91736f32329ebc30219ab21293873f8f60bd9c34cf8e0321680dee4e7798e353"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/shared/literature.md",
+      "bytes": 26711,
+      "sha256": "6ab71eb9207f8a84f3d08c231942f154b795f4ac69f785b489facb2963036ac8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/shared/literature_pool.yaml",
+      "bytes": 37373,
+      "sha256": "4ce3aeff69967868ec4bf5f3a75296873043e419c90110a4d8c8c019bdb4547a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/shared/problem_understanding.md",
+      "bytes": 7243,
+      "sha256": "5bc1bece18d3c193f8529a6f343f9cf75ffe4f83bfdac2db87f1e7788a1e52f2"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/assumptions.md",
+      "bytes": 28376,
+      "sha256": "e577687cb8b658a079d590a707a52be75e7df40489ced59127052e09b0b2b9c9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/code/prob02_solver.py",
+      "bytes": 55064,
+      "sha256": "b2e85d61d01a6e8d3abb66827585e55ed31745bbec1725ca6951ac4e72549bb0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py",
+      "bytes": 55596,
+      "sha256": "e8ea29a1bc6458d04b1052f9ba5ceb4942cf8c3c631be177fc5b6027bc36f9ac"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_annual_cost_composition_d335daf2b4.png",
+      "bytes": 183841,
+      "sha256": "a14f20fcf9a44ae43615d222c9a87c022007003df97e0823a08d52bca149e001"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_annual_cost_composition_d335daf2b4.quality.json",
+      "bytes": 318,
+      "sha256": "5f5e65b441b0094fdc2b2fb8e7e25c15ce1e432d9d272eaf259fe12f69b5987a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_curtail_plan_vs_act_23932d4781.png",
+      "bytes": 185836,
+      "sha256": "80027e3f568166c2a2eeade427226f451564826e1bdda4641df0247a3545f4f7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_curtail_plan_vs_act_23932d4781.quality.json",
+      "bytes": 314,
+      "sha256": "6eea3f2d269689692a4f6523ae4123b766c36c3c211955ab39cb1100237c9e2f"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_daily_cost_timeline_50a9548c6f.png",
+      "bytes": 518562,
+      "sha256": "00e9f352e26f629669e2169fcd2dccc95f65cf9dac599a30795ce03e1ce2a406"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_daily_cost_timeline_50a9548c6f.quality.json",
+      "bytes": 314,
+      "sha256": "3f8b3d0e4208dfdbd9c409ba76996e146ba51808eb3c8a45dccc58102d801c86"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_delivery_audit_444465cebd.png",
+      "bytes": 317618,
+      "sha256": "f8ebf78b47f4ec25a7512499b55cad99f848ec661e131231b80951b66ccfa090"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_delivery_audit_444465cebd.quality.json",
+      "bytes": 309,
+      "sha256": "8d83d0e42d11a6f8fabc2357446b0d3b3bd44cf9f9265c4c1253e63975b681ad"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_heatmap_2d_68cd24fd83.png",
+      "bytes": 163944,
+      "sha256": "f0abacc79c6f77fedd43352b77f264fb65e71540c893e235ee30144a5c58de29"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_heatmap_2d_68cd24fd83.quality.json",
+      "bytes": 315,
+      "sha256": "56e7e7dfa76b9e0fe3daf3a9ecfd8b1bf6e0b077777ce98ddd0e3023bb84a490"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_surface_3d_5bbc32f933.png",
+      "bytes": 527340,
+      "sha256": "41c5070271b004ec7dd7327cd9b0f9456f5793ccb986175667cd4f662c642361"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_surface_3d_5bbc32f933.quality.json",
+      "bytes": 315,
+      "sha256": "85da544c6eb7c672f1bda836c6cd861601a77e45b83dba3b292b5d2c51be9b4b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_vs_shortfall_77bce4105a.png",
+      "bytes": 177777,
+      "sha256": "7b3906622203a48f8e5907ff9e5d5cb52c38090322526ca7f95e01ae8c4950be"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_vs_shortfall_77bce4105a.quality.json",
+      "bytes": 317,
+      "sha256": "1de04d7f4525cc8e8021b3469d2a7aabcfe2eb5734f8c1224148a1af1980374c"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_key_dates_execution_c82eafd470.png",
+      "bytes": 295317,
+      "sha256": "7407377f10442091672d275133513784a3bd9df249a0cc216c55858786d59413"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_key_dates_execution_c82eafd470.quality.json",
+      "bytes": 314,
+      "sha256": "3ce02707adf17bf91dfb7886d248fe2e86f67e4f0185fe5147312e96020cff2a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_monthly_cost_stack_761697d6ee.png",
+      "bytes": 123296,
+      "sha256": "fa72e0a7875d6008ccb0e09156f0a1cd633a24091f578b12e4a0c8150e41aa08"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_monthly_cost_stack_761697d6ee.quality.json",
+      "bytes": 313,
+      "sha256": "bb1a2914de5300046eddf5d9e1e415dbe371306402de244126faedceea4edd7b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_residual_diagnostics_a6159fa4ae.png",
+      "bytes": 226855,
+      "sha256": "ee434ca335a865a33b16d64d0208983331941ed1905d869c4fbf8a2e88df3e4e"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_residual_diagnostics_a6159fa4ae.quality.json",
+      "bytes": 315,
+      "sha256": "e530386706ffcb05d80bed9bbab830297d324ff794ce727575498f2453ceb1a9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/visual_review.json",
+      "bytes": 11017,
+      "sha256": "8c09e9e2a2376d80aca645d7cf6f03aec19c8e53a7b9029f631877da2389f5e8"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/figures/visual_review_report.md",
+      "bytes": 10979,
+      "sha256": "9ce814837d4e6a298a55dda308f84a490fa33b0316a0506a60b7a7b1fb2895bd"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formula_validation.md",
+      "bytes": 29,
+      "sha256": "1878261f8cbd4718e46ff62f473b5d2e6754ef3216d9d412fd91f650ab33d2ba"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formulation.md",
+      "bytes": 29,
+      "sha256": "b243b56c8b38ae5047b7d67cc868772a130b32382a13d021ab489ceb03397fbc"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formulations/formulation_v001/formula_validation.md",
+      "bytes": 18807,
+      "sha256": "4e6287318f2f962d6448eb73d50df77d652d093b6ce767cad319194a1de35d48"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formulations/formulation_v001/formulation.md",
+      "bytes": 37715,
+      "sha256": "0c0325310d32bc347f337e23eb86bf4479638219c156166470a90e99d4111f92"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formulations/formulation_v001/formulation.yaml",
+      "bytes": 1424,
+      "sha256": "4935b27c2940e0a773714de25de780ffe5fa244fd59845951172bb12b2d2e785"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/formulations/formulation_v001/parameters.yaml",
+      "bytes": 18697,
+      "sha256": "1cbdc348a1f5ab6de76f0a6a6dea5b54070ffc50d0f70003a5a71ab82dd71c6b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/implementation.md",
+      "bytes": 16456,
+      "sha256": "bf11760c0abb505c618711a98254be735f5f6d5e3f339476425084342162e4e4"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/question_summary.md",
+      "bytes": 29,
+      "sha256": "198560957c5f7bd5326e880f2c66958f2a65237c7b3f5c503bdbff2fcd12f8d7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/daily_metrics.csv",
+      "bytes": 108482,
+      "sha256": "080af08d5c548517a0b9dc5aa38d75d976bb192d7be94caee8e8638a5b4fd372"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/emergency_segments.csv",
+      "bytes": 94723,
+      "sha256": "6883f097000faae688a92524b4146ab93134df914460ef171bc8229aa50c33d9"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/machine_sanity.json",
+      "bytes": 3052,
+      "sha256": "fbce6ecc19512c0744b46c9aa01dd49d81b12cf8a45affed8d39c7cf3a39806b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/metrics.json",
+      "bytes": 15255,
+      "sha256": "512acc901eb219e4cb0a04f63d635220bfd7678b08fd49fa97f8f2bf54c913b4"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/result2.xlsx",
+      "bytes": 374785,
+      "sha256": "a81a8f9940eee3b547d864e7d36dcce2f2c501727204b35d07076c94dfbab0d7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/run_manifest.json",
+      "bytes": 1853,
+      "sha256": "fd70f0386de46c3f5e511a79340bb35238d2a2aaa40406a3059093761d12b8b0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/run_report.json",
+      "bytes": 2547,
+      "sha256": "0982736f84af6d0a939aee326c9fa81c11fead13c97df45bb76fc9271bcaaea7"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/sanity_report.md",
+      "bytes": 679,
+      "sha256": "521dc24e2d4019e93e090578cbc4ba6d34bed0d52cd690dc0b8d08bd06062969"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv",
+      "bytes": 4812078,
+      "sha256": "6be7a94dcbe2b8b6cbf34e9646bf5045d5c71b763e6d9938de32c1f887e9864e"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solver_status.json",
+      "bytes": 800,
+      "sha256": "0048db457ed3f2d934d325958daf54cd6ea4fcc3af8ca0c073e8e9eb20807309"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/sanity_report.md",
+      "bytes": 16607,
+      "sha256": "c17b81fb7068439e198c3f3197fd01f7eec87aeaebe37e839dc362076ddfce8b"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/task_spec.yaml",
+      "bytes": 7449,
+      "sha256": "1c0eb18e0557ec5e2593ec2c94671bfb58b48b550cb8b38d9521e63e82d78d64"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob02/versions/assumption_v001/version.yaml",
+      "bytes": 36426,
+      "sha256": "1c1a6882a3bb353c96477589af043050a08301cdb5ec463e85505327e95ed42d"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob03/question_manifest.yaml",
+      "bytes": 890,
+      "sha256": "afc0971f3afb29690b0c17d9770cac6a02f67ca5a693de3454844214dfadf167"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob03/shared/literature.md",
+      "bytes": 36,
+      "sha256": "8e98e2d18f4a95b1182ea885d8d5a7330f71aa58788efcd1d5590886f21738cf"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob03/shared/literature_pool.yaml",
+      "bytes": 41,
+      "sha256": "2fa14adb4fdd6ff7c0758bdfb1330c63c6d5228c6b1c553cfb2901ca9bc07eac"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob03/shared/problem_understanding.md",
+      "bytes": 3659,
+      "sha256": "4006ad8cd6b64e7d3b739dbd46f58a60aa2b1f1c58e4349ce7234270225be166"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob04/question_manifest.yaml",
+      "bytes": 899,
+      "sha256": "1287a4425fbb86a15073047fa0f5956fea1c908fcff0573a4ef05dbac4061a08"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob04/shared/literature.md",
+      "bytes": 36,
+      "sha256": "b4ffe8b3301372be8b31e0ff897834c71127fc9afb229823826bbcdf8cdf2dc0"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob04/shared/literature_pool.yaml",
+      "bytes": 41,
+      "sha256": "b753168f061c78825951ad54dba0605d15918ba11593c3c2bfca2807074ccbd6"
+    },
+    {
+      "path": "结果/CUMCM2026-C/prob04/shared/problem_understanding.md",
+      "bytes": 2788,
+      "sha256": "125ce97556642082313a72b19ba08ceb18b3a1296f4c76597ec0f4cb8ca4844a"
+    },
+    {
+      "path": "结果/CUMCM2026-C/problem_state.json",
+      "bytes": 371,
+      "sha256": "0ae1abfb4c15de4fd9ce8be8fe4e3e7d1b52225f057ac872e08f526df370a8e6"
+    },
+    {
+      "path": "结果/CUMCM2026-C/problem_understanding.md",
+      "bytes": 19435,
+      "sha256": "348093b6400c36401a8e62b0ba936887618c614ea12d3dc75e068d4882d19289"
+    },
+    {
+      "path": "题目/attachments/C题.pdf",
+      "bytes": 354389,
+      "sha256": "2c098f6ae9dd47ae965aebdec3b9facf3de6c173f999783c1012c08fc5fb9d2d"
+    },
+    {
+      "path": "题目/attachments/README.md",
+      "bytes": 155,
+      "sha256": "dcbb5bcde9b56c413e47b43d43dcb1a4fd3e40a8754fe50cd13e93b371fd41d9"
+    },
+    {
+      "path": "题目/attachments/附件1.xlsx",
+      "bytes": 16003,
+      "sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377"
+    },
+    {
+      "path": "题目/attachments/附件2.xlsx",
+      "bytes": 907128,
+      "sha256": "2e95fd446bfafa0d8c59577b5c2e2ea8b3f1def20dde54a3062556f4da9b4c72"
+    },
+    {
+      "path": "题目/attachments/附件3.xlsx",
+      "bytes": 293526,
+      "sha256": "8a61b06c52bd0d639a1cc37c61a7d9f5b75edcbca718f64c1bd3498ec9f9d843"
+    },
+    {
+      "path": "题目/attachments/附件4.xlsx",
+      "bytes": 409790,
+      "sha256": "20e9c93aeab5e8e21ae4dd15587f9e190f7408692504c1319598461cd654fe71"
+    },
+    {
+      "path": "题目/attachments/附件5/result1.xlsx",
+      "bytes": 13323,
+      "sha256": "28360e0974e7d6065394a8aba4e14a86773ae0036cc7d3ea1b211b515b03d688"
+    },
+    {
+      "path": "题目/attachments/附件5/result2.xlsx",
+      "bytes": 18397,
+      "sha256": "1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47"
+    },
+    {
+      "path": "题目/attachments/附件5/result3.xlsx",
+      "bytes": 265429,
+      "sha256": "c59da470cabd0be23f602c95c8aa9d11ec224a0cdac216b3e1f218e65d006bdc"
+    },
+    {
+      "path": "题目/attachments/附件5/result4-2.xlsx",
+      "bytes": 18397,
+      "sha256": "1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47"
+    },
+    {
+      "path": "题目/attachments/附件5/result4-3.xlsx",
+      "bytes": 265429,
+      "sha256": "c59da470cabd0be23f602c95c8aa9d11ec224a0cdac216b3e1f218e65d006bdc"
+    },
+    {
+      "path": "题目/problem.md",
+      "bytes": 7959,
+      "sha256": "802ee0523e7deb39df82485d69a129953849bba922bfd6ddc0f6d000d28fffca"
+    }
+  ]
+}

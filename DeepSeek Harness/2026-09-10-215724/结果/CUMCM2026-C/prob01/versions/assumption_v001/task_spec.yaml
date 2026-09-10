@@ -1,0 +1,98 @@
+# prob01 computation 任务规格（由 implementation-agent 编写）
+#
+# 重要：implementation 阶段禁止创建正式 task。本文件只是供 computation 阶段的
+# Runner/dispatcher（scripts/compute_dispatcher.py submit → automm.tasks.make_task_spec）
+# 使用的确定性输入；task_id 由 tasks.compute_task_id 根据下列身份字段计算。
+# 本 spec 已于 implementation 阶段做过一次 make_task_spec 干跑（不提交、不产生 runtime/tasks 目录），
+# 预检结果 compileall=passed、ruff=passed。
+
+problem_id: CUMCM2026-C
+question_id: prob01
+stage: computation
+assumption_version: assumption_v001
+formulation_version: formulation_v001
+
+# 路径一律相对项目根；禁止绝对路径
+working_directory: .
+code_path: problems/CUMCM2026-C/prob01/versions/assumption_v001/code/prob01_solver.py
+input_path: data/附件1.xlsx
+config_path: config/compute.yaml
+output_directory: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001
+
+command:
+  - .venv/Scripts/python.exe
+  - problems/CUMCM2026-C/prob01/versions/assumption_v001/code/prob01_solver.py
+  - --data
+  - data/附件1.xlsx
+  - --output
+  - problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001
+  - --mode
+  - both
+  - --seed
+  - "20260101"
+  - --time-limit
+  - "300"
+  - --mip-gap
+  - "0.0001"
+
+# 求解与可复现参数（全部登记，便于任务身份核验）
+seed: 20260101
+timeout_seconds: 900
+backend: local
+solver: scipy.optimize.milp
+solver_backend: HiGHS
+required_scipy: ">=1.11"
+observed_scipy: "1.18.1"
+mode: both          # milp = M1（交付解）；lp = M2 松弛（仅下界与退化诊断）
+time_limit_seconds: 300
+mip_rel_gap: 0.0001
+
+# implementation 阶段干跑得到的身份字段（源代码/配置/输入未变化时应保持一致）
+dry_run:
+  expected_task_id: 13bf04ee604e54581fa2
+  code_hash: c1679061e0725bada20187dc30c3da1d01290c8612f6b1a49963b30f4ca484af
+  config_hash: 88a3d11012bf2ebe28404d8d55896db1b7ca0da0337e081978745eacfda5ed0b
+  source_config_hash: 9f076ef018b3f05c039d1ee56d978ab95c041bd7b425d353e0c16592abb8f0b4
+  input_hash: 9784ee20f4315a757806885b5795d01e08da414e6abe40dade3d76f7ff111903
+  preflight: {language: python, compileall: passed, ruff: passed}
+  code_sha256: 4c22a3049b103eb4187b667949dc71f4878337b983eee6a015e82d44c003abaa
+  data_sha256: 66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377
+
+# 期望输出（全部写入 output_directory；worker 另存 attempt-*.log 于 runtime/tasks/<task_id>/）
+expected_outputs:
+  - file: solver_status.json
+    note: 主模式（milp）状态；含 status/success/message/objective/best_bound/mip_gap/node_count/runtime_seconds/规模/pbar/seed/feasible_incumbent/incumbent_found。task_worker 以此判定 feasible_incumbent。
+  - file: metrics.json
+    note: 交付指标（Cost_day、Q_day、弃光总量、charge/discharge 合计、E_0/E_144、表1 六时段、表2 六块）与全部硬门禁残差。
+  - file: solution.csv
+    note: 144 行逐时段价格/负载/光伏/q/C/D/E/curtail（MILP 解），utf-8-sig。
+  - file: solution.json
+    note: 与 solution.csv 等价的数组形式，便于可视化/sanity 读取。
+  - file: result1.xlsx
+    note: 交付模板；计划购电量 144 行（按 asm-12 行序对应并重写为物理区间标签 0:00-0:10…23:50-24:00），充放电量 6 个 4 小时块 + 0:00/24:00 储电量。
+  - file: run_report.json
+    note: milp/lp 两种模式的汇总与 M1 vs M2 比较指标（lp_le_milp、lp_strictly_better、lp_max_min_charge_discharge）。
+  - file: run_manifest.json
+    note: 代码/输入 sha256、版本、种子、时限、gap、输出目录、生成时间、Python 版本。
+
+# 失败条件（任一触发即让 worker 以非零退出码结束并等待 implementation/资源路由）
+failure_conditions:
+  - 附件 1 缺失、列名不符、行数≠144、出现 NaN/Inf 或负值，或时间标签不符合右端点口径（退出码 2/异常）
+  - 主模式（milp）无可行 incumbent（退出码 3）
+  - 硬门禁违反：平衡/SOC/储电量边界/终端/功率上限/非负性残差 > 1e-6，互斥违反 max_t min(C_t,D_t) > 1e-9，或出现 NaN/Inf（退出码 3）
+  - M1 与 formulation_v001 不一致（例如把 LP 原始解当作交付的 C_t/D_t、或用电池侧计量口径）
+  - 输出目录与 --output 不一致（由 tasks.make_task_spec 在提交前拦截）
+
+# 复现与边界声明
+provenance:
+  written_by: implementation-agent
+  action_id: act-0831b08be2e14c5a
+  stage: implementation
+  ran_full_instance: false
+  static_checks:
+    - compileall（code/ 目录，通过）
+    - ruff check（通过）
+    - CLI --help（通过）
+    - --smoke 小规模合成实例接口探针 T=6（MILP 与 LP 均 status=0、门禁全过，约 3 秒）
+    - make_task_spec 干跑（未提交任何 task）
+  note: 竞赛实例（T=144）的完整 MILP 只能由 computation 阶段的隔离 task 异步执行。

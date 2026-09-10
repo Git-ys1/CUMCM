@@ -1,0 +1,531 @@
+version: assumption_v001
+status: accepted
+created_at: '2026-09-10T12:59:34.250263+00:00'
+parent_version: null
+assumptions:
+- id: asm-01
+  title: 两阶段「0:00 计划—实际补救」主框架
+  statement: 问题2按两阶段结构建模：第一阶段在每天 0:00 用当时可获得的信息确定当日计划购电量 q_dt 与储能充放电计划 (C_dt, D_dt,
+    E_dt)；第二阶段按当日实际负载与实际光伏执行该计划，若微网提供的电能低于小区负载，则缺口按交易时刻电价的 alpha_em=5 倍紧急购电。目标是全年（334
+    天）总购电费用最小。
+  category: 建模框架
+  key: true
+  evidence_type: literature_fact
+  reference_ids:
+  - ref-prob02-trading-morales-2010
+  - ref-prob02-loadshed-zeinalzadeh-2017
+  - ref-prob02-dayaheadintraday-xie-2021
+  - ref-prob02-twostage-ma-2022
+  evidence: F5：日前计划与实时/日内补救属不同信息结构的两阶段问题，可写为线性/两阶段优化（Morales 2010、Xie 2021 摘要级；Ma
+    2022 题录级，仅框架先例）；F3：微网可先确定向主网的净负荷/购电轨迹，实际不足用未供电变量刻画，储能用于降低未供电与弃光风险（Zeinalzadeh
+    2017 摘要级；本题把切负荷改为付费紧急购电）。
+  applicability: 单一微网、单一储能、单一外网结算通道；0:00 一次决策，当日不再调整（问题3 才引入调整与偏差结算）。
+  bias_direction: 若实际运营中允许日内滚动修订计划，两阶段解会高估紧急购电与购电费；若实际信息比本版本假设更差（如负载也需预测），则低估紧急购电。
+  affected_symbols:
+  - q_dt
+  - C_dt
+  - D_dt
+  - E_dt
+  - u_dt
+  - Cost_plan
+  - Cost_em
+  validation_method: formulation 显式写出两阶段的决策时点与信息集；computation 分别报告计划量、实际执行量、逐日紧急购电总量与次数；sanity
+    检查两阶段口径是否被静默改成单阶段完全信息。
+  status: accepted
+- id: asm-02
+  title: 0:00 计划的信息集：当日负载已知 + 当日 0:00 光伏预报（A3）
+  statement: 0:00 制定当日计划时：当日小区负载（附件2「小区负载」）视为已知的刚性需求；光伏发电功率取当日 0:00 发布的未来 24 小时整点预报（附件3），展开到
+    10 分钟时段后作为计划依据。当日实际光伏取附件2「光伏发电实际功率」。附件1 只提供逐日相同的电价曲线，不作为本问的光伏计划依据。因此计划依据的 (load,
+    pv_forecast) 与实际实现的 (load, pv_actual) 在光伏项上可以不同。
+  category: 决策偏好与信息结构
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-voi-chazarra-2016
+  - ref-prob02-pvforecast-mayer-2021
+  - ref-prob02-imbalance-bottieau-2020
+  evidence: F7：光伏功率预测存在可观的模型间误差，预测值不等同于实际值（Mayer 2021 摘要级）；F5/F6：完美信息价值可量化、日前与实时属不同信息结构（Chazarra
+    2016 摘要级）；F2：偏差的方向与结算价格必须分别定义（Bottieau 2020 摘要级）。题面问题3 明示「在每天 0:00、6:00、12:00
+    和 18:00 可获得未来 24 小时整点的光伏发电功率预报」，即 0:00 预报是既有的信息条件；物理上 0:00 亦无法预知当日实际光伏。
+  applicability: 问题2（以及问题4-2 的波动电价重算）；计划与实际的差异只来自光伏预报误差，负载视为已知。
+  bias_direction: 若实际采用完全信息（计划依据附件2 实际光伏），则紧急购电恒为 0、全年费用更低（见 alt-01）；若计划改用附件1 的年度日均预测，则逐日偏差被系统性放大（探针
+    L1 误差均值约 11 056 kWh/日，见 alt-02）。
+  affected_symbols:
+  - q_dt
+  - pvfc_dhk
+  - pv_dt
+  - u_dt
+  - Cost_plan
+  - Cost_em
+  validation_method: formulation 必须显式声明 0:00 信息集与「预报 k 小时→区间」的展开规则；computation 报告附件3
+    0:00 预报与附件2 实际的偏差统计（探针：365 天同日对齐的小时级相对 L1 误差均值 14.89%，优于次日/前日对齐的 16.53%/16.49%，证实同日对齐）；robustness
+    对照 alt-01（完全信息）与 alt-02（典型日预测口径）。
+  status: accepted
+  boundary_note: 题面问题2 的数据清单只列「附件1 的电价和附件2 的数据」，未列附件3；本版本把 0:00 预报纳入计划信息集属口径选择，已在
+    alt-01/alt-02 与本文第 3、6 节登记对照，论文与交付必须显式声明，不得静默采用。
+- id: asm-03
+  title: 供电充足判定与紧急购电口径（A11，只罚不足方向）
+  statement: 逐 10 分钟时段按四源平衡判定供电是否充足：q_dt + u_dt + pv_actual_dt·dt + D_dt − C_dt −
+    curtail_dt ≥ load_dt·dt，其中 u_dt ≥ 0 为紧急购电量；缺口 u_dt = max(0, load_dt·dt + C_dt
+    + curtail_dt − q_dt − pv_actual_dt·dt − D_dt) 按 5×max(price_t) 结算。只对「供电不足」方向计惩罚，计划量超出实际需求的方向不额外罚款（只按计划电价付费）。
+  category: 边界条件与结算口径
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-balancing-vanderveen-2016
+  - ref-prob02-imbalance-bottieau-2020
+  - ref-prob02-marketdesign-hu-2018
+  evidence: F1：电力平衡市场处理日前承诺与实际供需的偏差，偏差的结算规则与惩罚强度是市场设计的核心变量（van der Veen 2016、Hu 2018
+    摘要级）；F2：偏差有正负两个方向，结算规则决定参与者激励（Bottieau 2020 摘要级）。题面硬约束给出「不可低于负载」与「5 倍电价」，属题面给定，不属文献结论。
+  applicability: 问题2 全时段；紧急购电为目标中的惩罚性补救量，不得预设为恒 0，也不得与计划量重复计入供电。
+  bias_direction: 若实际结算对正偏差也计费（如违约电价），本模型会低估费用；反之若紧急电价低于 5 倍，则低估紧急购电的规避动机。
+  affected_symbols:
+  - u_dt
+  - alpha_em
+  - price_t
+  - load_dt
+  - pv_dt
+  - Cost_em
+  validation_method: computation 报告逐日紧急购电总量、发生时段与次数；sanity 独立回代四源平衡残差、检查 u ≥ 0 与 u
+    的计费单价恰为 5×price_t；robustness 对照 alt-01（完全信息下 u 应恒为 0）。
+  status: accepted
+- id: asm-04
+  title: 计划量的结算口径：按计划购电量计费（I3）
+  statement: 计划购电量 q_dt 是结算量而非实际取用量：无论实际取了多少，均按 q_dt 与 price_t 结算计划购电费；计划量高于实际需求的部分不退费，计划量低于实际需求的部分由
+    u_dt 以 5 倍电价补足。总费用 = Σ(Cost_plan + Cost_em)。
+  category: 结算与计费口径
+  key: true
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob02-balancing-vanderveen-2016
+  - ref-prob02-marketdesign-hu-2018
+  evidence: 题面明文：「除紧急购电费用外，其他时间段的购电费用均按计划购电量计算」；F1/F4 提供「日前承诺量 + 偏差惩罚性结算」的机制定位（van
+    der Veen 2016、Hu 2018 摘要级）。计费基数取计划量是题面规定，不属文献结论。
+  applicability: 问题2 的计划购电量与费用统计、表 1/表 2 的「全天购电量」「全天购电费」口径。
+  bias_direction: 若实际按取用量计费，则计划偏保守（多买）不产生额外成本，紧急购电的规避动机会更强；本口径使「计划偏保守/偏激进」具有不对称经济后果。
+  affected_symbols:
+  - q_dt
+  - Cost_plan
+  - Q_day
+  - Cost_day
+  validation_method: formulation 显式写出计划量结算式并在交付中区分「计划量」与「实际取用量」；sanity 检查 C_plan =
+    Σ price_t·q_dt 与 result2.xlsx「全天购电费」口径一致，禁止实现静默改成按实际取用量计费。
+  status: accepted
+- id: asm-05
+  title: 目标函数与求解组织：全年总费用最小、日循环下逐日独立 MILP
+  statement: 目标为全年（334 天）总购电费用最小，即 min Σ_d Σ_t (price_t·q_dt + 5·price_t·u_dt)；在 asm-06
+    的日循环边界下，334 天互不耦合，等价于对每天独立求解一个 144 时段 MILP 后求和。
+  category: 建模框架与求解策略
+  key: true
+  evidence_type: literature_fact
+  reference_ids:
+  - ref-prob02-centralized-tsikalakis-2008
+  - ref-prob02-ems-espin-2020
+  - ref-prob02-storagevalue-sioshansi-2009
+  evidence: F9：集中式 EMS/中央控制器是微网调度的主流架构，并网模式下与主网的功率交换以经济性为目标优化（Tsikalakis 2008、Espin-Sarzosa
+    2020 摘要级）；Sioshansi 2009（题录级）为「按全年逐时段评估储能运行价值」提供口径先例。逐日解耦是日循环边界的数学结果，不依赖文献。
+  applicability: 问题2 的 334 天；若改用连续跨日边界（alt-03），则日间耦合、需整体长时段模型或分解。
+  bias_direction: 逐日独立最优在全年代价上等价于整体最优（日循环下可分离）；若边界实为连续，则逐日独立性会低估可跨日转移的能量价值。
+  affected_symbols:
+  - d
+  - D
+  - q_dt
+  - u_dt
+  - Cost_plan
+  - Cost_em
+  validation_method: formulation 给出可分离性说明；computation 报告逐日 solver status/best bound/gap
+    与全年费用汇总；robustness 对照 alt-03（连续跨日）。
+  status: accepted
+- id: asm-06
+  title: 跨日储能边界取日循环：E_d,0 = E_d,144 = 6000 kWh（A2/A10）
+  statement: 每一天的计划与实际执行均满足 E_d,0 = E_d,144 = 6000 kWh（334 天取同一日循环水平），其中 6000 kWh
+    取自附录1「2025 年 1 月 1 日 0:00 的电量为 6000 kWh」；跨日不做连续传递，即昨日 24:00 储电量不直接作为今日 0:00 初值。
+  category: 边界条件
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-voi-chazarra-2016
+  - ref-prob02-bessmodels-rosewater-2019
+  - ref-prob02-terminal-han-2025
+  evidence: F6：日循环（daily-cycle）边界是储能调度的常见设定（Chazarra 2016 摘要级）；SOC 递推、效率与边界条件是 BESS
+    最优控制模型的核心要素，边界处理会显著影响结果（Rosewater 2019 摘要级；Han 2025 题录级）。题面问题1 明写「储能设备在 0:00 和
+    24:00 的储电量相同」，问题2 未重复该条件，但表 2 仍逐日交付 0:00 与 24:00 储电量；共同取值 6000 来自附录1，不来自文献。
+  applicability: 问题2 全部 334 天；交付范围 2025-02-01~12-31。
+  bias_direction: 若实际为连续跨日，日循环会切断跨日能量转移：在 PV 富余日高估弃光、在 PV 亏缺日高估紧急购电；共同取值偏离 6000 会按峰谷价差方向改变费用。
+  affected_symbols:
+  - E0
+  - E_dt
+  - Emin
+  - Emax
+  - C_dt
+  - D_dt
+  - u_dt
+  - Cost_em
+  validation_method: sanity 检查逐日 E_d,0 与 E_d,144 残差均等于 6000 且逐时段落在 [1200, 10800]；robustness
+    对照 alt-03（连续跨日，1 月为预热期）与日循环水平 E^cyc ∈ {4800, 6000, 7200} 的费用方向与幅度。
+  status: accepted
+- id: asm-07
+  title: 计划执行口径：储能按 0:00 计划执行，紧急购电是唯一补救手段
+  statement: 问题2 的第二阶段按已定计划执行储能充放电 (C_dt, D_dt)（储能不按实际光伏重新调度）；实际负载与实际光伏实现后，若按计划执行的供电仍低于负载，缺口只能由紧急购电
+    u_dt 补足；若实际光伏高于预报，超出部分（扣减计划充电后）以弃光处理。
+  category: 行为规则与执行口径
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-loadshed-zeinalzadeh-2017
+  - ref-prob02-ems-espin-2020
+  - ref-prob02-centralized-tsikalakis-2008
+  evidence: 题面问题2 只给出「制定当天的计划购电策略」，未提供任何日内调整机制；问题3 才引入「根据其他时刻的预报调整购电策略」，故本问的执行层按计划执行。F3：微网按给定的净负荷轨迹执行、实际不足用未供电变量刻画（Zeinalzadeh
+    2017 摘要级）；F9：集中式 EMS 以日前计划驱动运行（Espin-Sarzosa 2020、Tsikalakis 2008 摘要级）。
+  applicability: 问题2；问题3 引入调整机制后本口径失效（由该问假设覆盖）。
+  bias_direction: 不允许储能按实际光伏再调度会放大紧急购电量；若允许实时再调度（alt-06），紧急购电会下降（幅度由 ablation 量化）。
+  affected_symbols:
+  - C_dt
+  - D_dt
+  - E_dt
+  - u_dt
+  - curtail_t
+  - Cost_em
+  validation_method: formulation 明确写「计划层 / 执行层」两套变量与执行规则；computation 分别报告计划充放电量与实际执行的缺口；ablation
+    用 alt-06（实际数据下重新调度储能、计划购电量不变）量化储能灵活性对紧急购电的削减。
+  status: accepted
+- id: asm-08
+  title: 余电以弃光处理，不向外部电网反送（A4，继承 prob01 asm-03）
+  statement: 当光伏出力与放电之和超过负载与充电需求时，超出部分记为弃光 curtail_dt ≥ 0（零收益），不建模向外网售电或反送。
+  category: 边界条件
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-loadshed-zeinalzadeh-2017
+  - ref-prob02-bessmodels-rosewater-2019
+  evidence: 题面与附件均未提供上网电价或反送计量要求；F3 表明弃光是微网调度中的常规建模手段（Zeinalzadeh 2017 摘要级）；Rosewater
+    2019（摘要级）说明 SOC/功率边界与盈余处理必须显式建模。继承 prob01 assumption_v001 的 asm-03（同一设备与同一并网口径）。
+  applicability: 问题2 全部时段与全部 334 天；附件2 全年有 330 天存在单时段正余电（探针：最大单时段余电 6 602.0 kW），弃光量预计显著非零。
+  bias_direction: 若实际存在正上网电价，本模型会低估收益、高估购电费；零收益假设下偏差可忽略。
+  affected_symbols:
+  - curtail_t
+  - q_dt
+  - C_dt
+  - D_dt
+  validation_method: computation 报告全年弃光总量、发生时段与原因（SOC 达上界或单时段功率受限）；robustness 对照「允许零收益反送」并验证总费用不变（alt-04）。
+  status: inherited
+  inherited_from: prob01/assumption_v001/asm-03
+- id: asm-09
+  title: 效率与功率口径：单向 90%、833.33 kWh/10min、并网点侧计量（A14，继承 prob01 asm-04/asm-05）
+  statement: 附录1 的「充放电效率 90%」解释为充电、放电各 0.90（往返约 0.81），效率作用于储电量状态转移；5000 kW 为充/放电功率上限，折算为每
+    10 分钟能量上限 5000/6 ≈ 833.33 kWh；C_dt 与 D_dt 统一取并网点侧电量口径，限额、状态转移与功率平衡使用同一口径。
+  category: 机理简化与单位口径
+  key: true
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-bessmodels-rosewater-2019
+  - ref-prob02-milpdegr-minh-2024
+  evidence: Rosewater 2019（A/摘要级）指出 SOC 递推、效率与边界条件是 BESS 最优控制模型的核心要素，建模选择会显著影响结果；Minh
+    2024（题录级）只作 MILP 框架先例。附录1 只写「效率 90%」与「5000 kW」，单侧/往返与计量侧题面未指明，属 project_assumption。继承
+    prob01 assumption_v001 的 asm-04 与 asm-05。
+  applicability: 问题2 全部时段；恒定效率，与功率、温度、SOC 无关；10 分钟均匀离散。
+  bias_direction: 若 90% 实为往返效率（单侧 0.9487），当前口径高估损耗、使费用偏高；若 5000 kW 实为电池侧口径而按并网点侧解释，则可行域被高估约
+    1/eta。
+  affected_symbols:
+  - eta_ch
+  - eta_dis
+  - Pmax
+  - C_dt
+  - D_dt
+  - E_dt
+  validation_method: sanity 检查 0 ≤ C_dt, D_dt ≤ 833.33、SOC 递推残差与量纲一致性；robustness 沿用
+    prob01 的口径对照（往返 0.9 与电池侧计量）并报告费用差异方向上是否与 prob01 一致。
+  status: inherited
+  inherited_from: prob01/assumption_v001/asm-04, prob01/assumption_v001/asm-05
+- id: asm-10
+  title: 充放电互斥（C_dt·D_dt = 0，继承 prob01 asm-06）
+  statement: 同一时段不允许同时充电与放电，以 0-1 指示变量与 big-M（M = 833.33，由题面功率上限导出）作为硬约束进入模型。
+  category: 物理约束
+  key: true
+  evidence_type: literature_fact
+  reference_ids:
+  - ref-prob02-bessmodels-rosewater-2019
+  - ref-prob02-milpdegr-minh-2024
+  evidence: 同时充放电物理不可实现，必须显式排除；Rosewater 2019（A/摘要级）说明电池最优控制模型须显式表示 SOC 递推与功率边界，Minh
+    2024（A/题录级）给出 MILP 微网调度框架先例。本问文献池**没有**专门的互补性/互斥来源（prob01 的互补性论文不在 prob02 池内），故定量
+    big-M 只由题面功率上限导出，不引文献数值。
+  applicability: 问题2 每个 144 时段 MILP；big-M 必须由 C_dt、D_dt 的真实上下界 [0, 833.33] 导出。
+  bias_direction: 不施加互斥时线性松弛可能出现同时充放的虚假解，在 eta < 1 时低估购电费；该虚假解不能默认无害。
+  affected_symbols:
+  - C_dt
+  - D_dt
+  - y_t
+  - q_dt
+  validation_method: computation 检查 min(C_dt, D_dt) = 0（容差 1e-9）与求解器整数性状态；若采用松弛路线必须先给出成立条件或反例，不得直接照搬
+    prob01 的数值证据。
+  status: inherited
+  inherited_from: prob01/assumption_v001/asm-06
+- id: asm-11
+  title: 储能容量与运行电量区间
+  statement: 运行电量区间为 1200 ≤ E_dt ≤ 10800 kWh；最大容量 12000 kWh 不作为运行上界。
+  category: 边界条件
+  key: false
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob02-bessmodels-rosewater-2019
+  evidence: 附录1 明确规定最大容量 12000 kWh 与允许区间 1200~10800 kWh（防过充过放）。
+  applicability: 全部时段，含每日 t=0 与 t=144。
+  bias_direction: 若误用 12000 kWh 作运行上界，会放宽可行域并低估费用、减少弃光。
+  affected_symbols:
+  - Ecap
+  - Emin
+  - Emax
+  - E_dt
+  validation_method: sanity 逐时段检查 1200 ≤ E_dt ≤ 10800 的越界计数与残差。
+  status: accepted
+- id: asm-12
+  title: 10 分钟时段均值与整点预报的展开口径
+  statement: 每个 10 分钟时段内功率视为恒定；电量 = 功率 × dt（dt = 1/6 h）；附件3 的「预报 k 小时」为整点小时平均功率，展开到
+    10 分钟时段时在同一小时内取相同值；负载按 load_dt 刚性满足，光伏按预报/实际值出力且不可超发。
+  category: 数值近似与数据生成
+  key: false
+  evidence_type: project_assumption
+  reference_ids:
+  - ref-prob02-bessmodels-rosewater-2019
+  evidence: 附件2/附件4 为 10 分钟间隔数据，附件3 为整点小时预报；交付模板以 10 分钟与 4 小时块给出电量（kWh）。整点预报到 10 分钟的展开规则题面未规定，属
+    project_assumption（已用附件2 小时均值核验附件3 的整点口径）。
+  applicability: 问题2 的 10 分钟离散热与预报展开。
+  bias_direction: 时段内恒值会平滑掉 10 分钟内的波动，可能低估瞬时越限风险；同一小时内取均值会平滑掉小时内的光伏起伏。
+  affected_symbols:
+  - dt
+  - T
+  - pvfc_dhk
+  - pv_dt
+  - load_dt
+  validation_method: formulation 固定展开规则；sanity 检查四源平衡残差（kWh 口径）、量纲一致性，以及交付中 4 小时块汇总等于所含
+    24 个时段的代数和。
+  status: accepted
+- id: asm-13
+  title: 附件1 电价口径（A13）
+  statement: 本问电价按题面取附件1 的全年日均代表日曲线 price_t，334 天逐日相同；不得使用附件4 的逐日波动电价（属问题4）。
+  category: 数据生成与适用范围
+  key: false
+  evidence_type: problem_statement
+  reference_ids:
+  - ref-prob02-storagevalue-sioshansi-2009
+  evidence: 题面问题2 明写「每天的电价相同」「根据附件1 中的电价」；problem-decomposer 已核验附件1 为 2025 全年日均代表日曲线。Sioshansi
+    2009（题录级）仅作全年逐时段评估的口径先例。
+  applicability: 问题2 全时段；论文须注明该曲线的统计含义。
+  bias_direction: 若实际电价逐日波动（附件4），用日均曲线会低估/高估特定日的费用与储能套利空间（由问题4 承担）。
+  affected_symbols:
+  - price_t
+  - Cost_plan
+  - Cost_em
+  validation_method: formulation 明确 price_t 来源；sanity 抽查 price_t 与附件1 逐时段一致且不随 d 变化；交付文件中不出现附件4
+    的价格。
+  status: accepted
+- id: asm-14
+  title: 不引入电池退化与循环寿命成本（继承 prob01 asm-10）
+  statement: 目标函数只含计划购电费与紧急购电费，不加入电池退化成本、循环次数惩罚或弃光惩罚；该省略须在论文边界章节声明。
+  category: 决策偏好
+  key: false
+  evidence_type: team_decision
+  reference_ids:
+  - ref-prob02-aging-collath-2022
+  evidence: F10：忽略电池老化会高估储能运行收益/低估成本，须在边界中声明（Collath 2022 摘要级）；本题未提供循环/老化/温度数据，退化模型不可辨识。继承
+    prob01 assumption_v001 的 asm-10。
+  applicability: 问题2 主模型；退化影响作为边界讨论。
+  bias_direction: 忽略退化会高估频繁充放电的经济性；在本问日循环边界下主要体现为日内套利被高估、紧急购电规避被高估。
+  affected_symbols:
+  - Cost_plan
+  - Cost_em
+  - C_dt
+  - D_dt
+  validation_method: 论文边界章节定量引用退化影响量级并说明未建模理由；不得为贴合期望结果而事后加入。
+  status: inherited
+  inherited_from: prob01/assumption_v001/asm-10
+- id: asm-15
+  title: 时间标签口径统一（A9，继承 prob01 asm-12 并扩展到 result2.xlsx）
+  statement: 附件2/附件4 的时间标签为时段右端点（0:10 … 0:00+1），第 t 列对应区间 ((t-1)/6, t/6]；附件5 result2.xlsx
+    的「计划购电量」模板标签整体后移一个间隔（首行 0:10-0:20，末行 0:00-0:10+1），且含字面笔误 `7:0-7:10`。交付按列序一一对应填写（模板第
+    t 列 = 第 t 时段），并在交付文件中统一重写为「0:00-0:10 … 23:50-24:00」；紧急购电时间段按实际物理区间标注。
+  category: 数据口径
+  key: false
+  evidence_type: project_assumption
+  reference_ids: []
+  evidence: 附录2 明确「表中的 0:00+1 表示第二天凌晨 0:00，即当天 24:00」，故标签为右端点；result2.xlsx 模板末列为 0:00-0:10+1（超出
+    24 小时）可证实整体偏移一个间隔；四个模板同一位置均存在字面笔误 7:0-7:10。此歧义无文献可援引。继承 prob01 assumption_v001
+    的 asm-12。
+  applicability: result2.xlsx 三个工作表、论文表 1/表 2/表 3 的指定时段与指定日期取值。
+  bias_direction: 若按标签字面逐行对齐，全部 144 个时段整体错位一个间隔（10 分钟），表 1/表 2 的指定时段取值、全天购电量与费用、紧急购电时段均会取错。
+  affected_symbols:
+  - q_dt
+  - C_dt
+  - D_dt
+  - u_dt
+  - Q_day
+  - Cost_day
+  validation_method: 交付前核对表 1 的 10:00-10:10 取自第 61 列、表 2 的 0:00-4:00 等于前 24 个时段之和；抽查
+    3 个时段做标签-区间一致性检查；在全天汇总处验证 144 列齐全无重复；映射关系须写入论文与交付说明。
+  status: inherited
+  inherited_from: prob01/assumption_v001/asm-12
+- id: asm-16
+  title: 交付范围与日循环水平初值（A10）
+  statement: 交付范围为 2025-02-01~12-31 共 334 天（与附件5 result2.xlsx 模板一致）；日循环水平取 E^cyc =
+    6000 kWh（来自附录1 的 2025-01-01 0:00 电量）。1 月数据不进入交付；若采用连续跨日口径，1 月作为预热期（见 alt-03）。
+  category: 数据生成与交付口径
+  key: false
+  evidence_type: project_assumption
+  reference_ids: []
+  evidence: 题面与附件2 覆盖 2025-01-01~12-31，而附件5 result2.xlsx 的行范围是 2025-02-01~12-31（334
+    天）；题面未说明排除 1 月的原因，属交付口径选择。日循环水平取值基于附录1。
+  applicability: result2.xlsx 的行数与论文统计口径。
+  bias_direction: 若实际应包含 1 月或采用连续口径，则交付行数与 2 月的初值会不同，进而影响 2 月起每日的费用与紧急购电量。
+  affected_symbols:
+  - d
+  - D
+  - E0
+  - Q_day
+  - Cost_day
+  validation_method: sanity 检查交付行数恰为 334 且日期连续覆盖 2025-02-01~12-31；robustness 用 alt-03（连续跨日、1
+    月预热）对照 2 月起结果的差异。
+  status: accepted
+- id: asm-17
+  title: 紧急购电的时段粒度与数值处理
+  statement: 紧急购电逐 10 分钟时段判定；交付到「紧急购电量」工作表时，按表 4 的「日期 + 时间段 + 购电量」格式登记，同一日期内连续的紧急购电时段合并为一段；|u|
+    < 1e-9 的数值噪声归零；时间段标签按 asm-15 统一。
+  category: 数值近似与交付规则
+  key: false
+  evidence_type: team_decision
+  reference_ids: []
+  evidence: 题面表 4 给出「日期 + 时间段 + 购电量」的填写示例并允许一个日期多段；题面未规定合并阈值与噪声清零规则，属阶段内 team_decision（与
+    prob01 对 |y|<1e-9 清零的建议一致）。
+  applicability: result2.xlsx「紧急购电量」工作表与论文表 3。
+  bias_direction: 合并阈值或清零规则不一致会使表 3 的分段数与购电量合计数与逐时段明细不闭合。
+  affected_symbols:
+  - u_dt
+  - Cost_em
+  validation_method: sanity 检查表 3 的分段合计等于逐时段 u_dt 之和（容差 1e-6），并核对 4 个指定日期均给出结果（含 0
+    的显式登记）。
+  status: accepted
+formulation_versions:
+- formulation_v001
+active_formulation: formulation_v001
+accepted_formulation: formulation_v001
+tasks: []
+sanity_status: pending
+conclusion_id: ''
+conclusion_version: 0
+conclusion_hash: ''
+problem_id: CUMCM2026-C
+question_id: prob02
+scope: 问题2：每天电价相同、负载与光伏逐日逐时段变化，0:00 制定当日计划购电策略，供电不足按 5 倍电价紧急购电；交付 2025-02-01~12-31
+  共 334 天
+rejected_alternatives:
+- id: alt-01
+  title: 完全信息确定性口径（计划依据附件2 的实际光伏）
+  statement: 0:00 计划直接以当日实际负载与实际光伏为依据（题面数据清单的字面读法）。
+  status: rejected
+  reason: 在该口径下计划量可自由覆盖负载，最优解必有 u ≡ 0，题面要求的「紧急购电」（表 3 与 result2.xlsx 工作表）退化为空，且与题面问题3「0:00
+    预报驱动计划」的信息结构不一致。保留为 robustness 的「完美信息」对照，用于量化预测误差造成的费用上界（信息价值）。
+  reference_ids:
+  - ref-prob02-voi-chazarra-2016
+  - ref-prob02-pvforecast-mayer-2021
+- id: alt-02
+  title: 典型日预测口径（计划依据附件1 的光伏发电预测功率）
+  statement: 0:00 计划以附件1 的年度日均光伏曲线作为预测，实际为附件2。
+  status: rejected
+  reason: 该预测是全年日均曲线而非逐日预报，逐日偏差被系统性放大（只读探针：与实际的 L1 误差均值约 11 056 kWh/日、最大 21 122 kWh/日，远大于附件3
+    0:00 预报的 8 174 kWh/日），会使紧急购电量级失真并掩盖预报信息的作用。保留为对照情景。
+  reference_ids:
+  - ref-prob02-pvforecast-mayer-2021
+- id: alt-03
+  title: 连续跨日储能边界（E_d,0 = E_d-1,144，1 月为预热期）
+  statement: 储能跨日连续传递，2025-01-01 0:00 取 6000 kWh，2025-02-01 起交付。
+  status: rejected
+  reason: 题面问题2 未重复问题1 的两端相等条件，连续口径可解释 A10（为何自 2 月 1 日起交付）；但它需要额外指定终端条件（否则出现自由终端能量的伪解），且使
+    334 天耦合、与题面「每天 0:00 制定当天计划」的逐日决策表述不如日循环自然。保留为 robustness 对照。
+  reference_ids:
+  - ref-prob02-terminal-han-2025
+  - ref-prob02-bessmodels-rosewater-2019
+- id: alt-04
+  title: 允许向外部电网反送并获得上网电价
+  statement: 引入余电上网变量与上网电价收益。
+  status: rejected
+  reason: 题面与附件均未提供上网电价或反送计量要求，参数不可辨识；交付表只统计购电量。零收益情形下与 asm-08 目标等价。
+  reference_ids:
+  - ref-prob02-loadshed-zeinalzadeh-2017
+- id: alt-05
+  title: 引入电池退化/循环寿命成本
+  statement: 在目标中加入与充放电循环或吞吐量相关的退化成本项。
+  status: rejected
+  reason: 本问未提供循环次数、老化与温度工况，退化模型不可辨识（Collath 2022 摘要级仅支持「忽略退化会高估收益」的定性结论）；目标应贴合题面「购电费用」。
+  reference_ids:
+  - ref-prob02-aging-collath-2022
+- id: alt-06
+  title: 储能实时再调度（实际数据下重新优化 C/D，计划购电量不变）
+  statement: 第二阶段以实际负载/光伏重新优化储能充放电，q_dt 仍按计划结算。
+  status: rejected
+  reason: 题面问题2 未提供任何日内调整机制（问题3 才引入），按计划执行才是本问的「计划策略」；但储能是灵活资源，该口径可量化储能灵活性对紧急购电的削减，保留为
+    ablation 对照（不得进入主模型）。
+  reference_ids:
+  - ref-prob02-loadshed-zeinalzadeh-2017
+  - ref-prob02-ems-espin-2020
+- id: alt-07
+  title: 自由终端储电量（不施加 E_d,144 = E_d,0）
+  statement: 去掉每日两端储电量相等的约束，允许自由终端。
+  status: rejected
+  reason: 自由终端会产生「把储能量留到次日/透支储能」的伪解（首日几乎放空至 1200 kWh），需额外指定终端价值或年循环条件才能闭合；与 asm-06
+    的日循环口径冲突，仅作不可选记录。
+  reference_ids:
+  - ref-prob02-terminal-han-2025
+conflicts:
+  blocking: []
+  resolutions:
+  - asm-02（信息集）× asm-07（执行口径）必须成对使用：asm-02 决定第一阶段计划依据（0:00 预报），asm-07 决定第二阶段按计划执行、缺口由
+    u 补足；二者共同定义「计划—补救」链，不得只取其一（只取 asm-02 而允许实时重调度会得到 alt-06，只取 asm-07 而用实际值做计划会得到
+    alt-01）。
+  - asm-03（缺口判定）× asm-04（结算口径）必须分别实现：缺口按实际数据判定，费用按计划量 + 紧急量结算；不得把 u 计入 q 或反过来。
+  - asm-06（日循环）× asm-16（交付范围）一致：日循环水平取 6000 kWh，334 天同值，1 月不进入交付。
+  - asm-09（效率/计量侧）× asm-06（SOC 递推）必须同口径：并网点侧计量下 E_dt = E_d,t-1 + eta_ch·C_dt − D_dt/eta_dis，功率平衡中
+    D_dt 直接参与；两条口径不得混用。
+  - asm-08（弃光）× asm-12（时段离散）：弃光在 10 分钟粒度判定，交付时按 4 小时块汇总。
+  - asm-05（逐日独立）× asm-06（日循环）：逐日独立最优在日循环下等价于全年最优，不得据此省略「全年费用汇总」与逐日 traceability。
+  with_prior_conclusions:
+  - prob01 结论（conclusion_id = prob01-conclusion-v001, version = 1, content_hash =
+    6a2546c6d394276bea9f3c389f456c4b102988fdac542d1d7dbc5131adecd820）作为本问的设备层基线与费用对照；本版本沿用
+    prob01 的运行区间、单向效率、并网点侧计量与弃光不反送口径（asm-08/asm-09/asm-11），未修改其数值含义。
+  - prob01 的 asm-07（单日代表日、不外推全年）在本问失效：本问使用附件2 逐日实际数据，结论范围改为 2025-02-01~12-31 的 334
+    个实际日，不再以代表日口径陈述。
+  - prob01 的 asm-02（终端共同取 6000 kWh）在本问被 asm-06 替代为「每日日循环水平 6000 kWh」：单日固定终端升级为逐日日循环，含义不同，不得混用两种表述。
+  - prob01 的 asm-11（静态日前信息结构、0:00 一次决策）在本问保留（asm-01/asm-07），但其信息集由「电价、负载与光伏预测已知」细化为
+    asm-02 的「负载已知 + 0:00 光伏预报」。
+  with_problem_constraints:
+  - 全部假设均不削弱题面硬约束：供电充足（由 asm-03 的 u 保证可满足）、储电量区间 1200~10800、单时段能量 ≤ 833.33 kWh、充放电互斥、计划量按计划电价结算、紧急量按
+    5 倍电价结算。
+  - asm-02 与题面问题2 的数据清单（只列附件1 电价与附件2 数据）存在口径张力，已在 asm-02 的 boundary_note 与 alt-01/alt-02
+    显式登记，须由论文与交付说明声明，不得静默采用。
+coverage:
+  A2: asm-06
+  A3: asm-02
+  A4: asm-08
+  A5: asm-05, asm-10
+  A9: asm-15
+  A10: asm-06, asm-16
+  A11: asm-03, asm-17
+  A13: asm-13
+  A14: asm-09
+open_items:
+- I1（agent_inference，待 computation 证实）：紧急购电量由 0:00 预报误差驱动。只读探针（runtime/tmp/prob02_alignment_probe.py）显示附件3
+  的 0:00 预报与同日实际的小时级相对 L1 误差均值 14.89%（365 天），4 个交付日期（2025-03-20 / 06-21 / 09-23 /
+  12-21）的预报-实际光伏差（正缺口）分别约 6 059 / 3 618 / 3 343 / 2 007 kWh；全年有 163 天实际净负荷高于预报净负荷。computation
+  必须给出逐日 u 总量、发生时段与次数，以及 4 个指定日期的表 3 数值；若某日 u=0 须显式登记为 0 而非留空。
+- I2（agent_inference，待 computation 证实）：334 个独立的 144 时段 MILP（每个含 144 个 0-1）+ 334 次第二阶段缺口评估，规模与
+  prob01 同量级，精确求解应可行；须以 solver status、best bound 与主问题的 mip_gap 证实。若超时或 gap 缺失，按 PASS_WITH_WARNING
+  保留技术债说明，不得直接人工阻塞。
+- I3（口径推断，待 formulation/sanity 检查）：「按计划购电量计算」使 q_dt 成为结算量；计划偏保守（多买）与偏激进（少买）具有不对称成本（1×
+  vs 5×）。formulation 必须显式写出计划量结算式，sanity 必须核对 result2.xlsx 的「全天购电费」与 Σ price_t·q_dt
+  一致，禁止实现静默改成按实际取用量计费。
+- I4（待 computation 报告）：实际光伏高于预报的时段会出现弃光（附件2 全年 330 天存在单时段正余电，最大单时段余电 6 602.0 kW），实际光伏低于预报的时段（按预报充电/放电的计划被执行）会出现紧急购电；两者都必须按段报告时段与原因。
+- I5（待 formulation 固定）：「预报 k 小时」与区间的对应关系（第 k 个整点小时区间）、同日对齐的核验（探针已给出同日/次日/前日相对误差 14.89%/16.53%/16.49%，支持同日对齐），以及将整点预报展开到
+  10 分钟时段的规则；该口径错误会系统性改变 q_dt 与 u_dt。
+decision_reason: assumption_v001 覆盖 prob02 全部待裁定歧义（A2/A3/A4/A5/A9/A10/A11/A13/A14）：10
+  条关键假设均绑定本问 verified+used 来源，引用门禁 check_key_assumptions 实测通过；A3 固定为「负载已知 + 0:00 光伏预报
+  → 实际由附件2 实现」的两阶段口径，使题面要求的紧急购电机制非平凡，并把完全信息（u≡0）与典型日预测两种反面口径登记为 alt-01/alt-02 对照；A2
+  取日循环 6000 kWh 以闭合边界并保持 334 天可解；无阻塞冲突，取值与口径选择一律显式标为 project_assumption/problem_statement，未伪装成文献事实。
+decided_at: '2026-09-10T13:11:09.193910+00:00'

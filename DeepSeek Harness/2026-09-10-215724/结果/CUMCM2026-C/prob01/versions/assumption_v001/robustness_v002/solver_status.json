@@ -1,0 +1,13 @@
+{
+  "solver": "scipy.optimize.milp/HiGHS",
+  "stage": "robustness",
+  "scenario_count": 43,
+  "milp_optimal_count": 43,
+  "gate_failure_scenarios": [],
+  "max_mip_gap": 0.0,
+  "verdict": "fragile",
+  "anchor_ok": true,
+  "feasible_incumbent": true,
+  "incumbent_found": true,
+  "seed": 20260101
+}

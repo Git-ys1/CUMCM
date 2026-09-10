@@ -1,0 +1,255 @@
+{
+  "baseline_cost_day": 35126.948589289634,
+  "anchor_ok": true,
+  "groups": {
+    "A1_baseline": {
+      "delta_pct": 0.0
+    },
+    "A2_no_storage": {
+      "delta_pct": 0.3679539077726197
+    },
+    "A3_meter_battery_side": {
+      "delta_pct": -0.0007225516634222212
+    },
+    "A4_allow_zero_revenue_export": {
+      "delta_pct": 0.0
+    },
+    "A5_lp_relaxation": {
+      "delta_pct": 0.0
+    },
+    "B1_E0_4800": {
+      "delta_pct": 0.00017887501151299517
+    },
+    "B2_E0_7200": {
+      "delta_pct": -0.00012763230264481904
+    },
+    "B3_Emax_9600": {
+      "delta_pct": 0.02574720828477895
+    },
+    "B4_Emax_12000": {
+      "delta_pct": -0.022338339328054443
+    },
+    "B5_Emin_1800": {
+      "delta_pct": 0.01165802319243273
+    },
+    "C1_roundtrip_0.90": {
+      "delta_pct": -0.0377332247832012
+    },
+    "C2_eta_0.855": {
+      "delta_pct": 0.0376057008308071
+    },
+    "C3_eta_0.945": {
+      "delta_pct": -0.0349782384478277
+    },
+    "C4_eta_0.81": {
+      "delta_pct": 0.0786091773593353
+    },
+    "C5_eta_0.99": {
+      "delta_pct": -0.06922039287450847
+    },
+    "D1_Pmax_-10pct": {
+      "delta_pct": 0.0008412732901661561
+    },
+    "D2_Pmax_-20pct": {
+      "delta_pct": 0.003442437079891794
+    },
+    "D3_Pmax_+10pct": {
+      "delta_pct": -0.0006575229788653901
+    },
+    "D4_Pmax_+20pct": {
+      "delta_pct": -0.001242781139877492
+    },
+    "E_price_-5pct": {
+      "delta_pct": -0.050000000000000065
+    },
+    "E_price_-10pct": {
+      "delta_pct": -0.10000000000000002
+    },
+    "E_price_-20pct": {
+      "delta_pct": -0.20000000000000004
+    },
+    "E_price_+5pct": {
+      "delta_pct": 0.050000000000000065
+    },
+    "E_price_+10pct": {
+      "delta_pct": 0.10000000000000013
+    },
+    "E_price_+20pct": {
+      "delta_pct": 0.19999999999999984
+    },
+    "E_load_-5pct": {
+      "delta_pct": -0.10176700373805478
+    },
+    "E_load_-10pct": {
+      "delta_pct": -0.20079515266295256
+    },
+    "E_load_-20pct": {
+      "delta_pct": -0.3691615229963594
+    },
+    "E_load_+5pct": {
+      "delta_pct": 0.10553774966085984
+    },
+    "E_load_+10pct": {
+      "delta_pct": 0.2168950126827641
+    },
+    "E_load_+20pct": {
+      "delta_pct": 0.44988071506812016
+    },
+    "E_pv_-5pct": {
+      "delta_pct": 0.044701830350400894
+    },
+    "E_pv_-10pct": {
+      "delta_pct": 0.09382006213027176
+    },
+    "E_pv_-20pct": {
+      "delta_pct": 0.2033237680144572
+    },
+    "E_pv_+5pct": {
+      "delta_pct": -0.042598878725414305
+    },
+    "E_pv_+10pct": {
+      "delta_pct": -0.08298515099614098
+    },
+    "E_pv_+20pct": {
+      "delta_pct": -0.12107483828065968
+    },
+    "F1_price+20_load+20": {
+      "delta_pct": 0.7398568580817443
+    },
+    "F2_price-20_load+20": {
+      "delta_pct": 0.15990457205449637
+    },
+    "F3_pv-20_load+20": {
+      "delta_pct": 0.685388952111707
+    },
+    "F4_pv+20_load-20": {
+      "delta_pct": -0.4087252280656082
+    },
+    "F5_price+20_pv+20_load-20": {
+      "delta_pct": -0.29047027367872996
+    },
+    "G1_cyclic_shift_1": {
+      "delta_pct": -2.846817159527236e-06
+    }
+  },
+  "c2_envelope": {
+    "threshold": 0.1,
+    "scenarios": [
+      {
+        "scenario_id": "A3_meter_battery_side",
+        "group": "A_structure",
+        "kind": "metering_side",
+        "description": "电池侧计量：充电上限 Pmax*dt/eta_ch，放电上限 Pmax*dt*eta_dis",
+        "cost_day": 35101.567554155496,
+        "q_day": 59482.69899835392,
+        "curtail_total": 0.0,
+        "delta_cost": -25.381035134138074,
+        "delta_pct": -0.0007225516634222212,
+        "milp_status": 0,
+        "milp_gap": 0.0,
+        "lp_objective": 35101.56755415551,
+        "gates_all_pass": true,
+        "expect": "up",
+        "observed_direction": "down",
+        "direction_pass": false
+      },
+      {
+        "scenario_id": "A4_allow_zero_revenue_export",
+        "group": "A_structure",
+        "kind": "curtail_export",
+        "description": "允许零收益反送：反送上限放宽为 pv*dt + Pmax*dt",
+        "cost_day": 35126.948589289634,
+        "q_day": 59482.69899835391,
+        "curtail_total": 0.0,
+        "delta_cost": 0.0,
+        "delta_pct": 0.0,
+        "milp_status": 0,
+        "milp_gap": 0.0,
+        "lp_objective": 35126.94858928963,
+        "gates_all_pass": true,
+        "expect": "same",
+        "observed_direction": "same",
+        "direction_pass": true
+      },
+      {
+        "scenario_id": "B1_E0_4800",
+        "group": "B_terminal_bounds",
+        "kind": "terminal_endpoint",
+        "description": "E_0 = E_144 = 4800 kWh",
+        "cost_day": 35133.23192262296,
+        "q_day": 59482.69899835391,
+        "curtail_total": 0.0,
+        "delta_cost": 6.283333333325572,
+        "delta_pct": 0.00017887501151299517,
+        "milp_status": 0,
+        "milp_gap": 0.0,
+        "lp_objective": 35133.23192262297,
+        "gates_all_pass": true,
+        "expect": "up",
+        "observed_direction": "up",
+        "direction_pass": true
+      },
+      {
+        "scenario_id": "B2_E0_7200",
+        "group": "B_terminal_bounds",
+        "kind": "terminal_endpoint",
+        "description": "E_0 = E_144 = 7200 kWh",
+        "cost_day": 35122.4652559563,
+        "q_day": 59482.69899835391,
+        "curtail_total": 0.0,
+        "delta_cost": -4.483333333337214,
+        "delta_pct": -0.00012763230264481904,
+        "milp_status": 0,
+        "milp_gap": 0.0,
+        "lp_objective": 35122.46525595629,
+        "gates_all_pass": true,
+        "expect": "down",
+        "observed_direction": "down",
+        "direction_pass": true
+      },
+      {
+        "scenario_id": "C1_roundtrip_0.90",
+        "group": "C_efficiency",
+        "kind": "efficiency_metering",
+        "description": "往返效率 0.9：单向 eta = sqrt(0.9) = 0.9486833",
+        "cost_day": 33801.495542222016,
+        "q_day": 57526.24348088351,
+        "curtail_total": 0.0,
+        "delta_cost": -1325.4530470676182,
+        "delta_pct": -0.0377332247832012,
+        "milp_status": 0,
+        "milp_gap": 0.0,
+        "lp_objective": 33801.49554222201,
+        "gates_all_pass": true,
+        "expect": "down",
+        "observed_direction": "down",
+        "direction_pass": true
+      }
+    ]
+  },
+  "c3_envelope": {
+    "threshold": 0.25,
+    "min_delta_pct": -0.3691615229963594,
+    "max_delta_pct": 0.44988071506812016
+  },
+  "monte_carlo": {
+    "draws": 200,
+    "noise": 0.05,
+    "seed": 20260101,
+    "all_solved": true,
+    "mean_cost": 35143.340414159444,
+    "std_cost": 2533.2421797222264,
+    "percentile_2_5": 30627.46333029815,
+    "percentile_97_5": 40535.80907454427,
+    "bootstrap_ci_95_mean": [
+      34817.09847260023,
+      35531.19577554061
+    ],
+    "ci_width_ratio": 0.28207248685606634,
+    "mean_bias_ratio": 0.00046664528312624404,
+    "curtail_positive_draws": 0,
+    "gate_failures": 0
+  },
+  "storage_saving_day": 12925.098001557031,
+  "storage_saving_ratio": 0.26898121762870153
+}

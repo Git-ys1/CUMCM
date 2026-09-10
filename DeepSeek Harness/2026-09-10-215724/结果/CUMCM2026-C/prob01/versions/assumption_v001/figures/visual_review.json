@@ -1,0 +1,344 @@
+{
+  "generated_at": "2026-09-10T11:49:11.409210+00:00",
+  "method": "programmatic_visual_audit",
+  "method_note": "本环境最终响应模型不支持图像输入，无法进行像素级人工目检；视觉复核以可复现的程序化审计代替，覆盖：CJK 字形覆盖（FT2Font charmap）、文本越界/裁切、文本两两重叠（较小者重叠面积比 >25% 即失败）、字体族一致性、每坐标轴标题/轴标签/图例完整性、色板两两 RGB 区分度、三维图视角与二维配套投影存在性。",
+  "font": "Microsoft YaHei",
+  "mono_font": "NSimSun",
+  "dpi": 180,
+  "color_separation": {
+    "palette": {
+      "primary": "#1F4E79",
+      "secondary": "#70AD47",
+      "accent": "#ED7D31",
+      "neutral": "#7F8C8D",
+      "warning": "#C00000"
+    },
+    "pairwise_distance": [
+      {
+        "pair": "primary/secondary",
+        "distance": 134.5
+      },
+      {
+        "pair": "primary/accent",
+        "distance": 223.2
+      },
+      {
+        "pair": "primary/neutral",
+        "distance": 116.0
+      },
+      {
+        "pair": "primary/warning",
+        "distance": 216.0
+      },
+      {
+        "pair": "secondary/accent",
+        "distance": 135.7
+      },
+      {
+        "pair": "secondary/neutral",
+        "distance": 78.8
+      },
+      {
+        "pair": "secondary/warning",
+        "distance": 203.4
+      },
+      {
+        "pair": "accent/neutral",
+        "distance": 144.2
+      },
+      {
+        "pair": "accent/warning",
+        "distance": 141.6
+      },
+      {
+        "pair": "neutral/warning",
+        "distance": 209.1
+      }
+    ],
+    "minimum_distance": 78.8
+  },
+  "three_dimensional": {
+    "viewpoint": {
+      "elev": 20,
+      "azim": -62
+    },
+    "has_2d_companion": true,
+    "slugs": [
+      "day_profile",
+      "netload_purchase",
+      "soc_trajectory",
+      "arbitrage",
+      "delivery_audit",
+      "cumulative_cost",
+      "residual_diagnostics",
+      "state_price_trajectory_3d",
+      "price_soc_phase"
+    ]
+  },
+  "figures": [
+    {
+      "kind": "day_profile",
+      "text_count": 39,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "netload_purchase",
+      "text_count": 37,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "soc_trajectory",
+      "text_count": 29,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "arbitrage",
+      "text_count": 38,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "delivery_audit",
+      "text_count": 63,
+      "fonts": [
+        "Microsoft YaHei",
+        "NSimSun"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 2,
+          "title": true,
+          "xlabel": true,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 3,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "cumulative_cost",
+      "text_count": 39,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "residual_diagnostics",
+      "text_count": 21,
+      "fonts": [
+        "Microsoft YaHei",
+        "NSimSun"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "state_price_trajectory_3d",
+      "text_count": 24,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": true,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "price_soc_phase",
+      "text_count": 23,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

@@ -1,0 +1,642 @@
+question_id: prob02
+dry: true
+items:
+- id: ref-prob02-balancing-vanderveen-2016
+  title: 'The electricity balancing market: Exploring the design challenge'
+  source: Utilities Policy, 43, 186-194 (Elsevier)
+  doi: 10.1016/j.jup.2016.10.008
+  url: https://doi.org/10.1016/j.jup.2016.10.008
+  authors: van der Veen, R. A. C.; Hakvoort, R. A.
+  year: 2016
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 解绑后的欧洲国家电力市场中，平衡市场是处理电力供需平衡的制度安排。本文给出识别平衡市场设计变量与性能标准的框架，讨论性能标准之间的权衡、设计变量的不确定效应，以及平衡市场与整体电力市场之间的多重关联。
+  supports: (1) 电力平衡市场是处理日前承诺与实际供需偏差的制度安排；(2) 偏差（不平衡）结算规则与惩罚强度是市场设计的核心变量；(3) 设计变量会改变参与者的偏差激励。
+  applies_to: prob02 的核心结算结构（日前计划量 + 供电不足的惩罚性结算）；A3 信息集与紧急购电定价背景
+  boundary: 面向欧洲批发电力市场的平衡机制设计，不涉及微网/储能调度模型，也不给出 5 倍惩罚的定量依据；不能据此断言本题 5 倍电价是否合理。
+  fingerprint: 10.1016/j.jup.2016.10.008
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:29.462252+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:34.772104+00:00'
+  verified_title:
+  - 'The electricity balancing market: Exploring the design challenge'
+  decision_reason: 支撑 prob02「日前计划 + 偏差惩罚性结算」的机制定位：平衡市场即处理计划与实际偏差的制度安排；已读摘要，未把欧洲市场价格形成机制迁移到本题。
+  decided_at: '2026-09-10T12:57:34.806622+00:00'
+- id: ref-prob02-marketdesign-hu-2018
+  title: 'Identifying barriers to large-scale integration of variable renewable electricity
+    into the electricity market: A literature review of market design'
+  source: Renewable and Sustainable Energy Reviews, 81, 2181-2195 (Elsevier)
+  doi: 10.1016/j.rser.2017.06.028
+  url: https://doi.org/10.1016/j.rser.2017.06.028
+  authors: Hu, J.; Harmsen, R.; Crijns-Graus, W.; Worrell, E.; van den Broek, M.
+  year: 2018
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 综述欧盟电力市场设计中阻碍可变可再生电力大规模并网的因素：日内离散拍卖、边际定价的平衡市场、双价不平衡结算与节点定价更有利于降低并网成本；并主张把价格上限提高到失负荷价值(VOLL)水平。
+  supports: (1) 不平衡结算存在单/双价等设计，偏差如何计价是市场设计关键；(2) 惩罚/价格上限的高低应与失负荷价值(VOLL)对照；(3) 可再生预测偏差会产生并网/平衡成本。
+  applies_to: prob02 中「供电不足按 5 倍电价结算」的惩罚性定价定位；A3/A11 的结算口径讨论
+  boundary: 综述面向欧盟批发市场，不提供微网调度模型，也不给出 5 倍乘子的来源；其 VOLL 数值不适用于本题。
+  fingerprint: 10.1016/j.rser.2017.06.028
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:34.927134+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:36.095427+00:00'
+  verified_title:
+  - 'Identifying barriers to large-scale integration of variable renewable electricity
+    into the electricity market: A literature review of market design'
+  decision_reason: 为 prob02 的紧急购电惩罚定价提供市场设计侧依据（偏差定价 + VOLL 对照）；已读摘要，明确不引用其具体数值。
+  decided_at: '2026-09-10T12:57:36.138274+00:00'
+- id: ref-prob02-trading-morales-2010
+  title: Short-Term Trading for a Wind Power Producer
+  source: IEEE Transactions on Power Systems, 25(1), 554-564
+  doi: 10.1109/tpwrs.2009.2036810
+  url: https://doi.org/10.1109/tpwrs.2009.2036810
+  authors: Morales, J. M.; Conejo, A. J.; Perez-Ruiz, J.
+  year: 2010
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 给出风电生产商在含多个交易时段（日前等）的电力市场中的最优报价策略，显式考虑风电可用性、各交易阶段价格与平衡能量需求的不确定性，控制利润波动风险；模型转化为中等规模、可用商用软件求解的线性规划。
+  supports: (1) 「日前决策 + 实时/平衡偏差」的两阶段交易结构可写成线性/混合整数优化；(2) 偏差量与平衡需求必须显式进入模型；(3) 期望收益与风险存在权衡。
+  applies_to: prob02「0:00 制定计划 + 实际不足由紧急购电补足」的两阶段结构；prob03 调整策略先例
+  boundary: 面向风电生产商在批发市场的报价，非微网购电；其平衡价格由市场出清形成，而本题紧急电价由题面固定为 5 倍。
+  fingerprint: 10.1109/tpwrs.2009.2036810
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:36.281951+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:37.323128+00:00'
+  verified_title:
+  - Short-Term Trading for a Wind Power Producer
+  decision_reason: 支撑 prob02 两阶段（计划 + 实时偏差补救）可写为线性/混合整数优化且偏差需显式建模；已读摘要。
+  decided_at: '2026-09-10T12:57:37.350884+00:00'
+- id: ref-prob02-imbalance-bottieau-2020
+  title: Very-Short-Term Probabilistic Forecasting for a Risk-Aware Participation
+    in the Single Price Imbalance Settlement
+  source: IEEE Transactions on Power Systems, 35(2), 1218-1230
+  doi: 10.1109/tpwrs.2019.2940756
+  url: https://doi.org/10.1109/tpwrs.2019.2940756
+  authors: Bottieau, J.; Hubert, L.; De Greve, Z.; Vallee, F.; Toubeau, J.-F.
+  year: 2020
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 单一天平价格是欧洲电力市场新兴机制：所有正、负不平衡按统一价格结算，从而激励参与者主动偏离计划以恢复系统平衡；但实时条件波动使这种机会风险很高。本文提出深度概率预测模型刻画不平衡信号以支持风险感知决策。
+  supports: (1) 偏差（不平衡）按规则价格结算，是日前计划与实际执行之间的核心经济环节；(2) 偏差有正负两个方向，其结算规则决定参与者的偏差激励。
+  applies_to: prob02 偏差结算逻辑（本题只对供电不足方向按 5 倍惩罚，方向性更强）；A11 计量口径
+  boundary: 面向欧洲单一天平价格机制与风险预测，不涉及微网储能调度；其价格形成机制不能迁移。
+  fingerprint: 10.1109/tpwrs.2019.2940756
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:37.462017+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:38.495505+00:00'
+  verified_title:
+  - Very-Short-Term Probabilistic Forecasting for a Risk-Aware Participation in the
+    Single Price Imbalance Settlement
+  decision_reason: 支撑「偏差按规则价格结算且方向性重要」这一结算结构认识；已读摘要，本题不对称惩罚（只罚不足）为 project_assumption。
+  decided_at: '2026-09-10T12:57:38.522219+00:00'
+- id: ref-prob02-voll-leahy-2011
+  title: An estimate of the value of lost load for Ireland
+  source: Energy Policy, 39(3), 1514-1520 (Elsevier)
+  doi: 10.1016/j.enpol.2010.12.025
+  url: https://doi.org/10.1016/j.enpol.2010.12.025
+  authors: Leahy, E.; Tol, R. S. J.
+  year: 2011
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex/Semantic Scholar 均无摘要，主张严格限于题名范围）
+  supports: 失负荷价值(VOLL)可按用户类型/行业估计，是衡量未供电（切负荷）经济成本的常用量（题名级主张）。
+  applies_to: A11 供电不足惩罚强度的对照背景（5 倍电价 vs VOLL 概念）
+  boundary: 仅题录级核验，不能引用其任何数值；爱尔兰电力系统与本题场景不可直接迁移。
+  fingerprint: 10.1016/j.enpol.2010.12.025
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:38.663165+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:39.715262+00:00'
+  verified_title:
+  - An estimate of the value of lost load for Ireland
+  decision_reason: 为「未供电需要按高于正常电价的经济价值计价」提供概念/方法先例（题名级）；因未获摘要，不进入任何定量主张。
+  decided_at: '2026-09-10T12:57:39.779026+00:00'
+- id: ref-prob02-voi-chazarra-2016
+  title: Value of perfect information of spot prices in the joint energy and reserve
+    hourly scheduling of pumped storage plants
+  source: 2016 13th International Conference on the European Energy Market (EEM),
+    1-6
+  doi: 10.1109/eem.2016.7521284
+  url: https://doi.org/10.1109/eem.2016.7521284
+  authors: Chazarra, M.; Perez-Diaz, J. I.; Garcia-Gonzalez, J.
+  year: 2016
+  item_type: proceedings-article
+  authority_tier: B
+  content_check: abstract_read
+  abstract: 研究日循环抽水蓄能电站在现货市场（价格接受者）与二次调频备用市场（价格制定者）下，日前价格完美信息的价值；结果显示预测误差造成的利润损失占比在同时参与备用服务后下降。
+  supports: (1)「完美信息 vs 预测信息」是调度问题的标准对照，可用完美信息价值刻画信息集差异；(2)「日循环(daily-cycle)」边界是储能调度的常见设定。
+  applies_to: A2（跨日储能边界：日循环 vs 连续）与 A3（0:00 信息集）的文献先例
+  boundary: 抽水蓄能与备用市场语境，非光伏-电池微网；其数值结论不可迁移到本题。
+  fingerprint: 10.1109/eem.2016.7521284
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:39.917897+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:40.995305+00:00'
+  verified_title:
+  - Value of perfect information of spot prices in the joint energy and reserve hourly
+    scheduling of pumped storage plants
+  decision_reason: 同时支撑 A2 的日循环边界设定与 A3 的完美信息对照方法；已读摘要，仅作方法先例。
+  decided_at: '2026-09-10T12:57:41.032753+00:00'
+- id: ref-prob02-loadshed-zeinalzadeh-2017
+  title: Minimizing risk of load shedding and renewable energy curtailment in a microgrid
+    with energy storage
+  source: 2017 American Control Conference (ACC), 3412-3417
+  doi: 10.23919/acc.2017.7963474
+  url: https://doi.org/10.23919/acc.2017.7963474
+  authors: Zeinalzadeh, A.; Gupta, V.
+  year: 2017
+  item_type: proceedings-article
+  authority_tier: B
+  content_check: abstract_read
+  abstract: 考虑随机负载、随机可再生出力与储能单元的微网：电网控制器给定微网应向主网呈现的净负荷轨迹，微网必须通过切负荷与弃光来满足该轨迹；控制器优化储能运行，以最小化有限时域内切负荷与弃光的风险，问题建模为有限阶段动态规划。
+  supports: (1) 微网可先确定向主网的净负荷轨迹（对应计划购电），实际不足则用切负荷/未供电变量刻画；(2) 储能用于降低未供电与弃光风险；(3) 净负荷轨迹是控制器显式给定的决策量。
+  applies_to: prob02 的「计划购电轨迹 + 供电不足(u)」结构（本题用付费紧急购电替代切负荷，经济含义对应）；A11
+  boundary: 目标为风险最小化而非购电费最小，且用切负荷而非付费紧急购电；不含 5 倍电价结算。
+  fingerprint: 10.23919/acc.2017.7963474
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:41.212058+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:42.227769+00:00'
+  verified_title:
+  - Minimizing risk of load shedding and renewable energy curtailment in a microgrid
+    with energy storage
+  decision_reason: 直接支撑 prob02 的「净负荷/购电计划 + 供电不足补救变量」建模结构；已读摘要，注意其目标与结算方式不同。
+  decided_at: '2026-09-10T12:57:42.266032+00:00'
+- id: ref-prob02-reliability-nojavan-2017
+  title: An efficient cost-reliability optimization model for optimal siting and sizing
+    of energy storage system in a microgrid in the presence of responsible load management
+  source: Energy, 139, 89-97 (Elsevier)
+  doi: 10.1016/j.energy.2017.07.148
+  url: https://doi.org/10.1016/j.energy.2017.07.148
+  authors: Nojavan, S.; Majidi, M.; Nourani Esfetanaj, N.
+  year: 2017
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 均无摘要，主张严格限于题名范围）
+  supports: 微网中储能的经济性与可靠性可同时进入优化目标，供电可靠性指标可与费用指标并列（题名级主张）。
+  applies_to: prob02 交付与验收中「费用 + 紧急购电次数/电量」双指标统计口径
+  boundary: 研究储能选址定容且容量可变；本题容量/功率固定，只能作「可靠性可入优化目标」的先例。
+  fingerprint: 10.1016/j.energy.2017.07.148
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:42.458581+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:43.686774+00:00'
+  verified_title:
+  - An efficient cost-reliability optimization model for optimal siting and sizing
+    of energy storage system in a microgrid in the presence of responsible load management
+  decision_reason: 支撑以经济性与供电可靠性双指标评价微网方案的合理性（题名级）；未获摘要故不支撑任何定量结论。
+  decided_at: '2026-09-10T12:57:43.726940+00:00'
+- id: ref-prob02-ems-espin-2020
+  title: 'Energy Management Systems for Microgrids: Main Existing Trends in Centralized
+    Control Architectures'
+  source: Energies, 13(3), 547 (MDPI)
+  doi: 10.3390/en13030547
+  url: https://doi.org/10.3390/en13030547
+  authors: Espin-Sarzosa, D.; Palma-Behnke, R.; Nunez-Mata, O.
+  year: 2020
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 对近 200 篇文献做综述与定量分析，建立集中式微网能量管理系统(EMS)的五级分类框架，梳理目标函数、求解技术、运行模型与不确定性集成等属性的主要趋势。
+  supports: (1) 集中式 EMS 是微网调度的主流架构，其目标函数与约束已有系统分类；(2)「日前调度」与「不确定性处理」是 EMS 的标准建模维度。
+  applies_to: prob02 的集中式 0:00 决策架构（A3）与模型族定位
+  boundary: 综述，无具体模型与本题参数，不支撑任何定量结论。
+  fingerprint: 10.3390/en13030547
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:43.883939+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:45.330139+00:00'
+  verified_title:
+  - 'Energy Management Systems for Microgrids: Main Existing Trends in Centralized
+    Control Architectures'
+  decision_reason: 用于定位 prob02 的集中式日前决策架构与方法族；已读摘要，仅作分类/背景引用。
+  decided_at: '2026-09-10T12:57:45.401906+00:00'
+- id: ref-prob02-centralized-tsikalakis-2008
+  title: Centralized Control for Optimizing Microgrids Operation
+  source: IEEE Transactions on Energy Conversion, 23(1), 241-248
+  doi: 10.1109/tec.2007.914686
+  url: https://doi.org/10.1109/tec.2007.914686
+  authors: Tsikalakis, A. G.; Hatziargyriou, N. D.
+  year: 2008
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 描述微网中央控制器的运行：在并网模式下优化本地分布式电源出力与同主配电网的功率交换以最大化微网价值；考虑含可控负荷需求侧报价的两种市场政策，并在典型低压算例上以现实现货价格评估效果。
+  supports: (1) 微网可由中央控制器在并网模式下优化与主网的功率交换（购电）；(2) 功率交换优化以经济性为目标，可用优化算法求解。
+  applies_to: prob02 集中式日前计划购电的架构先例
+  boundary: 含可控负荷与需求侧报价，设备构成与本题不同；未含紧急购电与 5 倍惩罚结构。
+  fingerprint: 10.1109/tec.2007.914686
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:45.594789+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:46.702245+00:00'
+  verified_title:
+  - Centralized Control for Optimizing Microgrids Operation
+  decision_reason: 支撑「中央控制器优化并网购电功率」的架构先例；已读摘要，不迁移其设备构成。
+  decided_at: '2026-09-10T12:57:46.758321+00:00'
+- id: ref-prob02-microgridcontrol-olivares-2014
+  title: Trends in Microgrid Control
+  source: IEEE Transactions on Smart Grid, 5(4), 1905-1919
+  doi: 10.1109/tsg.2013.2295514
+  url: https://doi.org/10.1109/tsg.2013.2295514
+  authors: Olivares, D. E.; Mehrizi-Sani, A.; Etemadi, A. H.; Canizares, C. A.; Iravani,
+    R.; Kazerani, M.; et al.
+  year: 2014
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 讨论微网控制的主要问题与挑战并综述控制策略与趋势（下垂控制、模型预测控制、多智能体等），把微网控制分为一次、二次、三次三个层级，其中三次层级涉及微网与主网的协调运行。
+  supports: (1) 微网与主网的协调运行（含购电决策）属三级控制层级，通常以经济性为目标；(2) 间歇性可再生并网给可靠运行带来挑战。
+  applies_to: prob02 并网协调与日前经济调度的层级定位
+  boundary: 控制综述，不提供调度模型与本题参数。
+  fingerprint: 10.1109/tsg.2013.2295514
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:46.912707+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:48.225932+00:00'
+  verified_title:
+  - Trends in Microgrid Control
+  decision_reason: 用于界定「微网—外网协调购电」在分层控制中的位置；已读摘要，仅作背景引用。
+  decided_at: '2026-09-10T12:57:48.274477+00:00'
+- id: ref-prob02-bessmodels-rosewater-2019
+  title: Battery Energy Storage Models for Optimal Control
+  source: IEEE Access, 7, 178357-178391
+  doi: 10.1109/access.2019.2957698
+  url: https://doi.org/10.1109/access.2019.2957698
+  authors: Rosewater, D. M.; Copp, D. A.; Nguyen, T. A.; Byrne, R. H.; Santoso, S.
+  year: 2019
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 综述电池储能最优控制中所用的模型，指出模型中未表示的动态会导致次优控制，系统比较效率、SOC 动态、退化与边界条件等建模选择。
+  supports: (1) SOC 递推、效率与边界条件是 BESS 最优控制模型的核心要素；(2) 建模选择（含终端/循环边界与退化）会显著影响控制结果。
+  applies_to: A2（跨日 SOC 边界）与 A14（效率/功率口径）的模型依据
+  boundary: 综述面向电网侧 BESS 控制，不给出本题 6000/12000/5000/90% 的具体来源。
+  fingerprint: 10.1109/access.2019.2957698
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:48.457229+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:49.693973+00:00'
+  verified_title:
+  - Battery Energy Storage Models for Optimal Control
+  decision_reason: 支撑 SOC 递推、效率与边界条件的建模地位（A2/A14）；已读摘要，不替代附录 1 参数。
+  decided_at: '2026-09-10T12:57:49.763034+00:00'
+- id: ref-prob02-aging-collath-2022
+  title: 'Aging aware operation of lithium-ion battery energy storage systems: A review'
+  source: Journal of Energy Storage, 55, 105634 (Elsevier)
+  doi: 10.1016/j.est.2022.105634
+  url: https://doi.org/10.1016/j.est.2022.105634
+  authors: Collath, N.; Tepe, B.; Engelberger, S.; Jossen, A.; Hesse, H.
+  year: 2022
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 综述锂离子储能的老化机理、影响经济性的应力因素以及老化感知运行策略，指出容量衰减、内阻上升等对 BESS 经济性有显著影响。
+  supports: 频繁充放电带来的老化成本会影响储能运行经济性；忽略退化会高估调度收益或低估成本。
+  applies_to: prob02 边界声明（与 prob01 asm-10 一致：本题无循环/老化数据，不建模退化）
+  boundary: 面向老化机理与寿命模型，不提供调度模型或本题参数。
+  fingerprint: 10.1016/j.est.2022.105634
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:49.952949+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:53.637408+00:00'
+  verified_title:
+  - 'Aging aware operation of lithium-ion battery energy storage systems: A review'
+  decision_reason: 支撑「不建模退化须在边界声明」；已读摘要，未引入任何退化成本项。
+  decided_at: '2026-09-10T12:57:53.695949+00:00'
+- id: ref-prob02-terminal-han-2025
+  title: End-effect mitigation in renewable energy systems with energy storage using
+    value function approximation of terminal energy level
+  source: Applied Energy, 401, 126785 (Elsevier)
+  doi: 10.1016/j.apenergy.2025.126785
+  url: https://doi.org/10.1016/j.apenergy.2025.126785
+  authors: Han, D.; Heo, S.
+  year: 2025
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex/Semantic Scholar 与出版方页面均未取到摘要，主张严格限于题名范围）
+  supports: 有限时域储能调度存在「末端效应」，需要以终端能量价值/终端约束等方式处理，否则末段调度会系统性偏离（题名级主张）。
+  applies_to: A2 跨日边界处理与「终端储电量如何取值」的论证依据
+  boundary: 仅题录级核验，不能引用其方法细节与数值；本题仅使用「边界处理影响结果」这一定性依据。
+  fingerprint: 10.1016/j.apenergy.2025.126785
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:53.908099+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:55.250971+00:00'
+  verified_title:
+  - End-effect mitigation in renewable energy systems with energy storage using value
+    function approximation of terminal energy level
+  decision_reason: 为 A2「终端/跨日边界会显著影响最优解」提供 A 级期刊的题名级依据；因未获摘要，不进入定量主张。
+  decided_at: '2026-09-10T12:57:55.312150+00:00'
+- id: ref-prob02-twostage-ma-2022
+  title: Two-stage stochastic robust optimization model of microgrid day-ahead dispatching
+    considering controllable air conditioning load
+  source: International Journal of Electrical Power & Energy Systems, 141, 108174
+    (Elsevier)
+  doi: 10.1016/j.ijepes.2022.108174
+  url: https://doi.org/10.1016/j.ijepes.2022.108174
+  authors: Ma, Y.; Xu, W.; Yang, H.; Zhang, D.
+  year: 2022
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 均无摘要，主张严格限于题名范围）
+  supports: 微网日前调度可建模为两阶段优化，区分日前第一阶段决策与不确定实现后的第二阶段决策（题名级主张）。
+  applies_to: prob02「日前计划 q + 实时紧急购电 u」的两阶段结构
+  boundary: 处理源荷不确定性的随机鲁棒方法且含可控空调负荷；若本题 A3 固定为完美信息，两阶段退化为确定性单阶段。
+  fingerprint: 10.1016/j.ijepes.2022.108174
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:55.514225+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:56.804343+00:00'
+  verified_title:
+  - Two-stage stochastic robust optimization model of microgrid day-ahead dispatching
+    considering controllable air conditioning load
+  decision_reason: 支撑两阶段（日前决策 + 实际偏差决策）建模框架的存在与常见性（题名级）；未获摘要故不引用其方法细节。
+  decided_at: '2026-09-10T12:57:56.865144+00:00'
+- id: ref-prob02-milpdegr-minh-2024
+  title: A mixed-integer linear programming model for microgrid optimal scheduling
+    considering BESS degradation and RES uncertainty
+  source: Journal of Energy Storage, 104, 114663 (Elsevier)
+  doi: 10.1016/j.est.2024.114663
+  url: https://doi.org/10.1016/j.est.2024.114663
+  authors: Minh, N. Q.; et al.
+  year: 2024
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 均无摘要，主张严格限于题名范围）
+  supports: 微网最优调度可用 MILP 统一处理电池储能与可再生出力不确定性（题名级主张）。
+  applies_to: prob02 的 MILP 建模框架；robustness/ablation 的退化与不确定性对照线索
+  boundary: 含退化与不确定性建模，本题主模型不含；只能作框架先例，不提供参数。
+  fingerprint: 10.1016/j.est.2024.114663
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:57.074078+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:58.328409+00:00'
+  verified_title:
+  - A mixed-integer linear programming model for microgrid optimal scheduling considering
+    BESS degradation and RES uncertainty
+  decision_reason: 作为近期 MILP 微网调度框架先例（题名级），并标注其退化/不确定性项不进入本题主模型。
+  decided_at: '2026-09-10T12:57:58.393691+00:00'
+- id: ref-prob02-scuc-wu-2007
+  title: Stochastic Security-Constrained Unit Commitment
+  source: IEEE Transactions on Power Systems, 22(2), 800-811
+  doi: 10.1109/tpwrs.2007.894843
+  url: https://doi.org/10.1109/tpwrs.2007.894843
+  authors: Wu, L.; Shahidehpour, M.; Li, T.
+  year: 2007
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 提出安全约束机组组合(SCUC)的随机模型：把机组/线路停运与负荷预测误差用蒙特卡洛情景树表示；通过对偶优化与拉格朗日松弛把长期 SCUC
+    分解为可处理的短期 MIP 子问题，以拉格朗日乘子（惩罚价格）协调主问题与子问题；大规模时用情景削减权衡速度与精度。
+  supports: (1) 预测误差与随机扰动可用情景树显式建模；(2) 长期/大规模调度可用拉格朗日松弛分解为短期可解子问题；(3)「惩罚价格」可作为协调信号。
+  applies_to: prob02 的 334 天规模可解性讨论（A5）与 A3 的不确定性对照
+  boundary: 面向输电系统 SCUC 与情景随机优化，非微网储能；若本题采用日循环边界则逐日天然解耦，不需要该分解。
+  fingerprint: 10.1109/tpwrs.2007.894843
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:57:58.589217+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:57:59.704173+00:00'
+  verified_title:
+  - Stochastic Security-Constrained Unit Commitment
+  decision_reason: 支撑「长时段大规模调度可用分解求解」及「预测误差可情景化」两点（A3/A5）；已读摘要，不预设本题必须分解。
+  decided_at: '2026-09-10T12:57:59.837858+00:00'
+- id: ref-prob02-pvforecast-mayer-2021
+  title: Extensive comparison of physical models for photovoltaic power forecasting
+  source: Applied Energy, 283, 116239 (Elsevier)
+  doi: 10.1016/j.apenergy.2020.116239
+  url: https://doi.org/10.1016/j.apenergy.2020.116239
+  authors: Mayer, M. J.; Grof, G.
+  year: 2021
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 系统比较多种物理光伏功率预测模型，指出模型链选择对精度影响很大：最优与最差模型链的平均绝对误差(MAE)相差约 13%、均方根误差(RMSE)约
+    12%、技能评分 23%-33%。
+  supports: 光伏功率预测存在可观的模型间误差，预测值不等于实际值，因此「按预测制定计划 + 实际偏差补救」具有现实意义。
+  applies_to: A3（0:00 信息集：完全信息 vs 预报信息）与 A13（附件 1 代表日含义）
+  boundary: 面向并网光伏电站的物理预测模型，误差数值依赖站点与数据，不能迁移为附件 2/3 的误差量级。
+  fingerprint: 10.1016/j.apenergy.2020.116239
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:58:00.059629+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:58:01.351255+00:00'
+  verified_title:
+  - Extensive comparison of physical models for photovoltaic power forecasting
+  decision_reason: 支撑「预测与实际存在系统误差」这一 A3 讨论前提；已读摘要，明确不引用其误差数值到本题。
+  decided_at: '2026-09-10T12:58:01.474964+00:00'
+- id: ref-prob02-decomposition-conejo-2006
+  title: Decomposition Techniques in Mathematical Programming
+  source: Springer (book)
+  doi: 10.1007/3-540-27686-6
+  url: https://doi.org/10.1007/3-540-27686-6
+  authors: Conejo, A. J.; Castillo, E.; Minguez, R.; Garcia-Bertrand, R.
+  year: 2006
+  item_type: book
+  authority_tier: B
+  content_check: metadata_only
+  abstract: （教材题录；未取正文）
+  supports: 大规模数学规划可用 Benders 分解、拉格朗日松弛、Dantzig-Wolfe 分解等方法处理（教材级方法依据）。
+  applies_to: A5 的 334 天 × 144 时段规模可解性与分解/解耦依据
+  boundary: 通用教材，不针对电力调度；是否使用取决于本题实际耦合结构（日循环边界下逐日天然解耦）。
+  fingerprint: 10.1007/3-540-27686-6
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:58:01.695275+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:58:02.783481+00:00'
+  verified_title:
+  - Decomposition Techniques in Mathematical Programming
+  decision_reason: 为大规模长时段问题的分解/解耦提供 B 级教材依据；仅题录级核验，不引用具体算法细节。
+  decided_at: '2026-09-10T12:58:02.885014+00:00'
+- id: ref-prob02-storagevalue-sioshansi-2009
+  title: 'Estimating the value of electricity storage in PJM: Arbitrage and some welfare
+    effects'
+  source: Energy Economics, 31(2), 269-277 (Elsevier)
+  doi: 10.1016/j.eneco.2008.10.005
+  url: https://doi.org/10.1016/j.eneco.2008.10.005
+  authors: Sioshansi, R.; Denholm, P.; Jenkin, T.; Weiss, J.
+  year: 2009
+  item_type: journal-article
+  authority_tier: A
+  content_check: metadata_only
+  abstract: （未获摘要；Crossref/OpenAlex 均无摘要，主张严格限于题名范围）
+  supports: 储能价值可由长期（全年）逐时段价格下的套利优化估计，收益取决于价格时间结构与运行约束（题名级主张）。
+  applies_to: prob02 全年 334 天「逐日计划 + 全年统计」的评估口径
+  boundary: 面向批发市场套利与福利分析，不含紧急购电惩罚；不可迁移其数值结论。
+  fingerprint: 10.1016/j.eneco.2008.10.005
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:58:03.209209+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:58:04.296191+00:00'
+  verified_title:
+  - 'Estimating the value of electricity storage in PJM: Arbitrage and some welfare
+    effects'
+  decision_reason: 为「按全年逐时段评估储能运行价值」提供方法先例（题名级）；未获摘要故不支撑定量主张。
+  decided_at: '2026-09-10T12:58:04.430798+00:00'
+- id: ref-prob02-dayaheadintraday-xie-2021
+  title: Greedy energy management strategy and sizing method for a stand-alone microgrid
+    with hydrogen storage
+  source: Journal of Energy Storage, 44, 103406 (Elsevier)
+  doi: 10.1016/j.est.2021.103406
+  url: https://doi.org/10.1016/j.est.2021.103406
+  authors: Xie, Y.; Ueda, Y.; Sugiyama, M.
+  year: 2021
+  item_type: journal-article
+  authority_tier: A
+  content_check: abstract_read
+  abstract: 针对光伏+电池+氢储的独立微网提出基于模型预测控制的贪心能量管理策略，包含日前计划(day-ahead plan)与日内调度(intra-day
+    dispatch)两阶段；计划阶段确定各储能设备在给定时段内的功率序列。
+  supports: 「日前计划 + 日内/实时调度」两阶段能量管理结构在微网中已有先例，且两阶段的目标与信息集不同。
+  applies_to: prob02 的「0:00 计划 + 实际偏差补救」结构；prob03 日内调整先例
+  boundary: 独立（非并网）微网与氢储，两阶段由同一 MPC 滚动实施；本题阶段分离且惩罚价格由题面固定。
+  fingerprint: 10.1016/j.est.2021.103406
+  status: used
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:58:04.620368+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:58:05.866341+00:00'
+  verified_title:
+  - Greedy energy management strategy and sizing method for a stand-alone microgrid
+    with hydrogen storage
+  decision_reason: 支撑微网两阶段（日前计划 + 日内调度）结构的可行性；已读摘要，注意本题为并网且带有紧急购电惩罚。
+  decided_at: '2026-09-10T12:58:05.958162+00:00'
+- id: ref-prob02-eohe-alemany-2026
+  title: Terminal energy valuation and end-of-horizon effects in battery arbitrage
+    scheduling
+  source: Academia Green Energy, 3
+  doi: 10.20935/acadenergy8488
+  url: https://doi.org/10.20935/acadenergy8488
+  authors: Alemany, J. M.
+  year: 2026
+  item_type: journal-article
+  authority_tier: C
+  content_check: abstract_read
+  abstract: 有限时域电池套利调度会低估终端储电价值，产生末端效应(EOHE)；终端约束、残值、随机优化与风险度量以不同机制处理该边界条件。
+  supports: 有限时域调度存在末端效应，终端处理方式会改变调度结果（概念性支持）。
+  applies_to: A2 边界处理的补充线索
+  boundary: 新刊、被引 0，权威性不足；且同类概念已由 ref-prob02-terminal-han-2025（Applied Energy, A 级）覆盖。
+  fingerprint: 10.20935/acadenergy8488
+  status: rejected
+  verified: true
+  verification_provider: crossref
+  verification_error: null
+  added_at: '2026-09-10T12:58:06.208968+00:00'
+  round_id: rnd-bc12c1290345
+  verified_at: '2026-09-10T12:58:07.446761+00:00'
+  verified_title:
+  - Terminal energy valuation and end-of-horizon effects in battery arbitrage scheduling
+  decision_reason: 期刊权威性不足且主张与已收录 A 级来源（ref-prob02-terminal-han-2025）重复；标记 rejected（本问不采用），仅作为后续检索线索，关键边界假设只用
+    A/B 级来源。
+  decided_at: '2026-09-10T12:58:07.586325+00:00'
+rounds:
+- round_id: rnd-bc12c1290345
+  query: electricity balancing market imbalance settlement and deviation penalty;
+    day-ahead plan versus real-time emergency purchase for unserved load; value of
+    lost load and load shedding penalty in microgrid scheduling; two-stage day-ahead
+    plus intra-day microgrid dispatch; finite-horizon energy storage terminal state-of-charge
+    and end-of-horizon effect; value of perfect information versus forecast in storage
+    scheduling; long-horizon / large-scale MILP decomposition for annual microgrid
+    operation
+  status: completed
+  started_at: '2026-09-10T12:57:29.405530+00:00'
+  added_ids:
+  - ref-prob02-balancing-vanderveen-2016
+  - ref-prob02-marketdesign-hu-2018
+  - ref-prob02-trading-morales-2010
+  - ref-prob02-imbalance-bottieau-2020
+  - ref-prob02-voll-leahy-2011
+  - ref-prob02-voi-chazarra-2016
+  - ref-prob02-loadshed-zeinalzadeh-2017
+  - ref-prob02-reliability-nojavan-2017
+  - ref-prob02-ems-espin-2020
+  - ref-prob02-centralized-tsikalakis-2008
+  - ref-prob02-microgridcontrol-olivares-2014
+  - ref-prob02-bessmodels-rosewater-2019
+  - ref-prob02-aging-collath-2022
+  - ref-prob02-terminal-han-2025
+  - ref-prob02-twostage-ma-2022
+  - ref-prob02-milpdegr-minh-2024
+  - ref-prob02-scuc-wu-2007
+  - ref-prob02-pvforecast-mayer-2021
+  - ref-prob02-decomposition-conejo-2006
+  - ref-prob02-storagevalue-sioshansi-2009
+  - ref-prob02-dayaheadintraday-xie-2021
+  - ref-prob02-eohe-alemany-2026
+  finished_at: '2026-09-10T12:58:07.814639+00:00'
+  dry_reason: all_candidates_decided
+dry_reason: all_candidates_decided

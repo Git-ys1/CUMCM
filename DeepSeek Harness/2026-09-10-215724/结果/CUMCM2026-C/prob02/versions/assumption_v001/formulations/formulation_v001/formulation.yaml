@@ -1,0 +1,13 @@
+version: formulation_v001
+status: accepted
+created_at: '2026-09-10T13:11:09.522226+00:00'
+parent_version: null
+content_hash: d89f403068536327022e1529030e90921b129635bb4a756fdde4ba9cd189b9fb
+decision_reason: formulation_v001 完整闭合且可进入 implementation：主模型 M1 的目标、决策变量、计划层逐日 MILP
+  约束 (C1)~(C8)、执行层唯一闭式投影 (R1)~(R3)、费用与指标定义、求解策略与交付映射齐备；关键公式均可追溯到题面、附录 1、prob02 文献池摘要级来源或
+  accepted 假设，big-M 由真实上下界 Pbar 导出并证明其紧性；公式验证覆盖量纲、符号一致性、守恒、边界与极限、单调方向、可行性、有界性与数值规模并全部通过；执行层以
+  20 000 组随机组合确认 (R) 是唯一满足平衡与互补性的闭式，消除了 asm-03 字面式可能导致『同时紧急购电与弃光』的实现歧义，并以推导证明 (C8)
+  弃光松弛为必需约束；保留 0-1 与 (C6) 的决定有 asm-10 的物理依据与 400 实例诊断支撑，未把数值证据当定理；解析界、比较标准与求解策略已在未查看任何优化结果前固定，并新增『显式设定
+  mip_rel_gap』的求解规则以避免默认容差下的假最优。无 NEEDS_REVISION 项，故接受并进入 implementation。
+decided_at: '2026-09-10T13:20:52.986820+00:00'
+assumption_version: assumption_v001

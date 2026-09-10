@@ -1,0 +1,73 @@
+{
+  "scenario_ids": [
+    "A1_baseline",
+    "B1_E0_4800",
+    "C4_eta_0.81",
+    "E_price_+20pct",
+    "E_pv_-20pct"
+  ],
+  "checks": [
+    {
+      "scenario_id": "A1_baseline",
+      "diffs": {
+        "cost_day": 0.0,
+        "q_day": 0.0,
+        "curtail_total": 0.0,
+        "balance_residual": 0.0,
+        "soc_residual": 0.0,
+        "complementarity": 0.0
+      },
+      "max_abs_diff": 0.0
+    },
+    {
+      "scenario_id": "B1_E0_4800",
+      "diffs": {
+        "cost_day": 0.0,
+        "q_day": 0.0,
+        "curtail_total": 0.0,
+        "balance_residual": 0.0,
+        "soc_residual": 0.0,
+        "complementarity": 0.0
+      },
+      "max_abs_diff": 0.0
+    },
+    {
+      "scenario_id": "C4_eta_0.81",
+      "diffs": {
+        "cost_day": 0.0,
+        "q_day": 0.0,
+        "curtail_total": 0.0,
+        "balance_residual": 0.0,
+        "soc_residual": 0.0,
+        "complementarity": 0.0
+      },
+      "max_abs_diff": 0.0
+    },
+    {
+      "scenario_id": "E_price_+20pct",
+      "diffs": {
+        "cost_day": 0.0,
+        "q_day": 0.0,
+        "curtail_total": 0.0,
+        "balance_residual": 0.0,
+        "soc_residual": 0.0,
+        "complementarity": 0.0
+      },
+      "max_abs_diff": 0.0
+    },
+    {
+      "scenario_id": "E_pv_-20pct",
+      "diffs": {
+        "cost_day": 0.0,
+        "q_day": 0.0,
+        "curtail_total": 0.0,
+        "balance_residual": 0.0,
+        "soc_residual": 0.0,
+        "complementarity": 0.0
+      },
+      "max_abs_diff": 0.0
+    }
+  ],
+  "max_abs_diff": 0.0,
+  "margin_keys_equal": true
+}

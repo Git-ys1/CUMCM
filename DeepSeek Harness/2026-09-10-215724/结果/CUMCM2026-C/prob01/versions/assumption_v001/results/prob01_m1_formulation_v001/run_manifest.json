@@ -1,0 +1,18 @@
+{
+  "problem_id": "CUMCM2026-C",
+  "question_id": "prob01",
+  "stage": "computation",
+  "assumption_version": "assumption_v001",
+  "formulation_version": "formulation_v001",
+  "model_id": "M1_dayahead_milp",
+  "data_path": "data/附件1.xlsx",
+  "code_path": "problems/CUMCM2026-C/prob01/versions/assumption_v001/code/prob01_solver.py",
+  "code_sha256": "4c22a3049b103eb4187b667949dc71f4878337b983eee6a015e82d44c003abaa",
+  "data_sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377",
+  "seed": 20260101,
+  "time_limit_seconds": 300.0,
+  "mip_gap": 0.0001,
+  "output_directory": "problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001",
+  "generated_at": "2026-09-10T11:20:20.514699+00:00",
+  "python": "3.12.14"
+}

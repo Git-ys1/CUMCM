@@ -1,0 +1,480 @@
+problem_id: CUMCM2026-C
+question_id: prob02
+formulation_version: formulation_v001
+assumption_version: assumption_v001
+model_id: M1_twostage_plan_recourse_milp
+title: 可变负载/光伏下「0:00 计划（预报口径 MILP）—实际补救（紧急购电投影）」两阶段逐日模型
+
+sets:
+  - name: days
+    symbol: d
+    description: 交付日期索引
+    domain: "d = 1..334（2025-02-01 至 2025-12-31）"
+    source: "附件5 result2.xlsx 行范围；asm-16"
+  - name: T_set
+    symbol: t
+    description: 每日 10 分钟时段索引
+    domain: "t = 1..144"
+    period_definition: "时段 t 覆盖区间 ((t-1)/6 h, t/6 h]，t=144 即当天 24:00"
+  - name: T_zero
+    symbol: t=0
+    description: 当天 0:00 初始时刻（初始状态）
+    domain: "t = 0"
+  - name: hours
+    symbol: k
+    description: 附件3 的预报提前整点小时数
+    domain: "k = 1..24；区间 ((h+k-1):00, (h+k):00]"
+    in_this_question: "只用 h = 0（0:00 报表）"
+  - name: blocks
+    symbol: T_b
+    description: 表2 的 6 个 4 小时块
+    domain: "b = 1..6; T_1=1..24, T_2=25..48, T_3=49..72, T_4=73..96, T_5=97..120, T_6=121..144"
+
+parameters:
+  - symbol: dt
+    name: 调度时段长度
+    value: 0.16666666666666666
+    unit: h
+    expression: "1/6"
+    source: "global_symbols.yaml; asm-09"
+  - symbol: T
+    name: 每日时段数
+    value: 144
+    unit: "个"
+    source: "global_symbols.yaml"
+  - symbol: D
+    name: 交付日期数
+    value: 334
+    unit: 天
+    source: "附件5 result2.xlsx；asm-16"
+    note: "仅表示天数，勿与放电量 D_dt 混用"
+  - symbol: price_t
+    name: 时段 t 电价（334 天相同）
+    unit: 元/kWh
+    source: "附件1 列『电价』；asm-13"
+    observed_range: [0.3713, 1.3952]
+    observed_mean: 0.766197
+    min_period: 34
+    max_period: 124
+    time_series: "144 个时段逐时段取值，不随 d 变化，不得平滑或重采样"
+  - symbol: load_dt
+    name: 日期 d 时段 t 的小区负载功率
+    unit: kW
+    source: "附件2『小区负载』；asm-02"
+    observed_range: [1995.72, 7978.88]
+  - symbol: pv_dt
+    name: 日期 d 时段 t 的光伏实际功率
+    unit: kW
+    source: "附件2『光伏发电实际功率』；asm-02"
+    observed_range: [0.0, 10216.2]
+    note: "执行层使用；不得进入计划层（会构成未来信息泄漏）"
+  - symbol: pvfc_dhk
+    name: 日期 d 在时刻 h 发布的第 k 小时光伏预报功率
+    unit: kW
+    source: "附件3；本问取 h=0 子集"
+    expansion_rule: "pvfc_dt = pvfc_{d,0,ceil(t/6)}，同一小时内 6 个时段取同一值（formulation.md 式 (E)）"
+    alignment_check: "交付窗口同日 L1 相对误差 14.86%（334 天）< 次日 16.57% / 前日 16.46%（333 天）"
+  - symbol: Ecap
+    name: 储能最大容量
+    value: 12000
+    unit: kWh
+    source: "附录1"
+    note: "不作为运行上界（asm-11）"
+  - symbol: Emin
+    name: 储电量运行下界
+    value: 1200
+    unit: kWh
+    source: "附录1; asm-11"
+  - symbol: Emax
+    name: 储电量运行上界（防过充）
+    value: 10800
+    unit: kWh
+    source: "附录1; asm-11"
+  - symbol: Pmax
+    name: 最大充放电功率
+    value: 5000
+    unit: kW
+    source: "附录1"
+  - symbol: eta_ch
+    name: 充电效率
+    value: 0.9
+    unit: "-"
+    source: "附录1; asm-09（单向效率口径）"
+  - symbol: eta_dis
+    name: 放电效率
+    value: 0.9
+    unit: "-"
+    source: "附录1; asm-09（单向效率口径）"
+  - symbol: E0
+    name: 日循环水平储电量（每日 0:00 与 24:00）
+    value: 6000
+    unit: kWh
+    source: "附录1 的 2025-01-01 0:00 电量；asm-06"
+  - symbol: alpha_em
+    name: 紧急购电电价倍数
+    value: 5
+    unit: "-"
+    source: "题面问题2；global_symbols.yaml"
+
+derived:
+  - symbol: Pbar
+    name: 单时段充/放电能量上限
+    value: 833.3333333333334
+    unit: kWh
+    expression: "Pbar = Pmax * dt"
+    note: "同为大 M 的紧上界 M* = Pbar（formulation.md §3.4）"
+  - symbol: round_trip_efficiency
+    name: 并网点侧往返效率
+    value: 0.81
+    unit: "-"
+    expression: "eta_ch * eta_dis"
+  - symbol: loss_factor
+    name: 日聚合计划恒等式的循环损耗系数
+    value: 0.18999999999999995
+    unit: "-"
+    expression: "1 - eta_ch*eta_dis"
+  - symbol: price_min
+    name: 电价下界（用于解析下界）
+    value: 0.3713
+    unit: 元/kWh
+    source: "附件1"
+  - symbol: price_max
+    name: 电价上界（用于解析上界）
+    value: 1.3952
+    unit: 元/kWh
+    source: "附件1"
+  - symbol: sum_need_fc
+    name: 交付窗口预报口径净需求
+    value: 18177074.097
+    unit: kWh
+    expression: "sum_{d,t} (load_dt - pvfc_dt) * dt"
+    source: "runtime/tmp/prob02_formulation_probe.json（只读汇总）"
+  - symbol: sum_need_act
+    name: 交付窗口实际口径净需求
+    value: 17939189.495
+    unit: kWh
+    expression: "sum_{d,t} (load_dt - pv_dt) * dt"
+    source: "runtime/tmp/prob02_formulation_probe.json（只读汇总）"
+  - symbol: s_dt
+    name: 执行层净盈余
+    unit: kWh
+    expression: "s_dt = kappa_dt* + (pv_dt - pvfc_dt) * dt"
+    note: "派生记号，非独立决策"
+  - symbol: kappa_act_dt
+    name: 执行层实际弃光量
+    unit: kWh
+    expression: "kappa_act_dt = max(0, s_dt)"
+    note: "由投影闭式给出；交付与图表中的『弃光量』一律指该量"
+  - symbol: Cost_total
+    name: 总购电费用
+    unit: 元
+    expression: "Cost_total = Cost_plan + Cost_em"
+    note: "评估量；其定义见 formulation.md §3.5"
+
+decision_variables:
+  - symbol: q_dt
+    name: 计划购电量（每天 0:00 制定）
+    unit: kWh
+    lower: 0
+    upper: .inf
+    note: "结算量：无论实际取用多少均按 q_dt 与 price_t 计费（asm-04）"
+  - symbol: C_dt
+    name: 计划充电量（并网点侧口径）
+    unit: kWh
+    lower: 0
+    upper: Pbar
+  - symbol: D_dt
+    name: 计划放电量（并网点侧口径）
+    unit: kWh
+    lower: 0
+    upper: Pbar
+  - symbol: E_dt
+    name: 时段 t 末储电量
+    unit: kWh
+    lower: Emin
+    upper: Emax
+    initial: E0
+  - symbol: kappa_dt
+    name: 计划层弃光松弛（= 计划盈余）
+    unit: kWh
+    lower: 0
+    upper: "pvfc_dt * dt"
+    note: "全局符号 curtail_t 的日期下标记法；交付『弃光』指 kappa_act_dt 而非本量"
+  - symbol: y_dt
+    name: 充放电互斥 0-1 指示
+    unit: "-"
+    domain: "{0, 1}"
+  - symbol: u_dt
+    name: 紧急购电量（执行层，由投影闭式确定）
+    unit: kWh
+    lower: 0
+    expression: "u_dt = max(0, (pvfc_dt - pv_dt)*dt - kappa_dt*)"
+    note: "非计划层自由变量；见约束 R1"
+  - symbol: kappa_act_dt
+    name: 执行层实际弃光（由投影闭式确定）
+    unit: kWh
+    lower: 0
+    expression: "kappa_act_dt = max(0, kappa_dt* + (pv_dt - pvfc_dt)*dt)"
+    upper: "pv_dt * dt"
+
+constraints:
+  - id: C1
+    name: 计划层时段能量平衡（预报口径）
+    expression: "q_dt + pvfc_dt*dt + D_dt - C_dt - kappa_dt = load_dt*dt"
+    for: "all d, t"
+  - id: C2
+    name: 储电量状态转移（并网点侧计量）
+    expression: "E_dt = E_d,t-1 + eta_ch*C_dt - D_dt/eta_dis"
+    for: "all d, t"
+  - id: C3
+    name: 储电量运行区间
+    expression: "Emin <= E_dt <= Emax"
+    for: "all d, t"
+  - id: C4
+    name: 日循环边界
+    expression: "E_d,0 = E_d,144 = 6000"
+    for: "all d"
+  - id: C5
+    name: 充放电能量上限
+    expression: "0 <= C_dt <= Pbar; 0 <= D_dt <= Pbar"
+    for: "all d, t"
+  - id: C6
+    name: 充放电互斥（big-M 线性化，M = Pbar）
+    expression: "C_dt <= Pbar*y_dt; D_dt <= Pbar*(1-y_dt); y_dt in {0,1}"
+    for: "all d, t"
+  - id: C7
+    name: 计划购电量非负
+    expression: "q_dt >= 0"
+    for: "all d, t"
+  - id: C8
+    name: 计划弃光非负且不超过该时段预报光伏电量
+    expression: "0 <= kappa_dt <= pvfc_dt*dt"
+    for: "all d, t"
+    note: "必需约束：交付窗口有 272 个时段 (pvfc-load)*dt > Pbar，强制 kappa=0 会不可行"
+  - id: R1
+    name: 执行层净盈余与投影（唯一满足平衡与互补性的闭式）
+    expression: "s_dt = kappa_dt* + (pv_dt - pvfc_dt)*dt; u_dt = max(0, -s_dt); kappa_act_dt = max(0, s_dt)"
+    for: "all d, t"
+    note: "不得把计划层 kappa_dt* 直接代入缺口式（会产生同时紧急购电与弃光的矛盾）"
+  - id: R2
+    name: 执行层能量平衡（由 R1 自动满足，供 sanity 回代）
+    expression: "q_dt* + u_dt + pv_dt*dt + D_dt* - C_dt* - kappa_act_dt = load_dt*dt"
+    for: "all d, t"
+  - id: R3
+    name: 执行层互补性（由 R1 自动满足，供 sanity 回代）
+    expression: "u_dt * kappa_act_dt = 0"
+    for: "all d, t"
+
+objective:
+  plan_layer:
+    expression: "min Cost_plan = sum_{d,t} price_t * q_dt（逐日可分离：sum_d min_d Cost_plan_d）"
+    unit: 元
+    excludes: "紧急购电费、电池退化成本、循环惩罚、弃光惩罚、上网收益（asm-14, asm-08）"
+  evaluation:
+    expression: "Cost_total = Cost_plan + Cost_em = sum_{d,t} price_t*q_dt + alpha_em*sum_{d,t} price_t*u_dt"
+    unit: 元
+    note: "u_dt 在计划时点不可知，故 Cost_total 是评估量而非计划层目标；用实际 pv 求计划构成未来信息泄漏"
+
+metrics:
+  - symbol: Cost_plan
+    name: 计划购电费（年度/逐日）
+    unit: 元
+    role: primary
+    analytic_lower_bound: 6749147.6122
+    feasible_upper_bound: 16565407.2763
+  - symbol: Cost_em
+    name: 紧急购电费（年度/逐日）
+    unit: 元
+    role: primary
+    analytic_upper_bound: 5815010.6013
+  - symbol: Cost_total
+    name: 总购电费用
+    unit: 元
+    role: primary
+    analytic_lower_bound: 6660821.0595
+    analytic_upper_bound: 22380417.8775
+  - symbol: Q_plan
+    name: 全年计划购电量
+    unit: kWh
+    role: reported
+    lower_bound: 18177074.097
+  - symbol: emergency_energy
+    name: 全年紧急购电量
+    unit: kWh
+    role: reported
+    expected: "> 0；由 0:00 预报误差驱动（I1）；u=0 的日期须显式登记"
+  - symbol: curtail_plan_total
+    name: 计划层弃光总量
+    unit: kWh
+    role: diagnostic
+  - symbol: curtail_act_total
+    name: 执行层实际弃光总量
+    unit: kWh
+    role: reported
+    expected: "> 0；不可避免弃光至少 241 个时段（实际口径）"
+  - symbol: complementarity_u_kappa
+    name: 执行层互补性违反 max u*kappa_act
+    unit: kWh^2
+    threshold: 1.0e-9
+  - symbol: balance_residual_plan
+    name: 计划层平衡最大残差
+    unit: kWh
+    threshold: 1.0e-6
+  - symbol: balance_residual_exec
+    name: 执行层平衡最大残差
+    unit: kWh
+    threshold: 1.0e-6
+
+model_candidates:
+  - id: M1
+    name: 两阶段计划—补救 MILP（主模型）
+    structure: "计划层 334 个独立 144 时段 MILP + 执行层闭式投影 (R1)"
+    adopted: true
+  - id: M2
+    name: LP 松弛（去 C6 与 0-1）
+    role: "下界与退化诊断；原始解可能有 min(C,D)>0，不得作为交付解"
+    adopted: false
+  - id: M3
+    name: 完全信息口径（alt-01，计划用 pv_dt）
+    role: "预测误差的信息价值对照；该口径下 u ≡ 0"
+    adopted: false
+  - id: M4
+    name: 典型日预测口径（alt-02，计划用附件1 光伏曲线）
+    role: robustness/ablation 对照
+    adopted: false
+  - id: M5
+    name: 连续跨日边界（alt-03）
+    role: robustness 对照
+    adopted: false
+  - id: M6
+    name: 储能实时再调度（alt-06）
+    role: ablation 对照
+    adopted: false
+  - id: M7
+    name: 考虑预报误差的随机/鲁棒两阶段计划
+    role: "本问不采用：附件3 只有点预报，无误差分布/不确定集证据"
+    adopted: false
+  - id: M8
+    name: 启发式/元启发式
+    role: "不适用：线性 MILP、单日 144 个 0-1、334 日可分离"
+    adopted: false
+
+solver_strategy:
+  primary:
+    model: M1
+    method: "精确 MILP（分支定界），逐日独立求解 334 次"
+    library: "scipy.optimize.milp"
+    backend: HiGHS
+    required_scipy: ">=1.11"
+    observed_scipy: "1.18.1"
+    note: "pulp 未安装，不得依赖；无需外部求解器"
+    required_options:
+      mip_rel_gap: 1.0e-6
+      note: "必须显式设置；HiGHS 默认 1e-4 会把 gap 内可行解报为 status=0（本阶段发现：同一随机实例曾出现 LP 比 MILP 低 0.319 元的假象）"
+    reported_fields: ["status", "termination_reason", "objective", "best_bound", "mip_gap", "node_count", "runtime_seconds", "num_variables", "num_constraints", "seed"]
+  auxiliary:
+    - model: M2
+      role: "LP 下界与退化诊断"
+      constraint: "交付的 C_dt/D_dt 只能取自 M1 解"
+  execution_layer: "闭式投影 (R1)，无需求解；334 次 O(144) 评估"
+
+acceptance_gates:
+  pass:
+    - "逐日 solver status=0 且 mip_gap 已报告（显式 mip_rel_gap <= 1e-6）"
+    - "计划层/执行层平衡残差 <= 1e-6；SOC 与终端残差 <= 1e-6；Emin<=E<=Emax 越界 0"
+    - "互斥违反 <= 1e-9；执行层互补性违反 <= 1e-9；非负性 >= -1e-9"
+    - "kappa_dt <= pvfc_dt*dt 与 kappa_act_dt <= pv_dt*dt 越界 0"
+    - "Cost_plan ∈ [6749147.61, 16565407.28]；Cost_total >= 6660821.06"
+    - "E_d,0 = E_d,144 = 6000（334/334 天）；result2.xlsx 三表完整（334 天）"
+  pass_with_warning:
+    - "存在未证全局最优的日（超时或 gap 未闭合），但保留 best_bound 与 gap 与技术债说明"
+    - "紧急购电为 0 的日期占比异常时需给出解释，但不得据此改口径"
+  fail:
+    - "NaN/Inf；硬约束违反；单位或量纲错误"
+    - "formulation 与实现不一致（尤其把计划层 kappa* 代入缺口式、或用实际 pv 求计划）"
+    - "原始数据被修改或追踪链缺失"
+    - "Cost_plan/Cost_total 越出解析界"
+
+delivery_mapping:
+  result_file: "result2.xlsx"
+  plan_sheet:
+    name: 计划购电量
+    rows: "334 天 × 144 时段（q_dt）+ 全天购电量 + 全天购电费"
+    totals: "全天购电量 = Q_plan_d = sum_t q_dt；全天购电费 = Cost_plan_d = sum_t price_t*q_dt（计划口径，见 warning A-D1）"
+    label_rule: "按列序一一对应（模板第 t 列 = 时段 t），交付时重写为物理区间『0:00-0:10 … 23:50-24:00』（asm-15）"
+  charge_sheet:
+    name: 充放电量
+    rows_per_day: 7
+    blocks: "0:00-4:00, 4:00-8:00, 8:00-12:00, 12:00-16:00, 16:00-20:00, 20:00-24:00"
+    values: "sum_{t in T_b} C_dt, sum_{t in T_b} D_dt；第 1/2 行的『时刻』列填 0:00 与 24:00 的 E_d,0、E_d,144 = 6000"
+  emergency_sheet:
+    name: 紧急购电量
+    format: "日期 + 购电时间段 + 购电量（表4）"
+    rule: "按 asm-17 合并连续时段并令 |u|<1e-9 归零；模板每日仅预留 3 行，段数不同时必须增删行，不得丢段"
+  paper_tables:
+    table_1_periods:
+      "10:00-10:10": 61
+      "12:00-12:10": 73
+      "14:00-14:10": 85
+      "16:00-16:10": 97
+      "18:00-18:10": 109
+      "20:00-20:10": 121
+    table_1_dates: ["2025-03-20", "2025-06-21", "2025-09-23", "2025-12-21"]
+    table_2: "表2 的块充放电量与 0:00/24:00 储电量（同 4 个日期）"
+    table_3: "4 个指定日期的紧急购电时间段与购电量（逐段 + 当日合计）"
+  calibrated_key_dates:
+    "2025-03-20": {load_kWh: 117648.382, pv_actual_kWh: 55439.42, pv_fc0_kWh: 54253.39, fc_shortfall_kWh: 6059.487, shortfall_periods: 36}
+    "2025-06-21": {load_kWh: 81408.065, pv_actual_kWh: 62073.324, pv_fc0_kWh: 61615.903, fc_shortfall_kWh: 3812.266, shortfall_periods: 49}
+    "2025-09-23": {load_kWh: 121182.281, pv_actual_kWh: 59065.666, pv_fc0_kWh: 56935.963, fc_shortfall_kWh: 3500.289, shortfall_periods: 31}
+    "2025-12-21": {load_kWh: 124376.441, pv_actual_kWh: 35338.659, pv_fc0_kWh: 35461.567, fc_shortfall_kWh: 2272.067, shortfall_periods: 33}
+    note: "预报缺口是 u 的上界（还要扣掉 kappa*），不是 u 的预测值；逐 10 分钟判定，勿与小时级正部数混用"
+
+references:
+  - id: ref-prob02-trading-morales-2010
+    used_for: "日前计划与实时/平衡补救的两阶段线性建模结构"
+  - id: ref-prob02-dayaheadintraday-xie-2021
+    used_for: "微网日前计划 + 日内调度的两阶段信息结构先例"
+  - id: ref-prob02-loadshed-zeinalzadeh-2017
+    used_for: "净负荷轨迹 + 未供电/弃光变量；储能降低未供电与弃光风险"
+  - id: ref-prob02-voi-chazarra-2016
+    used_for: "完美信息价值（信息集对照）与 daily-cycle 边界设定先例"
+  - id: ref-prob02-pvforecast-mayer-2021
+    used_for: "光伏预测误差客观存在、预测值≠实际值"
+  - id: ref-prob02-imbalance-bottieau-2020
+    used_for: "偏差有正负两方向、结算规则决定参与者激励"
+  - id: ref-prob02-balancing-vanderveen-2016
+    used_for: "平衡市场中偏差结算与惩罚强度的机制定位"
+  - id: ref-prob02-marketdesign-hu-2018
+    used_for: "未供电定价与市场设计；本题 5 倍系数为题面硬约束"
+  - id: ref-prob02-centralized-tsikalakis-2008
+    used_for: "集中式微网经济调度与并网交换功率平衡"
+  - id: ref-prob02-ems-espin-2020
+    used_for: "集中式 EMS 以日前计划驱动运行的架构先例"
+  - id: ref-prob02-storagevalue-sioshansi-2009
+    used_for: "按全年逐时段评估储能运行价值的口径先例（题录级）"
+  - id: ref-prob02-bessmodels-rosewater-2019
+    used_for: "SOC 递推、效率与边界条件是 BESS 最优控制模型的核心要素"
+  - id: ref-prob02-terminal-han-2025
+    used_for: "边界处理影响储能调度结果（题录级）"
+  - id: ref-prob02-milpdegr-minh-2024
+    used_for: "微网 MILP 调度框架先例（题录级，不支撑定量内容）"
+  - id: ref-prob02-aging-collath-2022
+    used_for: "忽略电池退化会高估收益的边界声明"
+  - id: ref-prob02-twostage-ma-2022
+    used_for: "两阶段随机/鲁棒调度框架先例；不作为本题分布证据"
+  - id: ref-prob02-scuc-wu-2007
+    used_for: "含场景期望目标的随机调度框架先例；本问未采用"
+  - id: ref-prob02-decomposition-conejo-2006
+    used_for: "可分离/分解的一般背景"
+
+provenance:
+  written_by: mathematical-formulator
+  action_id: act-d381a3f015e34671
+  stage: mathematical_formulation
+  computed_full_instance: false
+  probes:
+    - "附件1/2/3 与附件5 result2.xlsx 只读结构核验（prob02_formulation_probe.py / prob02_template_rows_probe.py）"
+    - "交付窗口 334 天的解析界与预报缺口汇总（只读）"
+    - "执行层投影 (R1) 的 20 000 组随机可行性/互补性核验"
+    - "计划层 LP 松弛 vs MILP 的 400 个随机小规模实例诊断（非竞赛实例）"
+  note: "本文件与 formulation.md、formula_validation.md 共同构成 formulation_v001 的 content_hash 输入"

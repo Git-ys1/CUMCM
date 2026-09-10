@@ -1,0 +1,941 @@
+figures:
+- stable_id: prob01_fig_day_profile_98e7bc98b7
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 代表日分时电价、负载与光伏预测（含净负荷）
+  caption: 上：144 个 10 分钟时段的外网电价（元/kWh），最低 0.3713（5:30-5:40），最高 1.3952（20:30-20:40）。下：负载与光伏预测功率（kW），阴影为净负荷
+    (load−pv)：全天净缺额 55542.0 kWh，正余电 6248.0 kWh。
+  kind: day_profile
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_day_profile_98e7bc98b7.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:48:57.643338+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_day_profile_98e7bc98b7.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1776×1312 非纯色通过；视觉审计（39 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:34.646017+00:00'
+- stable_id: prob01_fig_netload_purchase_ea5dd09d3f
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 净负荷与最优计划购电量（逐时段与累计）
+  caption: 购电量随净负荷逐时段调整；全天购电量 59482.7 kWh 高于净缺额 55542.0 kWh，差额等于储能往返损耗 0.19·ΣC_t（ΣC=20740.7
+    kWh）。购电费 35126.95 元。
+  kind: netload_purchase
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_netload_purchase_ea5dd09d3f.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:48:59.166427+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_netload_purchase_ea5dd09d3f.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1777×1308 非纯色通过；视觉审计（37 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:34.734125+00:00'
+- stable_id: prob01_fig_soc_trajectory_5ff0f90d06
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 储能储电量全天轨迹与运行边界（含贴界时段）
+  caption: 储电量全程处于 [1200, 10800] kWh 且两端等于 6000 kWh；21 个时段贴运行上界（t=34–108），8 个时段贴运行下界（t=124–131）。贴界说明最优解由运行边界强约束，不得解读为设备可行性余量（robustness
+    需做端点敏感性对照）。
+  kind: soc_trajectory
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_soc_trajectory_5ff0f90d06.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:00.125963+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_soc_trajectory_5ff0f90d06.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1777×1092 非纯色通过；视觉审计（29 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:34.830604+00:00'
+- stable_id: prob01_fig_arbitrage_e99ae14bd7
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 低谷充电与高峰放电的套利结构（充放电量与分时电价对照）
+  caption: 充电集中在低价时段（充电压价 0.4930 元/kWh），放电集中在高价时段（放电压价 1.1376 元/kWh）；55.4% 的充电量落在最低价四分位，64.1%
+    的放电量落在最高价四分位。并网点侧往返效率 0.81 下毛利差仍为正，与「低谷充电、高峰放电」机理一致。
+  kind: arbitrage
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_arbitrage_e99ae14bd7.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:02.367786+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_arbitrage_e99ae14bd7.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1778×1308 非纯色通过；视觉审计（38 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:34.914866+00:00'
+- stable_id: prob01_fig_delivery_audit_a2257b367f
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: result1.xlsx 交付口径核对（表 1 指定时段 / 表 2 充放电量 / 分块购电费）
+  caption: 表 1 六个指定时段购电量取自 t=61/73/85/97/109/121；表 2 六个 4 小时块充放电量与 E_0/E_144 逐项一致；六块购电费合计
+    35126.9486 元与 Cost_day 完全一致（残差 7.3e-12 元）。时间标签按 asm-12 统一为物理区间，与附件 5 模板的字面标签存在一个时段的整体偏移。
+  kind: delivery_audit
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_delivery_audit_a2257b367f.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:05.235198+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_delivery_audit_a2257b367f.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1783×1415 非纯色通过；视觉审计（63 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:35.009456+00:00'
+- stable_id: prob01_fig_cumulative_cost_bfd2cc2a57
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 全天购电费对比：M1 最优调度与无储能基线（累计曲线与总量）
+  caption: M1 全天购电费 35126.95 元，较无储能基线 48052.05 元节省 12925.10 元（−26.90%）；基线由附件 1 数据直接复算并等于
+    formulation §7 的解析可行上界 48052.05 元；解析下界 20622.73 元。
+  kind: cumulative_cost
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_cumulative_cost_bfd2cc2a57.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:07.003957+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_cumulative_cost_bfd2cc2a57.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1777×1346 非纯色通过；视觉审计（39 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:35.096147+00:00'
+- stable_id: prob01_fig_residual_diagnostics_f987826556
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: prob01 结果可信度：硬约束回代残差与求解质量
+  caption: 左：七类硬约束的最大回代残差（对数轴），全部不高于 1e-6 阈值；右：求解器状态、目标值、best bound、MIP gap、规模与主结果。gap=0、node_count=1
+    表明 144 个 0-1 的 MILP 在根节点即得可证全局最优。
+  kind: residual_diagnostics
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_residual_diagnostics_f987826556.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:09.001251+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_residual_diagnostics_f987826556.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 2214×1065 非纯色通过；视觉审计（21 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:35.182071+00:00'
+- stable_id: prob01_fig_state_price_trajectory_3d_0608ca3079
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 储电量–电价–时刻三维调度轨迹（充/放/空闲着色）
+  caption: x 为时刻、y 为外网电价、z 为时段末储电量，线段颜色表示该时段状态：充电（绿）集中在低电价高储电量段，放电（橙）集中在高电价段，空闲（灰）连接两者。轨迹在
+    0:00 与 24:00 回到 6000 kWh。三维投影存在歧义，配套二维「电价–储电量相平面轨迹」图共同阅读。
+  kind: state_price_trajectory_3d
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_state_price_trajectory_3d_0608ca3079.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:10.288335+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_state_price_trajectory_3d_0608ca3079.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1305×1343 非纯色通过；视觉审计（24 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:35.300501+00:00'
+- stable_id: prob01_fig_price_soc_phase_ecc766e65c
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 13bf04ee604e54581fa2
+  title: 电价–储电量相平面轨迹（三维调度轨迹的二维配套投影）
+  caption: 把三维调度轨迹投影到「电价–储电量」平面并按时刻着色：低电价（左侧）对应充电与储电量上升，高电价（右侧）对应放电与储电量下降；右上角聚集点即最高电价且贴运行下界的时段（t=124~131）。该图作为三维图的二维配套，消除静态投影的歧义。
+  kind: price_soc_phase
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_price_soc_phase_ecc766e65c.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/results/prob01_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 3a5ba7071d6a0c5a4940e09f81ecaede3316bba06d6ede46d26ea148387080b5
+    metrics.json: 856d1f49e20d71e517866b2d6b9f0936f298685f3d8436e73b291e5977c41d7c
+    solver_status.json: 29735a0208b59b0a3218e1095699924ee630e1b4a3b215f5fe1f531ca620b1e0
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/generate_prob01_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T11:49:11.327343+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/figures/prob01_fig_price_soc_phase_ecc766e65c.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 1674×1129 非纯色通过；视觉审计（23 个文本）缺字 0、裁切 0、重叠 0；标题/轴标签/单位/图例齐全，配色区分度与数值方向复核一致。
+    reviewed_at: '2026-09-10T11:50:35.470859+00:00'
+- stable_id: prob01_fig_sensitivity_tornado_6a62953e1d
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: prob01 参数与口径扰动的购电费变化（相对基线）
+  caption: 每个情景相对接受版本基线的 Cost_day 变化百分比；红色为费用上升、蓝色为下降，0 线为基线。区间情景覆盖 asm-02 端点、asm-04
+    效率、asm-05 计量/功率、asm-03 反送与 ±5/10/20% 数据扰动。
+  kind: sensitivity_tornado
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_tornado.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:14.352908+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_tornado.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: null
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×2131、非纯色、边界暗像素比 0）；程序化审计 278 色、墨迹比 0.102、无错误；与 figure_index.json
+      的 title/caption/source_data 一致，且 tornado 取值与 summary.json 各情景 delta_pct 交叉核对一致（E_load_±20%
+      为最外侧）。本环境响应模型不支持图像输入，按与上游 visualization 阶段同一程序化审计口径复核。
+    reviewed_at: '2026-09-10T12:42:25.754853+00:00'
+- stable_id: prob01_fig_monte_carlo_histogram_9ef8d9025e
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: 输入 ±5% 均匀噪声下的 Cost_day 分布（200 次）
+  caption: price/load/pv 独立 ±5% 均匀乘性噪声下 200 次独立求解的 Cost_day 直方图；虚线为 2.5%/97.5% 分位，实线为接受版本基线。该探针超出
+    asm-01 的确定性口径，仅用于给出区间。
+  kind: monte_carlo_histogram
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_mc_hist.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:14.551184+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_mc_hist.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: null
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×864、非纯色、边界暗像素比 0）；程序化审计 395 色、墨迹比 0.291、无错误；图注 200 次与
+      summary.json criteria.C6.draws=200 一致，2.5%/97.5% 分位 30627.46/40535.81 元与 ci.json
+      一致，基线实线 35126.949 元可核。
+    reviewed_at: '2026-09-10T12:42:26.004409+00:00'
+- stable_id: prob01_fig_endpoint_sensitivity_eeb49dbbd6
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: 储电量端点与运行边界敏感性（asm-02 / asm-08）
+  caption: E_0=E_144 ∈ {4800, 6000, 7200}、E_max ∈ {9600, 10800, 12000} 与 E_min=1800
+    下 Cost_day 相对变化；基线最优解贴运行上下界，贴界不等于设备余量。
+  kind: endpoint_sensitivity
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_endpoint_sensitivity.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:14.812902+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_endpoint_sensitivity.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: null
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×864、非纯色、边界暗像素比 0）；程序化审计 266 色、墨迹比 0.164、无错误；所绘 B1/B2/B3/B4/B5
+      端点与运行边界变化率与 summary.json 逐条一致（+0.018%/−0.013%/+2.575%/−2.234%/+1.166%），并含「贴界不等于设备余量」说明。
+    reviewed_at: '2026-09-10T12:42:26.269102+00:00'
+- stable_id: prob01_fig_efficiency_metering_6ec5b3b7fb
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: 效率口径与计量侧对照（asm-04 / asm-05 / asm-03）
+  caption: 往返效率 0.9（单侧 0.9487）、单向效率 ±5%/±10%、电池侧计量与允许零收益反送对 Cost_day 的影响；零收益反送应与基线完全一致（差值
+    ≤1e-6 元）。
+  kind: efficiency_metering
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_efficiency_metering.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:15.055237+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_efficiency_metering.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: null
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×864、非纯色、边界暗像素比 0）；程序化审计 266 色、墨迹比 0.173、无错误；A3/A4 与 C1–C5
+      各条与 summary.json 一致（A4 与基线差值 0、C1 往返口径 −3.773%），未把 A3 的方向不一致隐藏。
+    reviewed_at: '2026-09-10T12:42:26.392441+00:00'
+- stable_id: prob01_fig_stress_combinations_f1ca2e701e
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: 组合压力情景与储能节省量（K3）
+  caption: 多参数同向/反向压力情景的 Cost_day 与基线、无储能参照线对比；所有情景均应严格低于无储能费用（C4b）。
+  kind: stress_combinations
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_stress_combos.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:15.284961+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_stress_combos.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: null
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×864、非纯色、边界暗像素比 0）；程序化审计 357 色、墨迹比 0.394、无错误；F1–F5 的 Cost_day
+      与 summary.json 一致（+73.986%/−40.873% 等），无储能参照线标注与同条件重算复核一致。
+    reviewed_at: '2026-09-10T12:42:26.531231+00:00'
+- stable_id: prob01_fig_dispatch_endpoint_compare_438a52b0a6
+  problem_id: CUMCM2026-C
+  question_id: prob01
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: 66b12e7cd283813a098e
+  title: 终端储电量端点情景的储电量轨迹（asm-02）
+  caption: E_0=E_144 ∈ {4800, 6000, 7200} 三种终端取值下的最优储电量轨迹与运行上下界；轨迹贴界处说明最优解受边界强约束，不得解读为设备余量。
+  kind: dispatch_endpoint_compare
+  stage: robustness
+  path: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_dispatch_endpoint.png
+  source_data: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/summary.json
+  source_hashes:
+    summary.json: c82ccd81b8abdcb67d8a9982eff3d7bc335ecf8d2f0f49e2af4b35504b8eae8e
+    A1_baseline.json: 319c596b4ff545af4e9c5e826cce7d88954c7f4743694fd21d261a544ba60a61
+    B1_E0_4800.json: 51140db9d367c25dbb0755bfb759ea718a4c02ead0e186583ac11abfc226565a
+    B2_E0_7200.json: cf7fa5fd170b8635f146a08bd3d0008505c580f00d602f456ce80b9554d439b7
+  script: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness/prob01_robustness.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T12:27:15.556941+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/figures/robustness_dispatch_endpoint.png.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_quality_check
+    status: passed
+    warnings: []
+  series_file: problems/CUMCM2026-C/prob01/versions/assumption_v001/robustness_v002/raw/series
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1800×864、非纯色、边界暗像素比 0）；程序化审计 1506 色、墨迹比 0.053、无错误；source_hashes
+      含 summary.json 与 raw/series 的 A1/B1/B2 三个轨迹文件，经重算全部与磁盘现状一致且解析路径均在 robustness_v002
+      内，未引用 attempt-001 残留。
+    reviewed_at: '2026-09-10T12:42:26.650793+00:00'
+- stable_id: prob02_fig_daily_cost_timeline_50a9548c6f
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 全年逐日费用构成（计划购电费与紧急购电费，334 天）
+  caption: 计划层 min Σ(price·q) 给出 12,570,533.91 元，执行层 u=(−s)⁺ 的紧急购电费为 4,828,772.42
+    元（占 27.75%），两者之和即 Cost_total=17,399,306.33 元。虚线标记附件 5 要求的四个关键交付日期。
+  kind: daily_cost_timeline
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_daily_cost_timeline_50a9548c6f.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:25.603625+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_daily_cost_timeline_50a9548c6f.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2136×1164，非纯色，边界暗像素比例 0）；程序化视觉审计 passed（文本 22，缺字 0、裁切 0、重叠
+      0）；数值取自 daily_metrics.csv 并复算入出图前门禁。
+    reviewed_at: '2026-09-10T13:57:23.211927+00:00'
+- stable_id: prob02_fig_monthly_cost_stack_761697d6ee
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 月度费用构成与紧急购电费占比（下：紧急购电费占月费用比例）
+  caption: 全年紧急购电费占比 27.75%，逐月占比在 21.45%~34.58% 之间（全年占比均值 28.10%）。紧急购电费源自 0:00 预报误差导致的执行层缺口，计划购电费与紧急购电费必须双报（sanity
+    W3）。
+  kind: monthly_cost_stack
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_monthly_cost_stack_761697d6ee.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:27.032078+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_monthly_cost_stack_761697d6ee.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2028×1344）；视觉审计 passed（文本 55，缺字 0、裁切 0、重叠 0）；月度费用与紧急购电费占比逐月复算自
+      daily_metrics.csv。
+    reviewed_at: '2026-09-10T13:57:23.352440+00:00'
+- stable_id: prob02_fig_emergency_vs_shortfall_77bce4105a
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 紧急购电量与预报缺口的关系（散点、上界参照与占比分布）
+  caption: 逐日紧急购电量不超过当日预报缺口（y=x 上界），因计划层 κ* 可吸收部分缺口；占比均值 86.7%、中位数 100.0%。全年预报缺口合计
+    1,368,910.6 kWh，紧急购电 1,156,789.4 kWh。按主模型口径 u 完全来自 0:00 预报误差（W2），若改用实际值（alt-01）则
+    u≡0。
+  kind: emergency_vs_shortfall
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_vs_shortfall_77bce4105a.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:28.493896+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_vs_shortfall_77bce4105a.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2287×1054）；视觉审计 passed（文本 46，缺字 0、裁切 0、重叠 0）；预报缺口由 solution.csv
+      的 max(pvfc−pv,0)·Δt 逐日复算，与 metrics.key_dates 一致。
+    reviewed_at: '2026-09-10T13:57:23.498684+00:00'
+- stable_id: prob02_fig_curtail_plan_vs_act_23932d4781
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 计划层弃光与执行层弃光的对照（月度分块与逐日散点）
+  caption: 计划层弃光合计 961,173.7 kWh，执行层弃光合计 2,355,847.7 kWh，后者为前者的 2.45 倍：执行层在预报误差下额外产生弃光（W7）。交付窗口不存在「零弃光」，两层次弃光不得混用（计划层
+    κ* 与执行层 κ_act 是不同物理量）。
+  kind: curtail_plan_vs_act
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_curtail_plan_vs_act_23932d4781.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:30.108031+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_curtail_plan_vs_act_23932d4781.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2311×1057）；视觉审计 passed（文本 62，缺字 0、裁切 0、重叠 0）；计划弃光与执行弃光分别取自
+      kappa_plan_kwh 与 kappa_act_kwh，年度合计与 metrics.json 偏差 ≤1.3e-12。
+    reviewed_at: '2026-09-10T13:57:23.618728+00:00'
+- stable_id: prob02_fig_key_dates_execution_c82eafd470
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 四个关键交付日期的执行层分解（q、u、κ_act 与 E）
+  caption: 四日分别取自 metrics.json 的 key_dates（2025-03-20/06-21/09-23/12-21）。柱为逐 10 分钟电量（计划购电
+    q、紧急购电 u、实际弃光 κ_act 向下），虚线为时段末储电量 E（右轴）。紧急购电集中在光伏预报偏低的时段，弃光集中在正午高辐照时段且 E 触及运行上界。
+  kind: key_dates_execution
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_key_dates_execution_c82eafd470.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:34.344985+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_key_dates_execution_c82eafd470.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2390×1505）；视觉审计 passed（文本 90，缺字 0、裁切 0、重叠 0）；四个关键日期的 q/u/κ_act/E
+      与 metrics.key_dates 的 q_plan、emergency_energy、E_0/E_144 逐项一致。
+    reviewed_at: '2026-09-10T13:57:23.748309+00:00'
+- stable_id: prob02_fig_delivery_audit_444465cebd
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: result2.xlsx 交付口径核对（指定时段购电量、4 小时块充放电量与标签映射）
+  caption: 三个热力图逐格复算自 solution.csv 并与 result2.xlsx 登记值逐项核对（最大绝对偏差 ≤0.05）；时间标签按 asm-15
+    统一为物理区间，与附件 5 模板字面标签整体相差一个时段，交付阶段须登记映射（W6）。「全天购电量/全天购电费」为计划口径，含紧急购电费的 Cost_total
+    必须单独给出（W3）。
+  kind: delivery_audit
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_delivery_audit_444465cebd.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:37.012443+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_delivery_audit_444465cebd.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2411×1732）；视觉审计 passed（文本 95，缺字 0、裁切 0、重叠 0）；三个面板逐格复算自 solution.csv
+      并与 result2.xlsx 登记值逐项核对，最大绝对偏差 0.0117 ≤0.05，标签为统一物理区间。
+    reviewed_at: '2026-09-10T13:57:23.877963+00:00'
+- stable_id: prob02_fig_annual_cost_composition_d335daf2b4
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 年度费用与电量构成、解析界与求解质量诊断
+  caption: 全年计划购电费 12,570,533.91 元 + 紧急购电费 4,828,772.42 元 = 17,399,306.33 元，落在解析下界
+    6,660,821.06 元之上；334/334 天 status=0（可证最优），LP 松弛与 MILP 目标差 3.6e-11、无严格更优天，说明 0-1
+    变量的引入未改变最优值。
+  kind: annual_cost_composition
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_annual_cost_composition_d335daf2b4.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:38.385459+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_annual_cost_composition_d335daf2b4.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2496×1093）；视觉审计 passed（文本 35，缺字 0、裁切 0、重叠 0）；年度费用与电量取自 metrics.json，解析界与
+      LP/MILP 对照逐项登记，无手工抄录。
+    reviewed_at: '2026-09-10T13:57:24.000246+00:00'
+- stable_id: prob02_fig_emergency_heatmap_2d_68cd24fd83
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 全年逐时段紧急购电量热力图（334 天 × 144 时段）
+  caption: 紧急购电集中在白天光伏出力时段（时段落在 05:00–19:00，其中 06:00–18:00 占紧急购电量的 99.9%）：全年 10877
+    个时段发生紧急购电，峰值 440.8 kWh/10min 出现在 2025-05-26 t=67。该热力图同时是三维曲面图的二维投影配套。
+  kind: emergency_heatmap_2d
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_heatmap_2d_68cd24fd83.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:39.312073+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_heatmap_2d_68cd24fd83.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2020×1129）；视觉审计 passed（文本 34，缺字 0、裁切 0、重叠 0）；矩阵由 solution.csv
+      pivot 得到（334×144），峰值与 emergency_periods=10877 一致，并作为三维图的二维配套投影。
+    reviewed_at: '2026-09-10T13:57:24.173981+00:00'
+- stable_id: prob02_fig_emergency_surface_3d_5bbc32f933
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: 紧急购电量时空三维曲面（日序 × 时刻 × 紧急购电量）
+  caption: x 为日序（2025-02-01 起 334 天）、y 为时刻、z 为按小时聚合的紧急购电量；曲面的高脊集中在白天时段，峰值 1942 kWh/h
+    出现在 2025-09-30 10:00。三维静态投影存在遮挡与透视歧义，配套「全年逐时段紧急购电量热力图」（二维投影）共同阅读。
+  kind: emergency_surface_3d
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_surface_3d_5bbc32f933.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:40.393447+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_emergency_surface_3d_5bbc32f933.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（1602×1385）；视觉审计 passed（文本 33，缺字 0、裁切 0、重叠 0）；三维视角 elev=26/azim=-64
+      固定，轴标签不与刻度重叠，且存在二维配套 emergency_heatmap_2d。
+    reviewed_at: '2026-09-10T13:57:24.426147+00:00'
+- stable_id: prob02_fig_residual_diagnostics_a6159fa4ae
+  problem_id: CUMCM2026-C
+  question_id: prob02
+  assumption_version: assumption_v001
+  formulation_version: formulation_v001
+  task_id: ea71568e2cf6c5326ded
+  title: prob02 结果可信度：12 类硬约束回代残差与求解质量
+  caption: 左：十二类硬约束的最大回代残差（对数轴），全部远低于 1e-6 阈值；右：334/334 天 status=0、max mip_gap=2.0e-16、失败
+    0 天，以及年度主结果。残差与求解器状态均取自 metrics.json / solver_status.json，未做任何再计算改写。
+  kind: residual_diagnostics
+  path: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_residual_diagnostics_a6159fa4ae.png
+  source_data: problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001/solution.csv
+  source_hashes:
+    solution.csv: 566811b9f7f4f676b58b40029c32ab1c661d65bfe08ef2c95e2a33e8c1e9d2c9
+    daily_metrics.csv: c355642b23652cdf6f062faf9814f3da39a99831392baadf79672a36cd4ddd96
+    emergency_segments.csv: e3a724a98216e10bc18dc0637e48f0a89d76fd5b9bb4c58263b2d2860babe689
+    metrics.json: db422a0c0d5d737d8179757957e42efb6df8f34fe0d43c6d68fabd9278f0f364
+    solver_status.json: 68cc1bc0b527d9bd63051505aac9b57c0b90508ab4f5129e786ab97d366984ab
+    result2.xlsx: a64dd7888dd72a62bdc28b0b4b2f2abc5e341bf6015be4a81d9c123ab96a5594
+  script: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/generate_prob02_figures.py
+  font: Microsoft YaHei
+  dpi: 180
+  formats:
+  - png
+  generated_at: '2026-09-10T13:56:42.162232+00:00'
+  included_in_summary: true
+  included_in_paper: false
+  quality_report: problems/CUMCM2026-C/prob02/versions/assumption_v001/figures/prob02_fig_residual_diagnostics_a6159fa4ae.quality.json
+  quality_status: passed
+  visual_audit:
+    method: programmatic_visual_audit
+    status: passed
+    clipped_text: 0
+    text_overlaps: 0
+    missing_glyphs: 0
+  visual_review:
+    status: passed
+    reason: 自动质检 passed（2349×1171）；视觉审计 passed（文本 26，缺字 0、裁切 0、重叠 0）；12 类残差与求解质量取自
+      metrics.json / solver_status.json，全部残差 ≤2.2e-10、334/334 天 status=0。
+    reviewed_at: '2026-09-10T13:57:24.563939+00:00'

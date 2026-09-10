@@ -1,0 +1,471 @@
+{
+  "generated_at": "2026-09-10T13:56:42.318888+00:00",
+  "method": "programmatic_visual_audit",
+  "method_note": "本环境最终响应模型不支持图像输入，无法进行像素级人工目检；视觉复核以可复现的程序化审计代替，覆盖：CJK 字形覆盖（FT2Font charmap）、文本越界/裁切、文本两两重叠（较小者重叠面积比 >25% 即失败）、字体族一致性、每坐标轴标题/轴标签/图例完整性、色板两两 RGB 区分度、三维图视角与二维配套投影存在性。",
+  "font": "Microsoft YaHei",
+  "mono_font": "NSimSun",
+  "dpi": 180,
+  "gate": {
+    "relative_errors": {
+      "cost_plan": 6.896087774771134e-13,
+      "q_plan": 7.110595439570586e-13,
+      "charge_total": 3.0165426870702785e-11,
+      "discharge_total": 4.095094124238955e-12,
+      "curtail_plan_total": 2.8353696505469215e-12,
+      "curtail_act_total": 1.2561412619910114e-12,
+      "emergency_energy": 2.882231475341168e-13
+    },
+    "checks": {
+      "cost_total_vs_parts": 0.0,
+      "emergency_periods": 0,
+      "emergency_segment_rows": 0,
+      "segment_energy": 2.3283064365386963e-10,
+      "energy_lower": 0.0,
+      "energy_upper": 0.0,
+      "terminal": 0.0,
+      "curtail_period_count": 0,
+      "surplus_min_matches_negative_extreme": 0.0,
+      "nonfinite_count": 0.0
+    },
+    "delivery_max_abs": 0.011658382602036
+  },
+  "color_separation": {
+    "palette": {
+      "primary": "#1F4E79",
+      "secondary": "#70AD47",
+      "accent": "#ED7D31",
+      "neutral": "#7F8C8D",
+      "warning": "#C00000"
+    },
+    "pairwise_distance": [
+      {
+        "pair": "primary/secondary",
+        "distance": 134.5
+      },
+      {
+        "pair": "primary/accent",
+        "distance": 223.2
+      },
+      {
+        "pair": "primary/neutral",
+        "distance": 116.0
+      },
+      {
+        "pair": "primary/warning",
+        "distance": 216.0
+      },
+      {
+        "pair": "secondary/accent",
+        "distance": 135.7
+      },
+      {
+        "pair": "secondary/neutral",
+        "distance": 78.8
+      },
+      {
+        "pair": "secondary/warning",
+        "distance": 203.4
+      },
+      {
+        "pair": "accent/neutral",
+        "distance": 144.2
+      },
+      {
+        "pair": "accent/warning",
+        "distance": 141.6
+      },
+      {
+        "pair": "neutral/warning",
+        "distance": 209.1
+      }
+    ],
+    "minimum_distance": 78.8
+  },
+  "three_dimensional": {
+    "viewpoint": {
+      "elev": 26,
+      "azim": -64
+    },
+    "has_2d_companion": true,
+    "slugs": [
+      "daily_cost_timeline",
+      "monthly_cost_stack",
+      "emergency_vs_shortfall",
+      "curtail_plan_vs_act",
+      "key_dates_execution",
+      "delivery_audit",
+      "annual_cost_composition",
+      "emergency_heatmap_2d",
+      "emergency_surface_3d",
+      "residual_diagnostics"
+    ]
+  },
+  "figures": [
+    {
+      "kind": "daily_cost_timeline",
+      "text_count": 22,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "monthly_cost_stack",
+      "text_count": 55,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "emergency_vs_shortfall",
+      "text_count": 46,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 2,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "curtail_plan_vs_act",
+      "text_count": 62,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": true
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "key_dates_execution",
+      "text_count": 90,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 2,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 3,
+          "title": true,
+          "xlabel": true,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 4,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 5,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 6,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 7,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "delivery_audit",
+      "text_count": 95,
+      "fonts": [
+        "Microsoft YaHei",
+        "NSimSun"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 2,
+          "title": true,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 3,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "annual_cost_composition",
+      "text_count": 35,
+      "fonts": [
+        "Microsoft YaHei",
+        "NSimSun"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": true,
+          "xlabel": true,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 2,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "emergency_heatmap_2d",
+      "text_count": 34,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "emergency_surface_3d",
+      "text_count": 33,
+      "fonts": [
+        "Microsoft YaHei"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": true,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": false,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    },
+    {
+      "kind": "residual_diagnostics",
+      "text_count": 26,
+      "fonts": [
+        "Microsoft YaHei",
+        "NSimSun"
+      ],
+      "missing_glyphs": [],
+      "clipped_text": [],
+      "text_overlaps": [],
+      "axes": [
+        {
+          "index": 0,
+          "title": true,
+          "xlabel": true,
+          "ylabel": true,
+          "zlabel": null,
+          "legend": false
+        },
+        {
+          "index": 1,
+          "title": false,
+          "xlabel": false,
+          "ylabel": false,
+          "zlabel": null,
+          "legend": false
+        }
+      ],
+      "status": "passed"
+    }
+  ],
+  "status": "passed"
+}

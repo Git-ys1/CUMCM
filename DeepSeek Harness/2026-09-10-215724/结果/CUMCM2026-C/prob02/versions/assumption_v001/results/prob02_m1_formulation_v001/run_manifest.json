@@ -1,0 +1,48 @@
+{
+  "problem_id": "CUMCM2026-C",
+  "question_id": "prob02",
+  "stage": "computation",
+  "assumption_version": "assumption_v001",
+  "formulation_version": "formulation_v001",
+  "model_id": "M1_twostage_plan_recourse_milp",
+  "code_path": "problems/CUMCM2026-C/prob02/versions/assumption_v001/code/prob02_solver.py",
+  "code_sha256": "b2e85d61d01a6e8d3abb66827585e55ed31745bbec1725ca6951ac4e72549bb0",
+  "inputs": {
+    "price": {
+      "path": "data/附件1.xlsx",
+      "sha256": "66b87134f5ecccd68184d3539bb1293ef039f9e0fdd955a589b9bfa7f227c377"
+    },
+    "load_pv": {
+      "path": "data/附件2.xlsx",
+      "sha256": "2e95fd446bfafa0d8c59577b5c2e2ea8b3f1def20dde54a3062556f4da9b4c72"
+    },
+    "forecast": {
+      "path": "data/附件3.xlsx",
+      "sha256": "8a61b06c52bd0d639a1cc37c61a7d9f5b75edcbca718f64c1bd3498ec9f9d843"
+    },
+    "template": {
+      "path": "data/附件5/result2.xlsx",
+      "sha256": "1c26494cfc6d754e0bd9bff7e13e1126a73d2d2da6c5336eb251d89b9a1a1a47"
+    }
+  },
+  "seed": 20260102,
+  "time_limit_seconds_per_day": 120.0,
+  "total_budget_seconds": 1500.0,
+  "mip_gap": 1e-06,
+  "output_directory": "problems/CUMCM2026-C/prob02/versions/assumption_v001/results/prob02_m1_formulation_v001",
+  "generated_at": "2026-09-10T13:32:15.388245+00:00",
+  "python": "3.12.14",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "pandas": "3.0.5",
+  "delivery_mapping": {
+    "result_file": "result2.xlsx",
+    "plan_sheet": "计划购电量（列序一一对应模板第 t 列 = 时段 t，标签重写为物理区间）",
+    "charge_sheet": "充放电量（每日 7 行：6 个 4 小时块 + 0:00/24:00 储电量）",
+    "emergency_sheet": "紧急购电量（按 asm-17 合并连续时段；u=0 的日期显式登记为 0）",
+    "rounding": {
+      "energy": 3,
+      "cost": 2
+    }
+  }
+}

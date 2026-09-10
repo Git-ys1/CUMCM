@@ -1,0 +1,84 @@
+{
+  "problem_id": "CUMCM2026-C",
+  "question_id": "prob02",
+  "assumption_version": "assumption_v001",
+  "formulation_version": "formulation_v001",
+  "seed": 20260102,
+  "modes": {
+    "milp": {
+      "days": 334,
+      "objective_total": 12570533.913786462,
+      "status_counts": {
+        "0": 334
+      },
+      "max_mip_gap": 2.010128890591698e-16,
+      "runtime_seconds": 29.174731900031475
+    },
+    "lp": {
+      "days": 334,
+      "objective_total": 12570533.913786462,
+      "status_counts": {
+        "0": 334
+      },
+      "max_mip_gap": 0.0,
+      "runtime_seconds": 3.465015300014784
+    }
+  },
+  "comparison": {
+    "milp_objective_total": 12570533.913786462,
+    "lp_objective_total": 12570533.913786462,
+    "lp_minus_milp_max": 3.637978807091713e-11,
+    "lp_le_milp": true,
+    "lp_strictly_better_days": 0,
+    "lp_max_min_charge_discharge": 0.0
+  },
+  "annual": {
+    "days_total": 334,
+    "days_with_incumbent": 334,
+    "days_failed": 0,
+    "failed_days": [],
+    "cost_plan": 12570533.91378646,
+    "cost_em": 4828772.4162658,
+    "cost_total": 17399306.33005226,
+    "q_plan": 20385219.03615807,
+    "charge_total": 6563006.6217018515,
+    "discharge_total": 5316035.363578499,
+    "curtail_plan_total": 961173.6809847201,
+    "curtail_act_total": 2355847.6824096707,
+    "emergency_energy": 1156789.3993416172,
+    "emergency_periods": 10877,
+    "emergency_segments": 1919,
+    "days_with_zero_emergency": 0,
+    "curtail_act_period_count": 16440
+  },
+  "gates": {
+    "all_days_have_incumbent": true,
+    "hard_constraints": true,
+    "cost_plan_in_bounds": true,
+    "cost_em_le_upper": true,
+    "cost_total_ge_lower": true,
+    "q_plan_ge_lower": true,
+    "terminal_daily_ok": true,
+    "finite": true,
+    "all_pass": true
+  },
+  "residuals": {
+    "balance_plan_max_abs": 9.458744898438454e-11,
+    "balance_exec_max_abs": 9.458744898438454e-11,
+    "soc_max_abs": 1.3642420526593924e-10,
+    "energy_bound_violation": 5.95719029661268e-11,
+    "terminal_residual": 0.0,
+    "power_upper_violation": 2.3874235921539366e-12,
+    "complementarity_max_min": 1.8530954548623413e-11,
+    "exec_complementarity_max": 0.0,
+    "nonnegativity_violation": 2.1100277081131935e-10,
+    "kappa_upper_violation": 0.0,
+    "kappa_act_upper_violation": 0.0,
+    "integrality_violation": 0.0,
+    "nan_inf_count": 0
+  },
+  "pbar_kwh": 833.3333333333333,
+  "periods": 144,
+  "days": 334,
+  "generated_at": "2026-09-10T13:32:15.368240+00:00"
+}
