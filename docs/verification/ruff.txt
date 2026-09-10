@@ -1,0 +1,102 @@
+scripts\automm\agent_runtime.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\agent_runtime.py:15:121: E501 Line too long (126 > 120)
+scripts\automm\agent_runtime.py:21:121: E501 Line too long (147 > 120)
+scripts\automm\agent_runtime.py:65:75: E501 Line too long (158 > 120)
+scripts\automm\agent_runtime.py:69:88: E501 Line too long (129 > 120)
+scripts\automm\agent_runtime.py:134:121: E501 Line too long (214 > 120)
+scripts\automm\agent_runtime.py:137:121: E501 Line too long (152 > 120)
+scripts\automm\agent_runtime.py:158:121: E501 Line too long (142 > 120)
+scripts\automm\agent_runtime.py:182:121: E501 Line too long (261 > 120)
+scripts\automm\agent_runtime.py:183:121: E501 Line too long (305 > 120)
+scripts\automm\agent_runtime.py:187:121: E501 Line too long (225 > 120)
+scripts\automm\agent_runtime.py:191:121: E501 Line too long (202 > 120)
+scripts\automm\agent_runtime.py:254:121: E501 Line too long (165 > 120)
+scripts\automm\agent_runtime.py:265:121: E501 Line too long (127 > 120)
+scripts\automm\agent_runtime.py:268:121: E501 Line too long (192 > 120)
+scripts\automm\agent_runtime.py:270:121: E501 Line too long (163 > 120)
+scripts\automm\failure_policy.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\failure_policy.py:96:121: E501 Line too long (127 > 120)
+scripts\automm\failure_policy.py:108:121: E501 Line too long (136 > 120)
+scripts\automm\remote\github.py:41:121: E501 Line too long (129 > 120)
+scripts\automm\runner.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\runner.py:16:121: E501 Line too long (138 > 120)
+scripts\automm\runner.py:18:121: E501 Line too long (121 > 120)
+scripts\automm\runner.py:31:121: E501 Line too long (126 > 120)
+scripts\automm\runner.py:51:121: E501 Line too long (136 > 120)
+scripts\automm\runner.py:65:121: E501 Line too long (200 > 120)
+scripts\automm\runner.py:66:121: E501 Line too long (173 > 120)
+scripts\automm\runner.py:71:121: E501 Line too long (147 > 120)
+scripts\automm\runner.py:74:121: E501 Line too long (140 > 120)
+scripts\automm\runner.py:76:121: E501 Line too long (209 > 120)
+scripts\automm\runner.py:90:121: E501 Line too long (149 > 120)
+scripts\automm\runner.py:92:121: E501 Line too long (143 > 120)
+scripts\automm\runner.py:117:121: E501 Line too long (125 > 120)
+scripts\automm\runner.py:120:121: E501 Line too long (176 > 120)
+scripts\automm\runner.py:122:121: E501 Line too long (122 > 120)
+scripts\automm\runner.py:124:121: E501 Line too long (123 > 120)
+scripts\automm\runner.py:126:121: E501 Line too long (184 > 120)
+scripts\automm\runner.py:128:121: E501 Line too long (149 > 120)
+scripts\automm\runner.py:151:121: E501 Line too long (164 > 120)
+scripts\automm\runner.py:169:121: E501 Line too long (162 > 120)
+scripts\automm\runner.py:180:121: E501 Line too long (223 > 120)
+scripts\automm\runner.py:184:121: E501 Line too long (126 > 120)
+scripts\automm\runner.py:185:121: E501 Line too long (156 > 120)
+scripts\automm\runner.py:213:108: E501 Line too long (128 > 120)
+scripts\automm\runner.py:227:119: E501 Line too long (124 > 120)
+scripts\automm\runner.py:229:121: E501 Line too long (247 > 120)
+scripts\automm\runner.py:230:121: E501 Line too long (127 > 120)
+scripts\automm\runner.py:273:121: E501 Line too long (313 > 120)
+scripts\automm\runner.py:274:118: E501 Line too long (140 > 120)
+scripts\automm\runner.py:277:121: E501 Line too long (142 > 120)
+scripts\automm\runner.py:278:121: E501 Line too long (209 > 120)
+scripts\automm\runner.py:279:121: E501 Line too long (140 > 120)
+scripts\automm\state.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\state.py:19:121: E501 Line too long (138 > 120)
+scripts\automm\state.py:169:121: E501 Line too long (130 > 120)
+scripts\automm\tasks.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\tasks.py:6:8: F401 [*] `importlib.util` imported but unused
+scripts\automm\tasks.py:17:107: F401 [*] `.common.read_yaml` imported but unused
+scripts\automm\tasks.py:17:121: E501 Line too long (168 > 120)
+scripts\automm\tasks.py:27:121: E501 Line too long (131 > 120)
+scripts\automm\tasks.py:200:121: E501 Line too long (145 > 120)
+scripts\automm\tasks.py:202:121: E501 Line too long (121 > 120)
+scripts\automm\tasks.py:223:121: E501 Line too long (131 > 120)
+scripts\automm\workflow.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\automm\workflow.py:7:21: F401 [*] `.common.ROOT` imported but unused
+scripts\automm\workflow.py:7:54: F401 [*] `.common.read_json` imported but unused
+scripts\automm\workflow.py:65:111: E501 Line too long (125 > 120)
+scripts\automm\workflow.py:88:121: E501 Line too long (133 > 120)
+scripts\automm\workflow.py:128:121: E501 Line too long (130 > 120)
+scripts\automm\workflow.py:235:121: E501 Line too long (177 > 120)
+scripts\automm\workflow.py:236:115: E501 Line too long (189 > 120)
+scripts\automm\workflow.py:241:108: E501 Line too long (176 > 120)
+scripts\automm\workflow.py:243:121: E501 Line too long (122 > 120)
+scripts\automm\workflow.py:244:115: E501 Line too long (157 > 120)
+scripts\automm\workflow.py:405:121: E501 Line too long (131 > 120)
+scripts\automm\workflow.py:552:121: E501 Line too long (121 > 120)
+scripts\configure_remote.py:102:121: E501 Line too long (122 > 120)
+scripts\configure_remote.py:301:121: E501 Line too long (126 > 120)
+scripts\run_sanity_check.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+scripts\run_sanity_check.py:13:27: F401 [*] `automm.common.ROOT` imported but unused
+scripts\run_sanity_check.py:68:121: E501 Line too long (137 > 120)
+scripts\run_sanity_check.py:97:121: E501 Line too long (205 > 120)
+scripts\task_worker.py:3:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_agent_runtime.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_agent_runtime.py:61:121: E501 Line too long (124 > 120)
+tests\test_agent_runtime.py:68:121: E501 Line too long (125 > 120)
+tests\test_agent_runtime.py:77:121: E501 Line too long (219 > 120)
+tests\test_agent_runtime.py:91:121: E501 Line too long (141 > 120)
+tests\test_agent_runtime.py:97:121: E501 Line too long (154 > 120)
+tests\test_agent_runtime.py:105:121: E501 Line too long (124 > 120)
+tests\test_agent_timeout_recovery.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_agent_timeout_recovery.py:12:121: E501 Line too long (134 > 120)
+tests\test_cross_question_progression.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_dsh_provider_smoke.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_failure_policy.py:41:121: E501 Line too long (136 > 120)
+tests\test_harness_invariants.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_productive_recovery.py:15:121: E501 Line too long (138 > 120)
+tests\test_runner_integration.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+tests\test_runner_integration.py:10:60: F401 [*] `automm.runner.run_once` imported but unused
+tests\test_runner_integration.py:33:121: E501 Line too long (149 > 120)
+Found 100 errors.
+[*] 20 fixable with the `--fix` option.

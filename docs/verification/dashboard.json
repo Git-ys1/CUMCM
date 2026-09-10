@@ -1,0 +1,32 @@
+[
+  {
+    "endpoint": "/",
+    "status": 200,
+    "bytes": 20561
+  },
+  {
+    "endpoint": "/api/state",
+    "status": 200,
+    "bytes": 486
+  },
+  {
+    "endpoint": "/api/tasks",
+    "status": 200,
+    "bytes": 2
+  },
+  {
+    "endpoint": "/api/tree",
+    "status": 200,
+    "bytes": 170
+  },
+  {
+    "endpoint": "/api/events",
+    "status": 200,
+    "bytes": 2
+  },
+  {
+    "endpoint": "/api/log",
+    "status": 200,
+    "bytes": 2
+  }
+]

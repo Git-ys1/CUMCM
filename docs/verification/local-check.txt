@@ -1,0 +1,19 @@
+No broken requirements found.
+PASS config/project.yaml
+PASS config/paths.yaml
+PASS config/workflow.yaml
+PASS config/compute.yaml
+PASS config/ssh.yaml
+PASS config/kaggle.yaml
+PASS config/sanity_check.yaml
+PASS config/visualization.yaml
+PASS config/paper.yaml
+PASS config/notifications.yaml
+PASS config/agent_runtime.yaml
+PASS config/agent_registry.yaml
+PASS config/orchestrator.yaml
+PASS config/research.yaml
+PASS config/gates.yaml
+PASS config/summary.yaml
+配置校验完成
+{'executable': 'C:\\Users\\yusu\\AppData\\Roaming\\npm\\dsh.CMD', 'version': ['0.1.5-rc.1']}

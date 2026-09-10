@@ -1,0 +1,13 @@
+usage: render_template.py [-h] [--project PROJECT] [--overwrite] [--list]
+                          [template]
+
+Render a bundled MathModel figure template.
+
+positional arguments:
+  template           Template id, alias, or Chinese title fragment
+
+options:
+  -h, --help         show this help message and exit
+  --project PROJECT  Output project directory, default: 绘图复刻
+  --overwrite        Overwrite an existing copied workspace script
+  --list             List supported template ids

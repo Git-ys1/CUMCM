@@ -1,0 +1,218 @@
+[
+  {
+    "name": "bzd-modeling-workflow",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/总控类/bzd-modeling-workflow",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-modeling-workflow",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-ai-usage-disclosure",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/生成类/bzd-ai-usage-disclosure",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-ai-usage-disclosure",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-modeling-ideas",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/生成类/bzd-modeling-ideas",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-modeling-ideas",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-problem-restatement",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/生成类/bzd-problem-restatement",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-problem-restatement",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-problem-translator",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/生成类/bzd-problem-translator",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-problem-translator",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-cumcm-school-awards",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/综合评审与自我定位类/bzd-cumcm-school-awards",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-cumcm-school-awards",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-review-paper",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/综合评审与自我定位类/bzd-review-paper",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-review-paper",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-abstract-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-abstract-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-abstract-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-model-assumption-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-model-assumption-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-model-assumption-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-model-dictionary",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-model-dictionary",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-model-dictionary",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-model-solution-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-model-solution-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-model-solution-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-paper-aigc-auditor",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-paper-aigc-auditor",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-paper-aigc-auditor",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-paper-format-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-paper-format-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-paper-format-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-problem-analysis-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-problem-analysis-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-problem-analysis-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-reference-appendix-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-reference-appendix-checker/bzd-reference-appendix-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-reference-appendix-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "bzd-symbol-notation-checker",
+    "repo": "BZDmathclub/bzd-math-modeling-skills",
+    "commit": "332d55c2f3244c9e193e90749f42bcc0d534ce53",
+    "path": "skills/论文自查类/bzd-symbol-notation-checker",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\bzd-symbol-notation-checker",
+    "kind": "skill"
+  },
+  {
+    "name": "1start-mathmodel",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/1start-mathmodel",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\1start-mathmodel",
+    "kind": "skill"
+  },
+  {
+    "name": "2analysis-modeling",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/2analysis-modeling",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\2analysis-modeling",
+    "kind": "skill"
+  },
+  {
+    "name": "3coding-visual",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/3coding-visual",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\3coding-visual",
+    "kind": "skill"
+  },
+  {
+    "name": "4drawio",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/4drawio",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\4drawio",
+    "kind": "skill"
+  },
+  {
+    "name": "5writing",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/5writing",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\5writing",
+    "kind": "skill"
+  },
+  {
+    "name": "6verity",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/6verity",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\6verity",
+    "kind": "skill"
+  },
+  {
+    "name": "doctor",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/doctor",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\doctor",
+    "kind": "skill"
+  },
+  {
+    "name": "mathmodel-figure-templates",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/mathmodel-figure-templates",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\mathmodel-figure-templates",
+    "kind": "skill"
+  },
+  {
+    "name": "typst-author",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/typst-author",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\typst-author",
+    "kind": "skill"
+  },
+  {
+    "name": "_references",
+    "repo": "jihe520/MathModelAgent",
+    "commit": "83d8783187a2d29dda1b046cb667009cc50c8203",
+    "path": "skills/_references",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\_references",
+    "kind": "reference"
+  },
+  {
+    "name": "humanizer-zh",
+    "repo": "op7418/Humanizer-zh",
+    "commit": "91f3d394db8419c20d67ebe22a96cf8fee0a404b",
+    "path": ".",
+    "destination": "F:\\AcademicHub\\.codex\\skills\\humanizer-zh",
+    "kind": "skill"
+  }
+]

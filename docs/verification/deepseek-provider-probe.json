@@ -1,0 +1,9 @@
+{
+  "provider": "dsh_headless",
+  "model": "deepseek-v4-flash",
+  "exit_code": 0,
+  "schema_valid": true,
+  "action_id_match": true,
+  "commands_empty": true,
+  "scope": "real API and AutoMM provider response contract only; not a research workflow run"
+}

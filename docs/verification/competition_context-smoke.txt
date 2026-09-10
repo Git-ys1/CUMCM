@@ -1,0 +1,12 @@
+usage: competition_context.py [-h] --score SCORE --region REGION --school
+                              SCHOOL --advisor ADVISOR --division {本科组,高职高专组}
+
+Apply transparent CUMCM region, school, advisor and division adjustments.
+
+options:
+  -h, --help            show this help message and exit
+  --score SCORE         paper quality final score
+  --region REGION
+  --school SCHOOL
+  --advisor ADVISOR
+  --division {本科组,高职高专组}

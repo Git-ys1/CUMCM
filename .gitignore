@@ -1,0 +1,14 @@
+# AutoMM 为独立工程，体量大且不属于本仓库成果，不纳入版本管理
+AutoMM/
+
+# 常见系统/编辑器垃圾
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Office 临时锁文件
+~$*
+
+# Python
+__pycache__/
+*.py[cod]

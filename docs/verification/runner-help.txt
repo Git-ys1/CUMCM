@@ -1,0 +1,6 @@
+usage: orchestrator_runner.py [-h]
+
+AutoMM 单次 Orchestrator 唤醒
+
+options:
+  -h, --help  show this help message and exit

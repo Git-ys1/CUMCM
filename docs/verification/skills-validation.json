@@ -1,0 +1,34 @@
+{
+  "entries": 27,
+  "callable_skills": 26,
+  "reference_bundles": 1,
+  "git_blob_files_verified": 733,
+  "hash_mismatches": [],
+  "checkout_newline_differences": 704,
+  "checks": [
+    {
+      "script": "bzd-model-dictionary/scripts/query_dictionary.py",
+      "exit_code": 0
+    },
+    {
+      "script": "bzd-cumcm-school-awards/scripts/query_school.py",
+      "exit_code": 0
+    },
+    {
+      "script": "bzd-review-paper/scripts/award_position.py",
+      "exit_code": 0
+    },
+    {
+      "script": "bzd-review-paper/scripts/competition_context.py",
+      "exit_code": 0
+    },
+    {
+      "script": "bzd-review-paper/scripts/score_percentile.py",
+      "exit_code": 0
+    },
+    {
+      "script": "mathmodel-figure-templates/scripts/render_template.py",
+      "exit_code": 0
+    }
+  ]
+}

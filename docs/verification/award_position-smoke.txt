@@ -1,0 +1,11 @@
+usage: award_position.py [-h] --score SCORE --contest-type {cumcm,small}
+                         [--uncertainty UNCERTAINTY]
+
+Estimate award band and position for CUMCM or a smaller contest.
+
+options:
+  -h, --help            show this help message and exit
+  --score SCORE
+  --contest-type {cumcm,small}
+  --uncertainty UNCERTAINTY
+                        percentile half-width

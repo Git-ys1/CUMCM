@@ -1,0 +1,11 @@
+usage: score_percentile.py [-h] --score SCORE --distribution DISTRIBUTION
+                           [--column COLUMN]
+
+Compute a transparent midrank percentile from a reference score distribution.
+
+options:
+  -h, --help            show this help message and exit
+  --score SCORE
+  --distribution DISTRIBUTION
+                        CSV or JSON scores
+  --column COLUMN       CSV column or JSON object key
