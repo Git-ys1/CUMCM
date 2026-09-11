@@ -1,0 +1,84 @@
+\newpage
+\appendix
+\begin{center}
+	{\zihao{4}\bfseries 附录}
+\end{center}
+
+\section*{附录 A\quad 支撑材料文件列表}
+\addcontentsline{toc}{section}{附录 A\quad 支撑材料文件列表}
+
+\begin{table}[htbp]
+	\caption{支撑材料文件清单}
+	\centering
+	\zihao{-5}
+	\begin{tabularx}{0.96\textwidth}{l X}
+		\toprule
+		文件 & 说明 \\
+		\midrule
+		result1.xlsx & 问题一结果：计划购电量（$144$ 个 $10$ min 时段）与储能分时段充放电量、首末储电量 \\
+		result2.xlsx & 问题二结果：2025.2.1--12.31 逐日计划购电量、储能充放电量、紧急购电时间段与电量 \\
+		result3.xlsx & 问题三结果：逐日计划购电量、调整购电量、最终充放电量、紧急购电量 \\
+		result4-2.xlsx & 问题四对应问题二的结果（波动电价）\\
+		result4-3.xlsx & 问题四对应问题三的结果（波动电价）\\
+		AI工具使用详情.pdf & AI 工具名称、版本、使用环节与人工核验说明 \\
+		\texttt{solve/} & 全部求解源码：数据读取、线性规划内核、因果预测、结算与消融实验 \\
+		\texttt{tests/} & 因果性 mutation 测试、结算口径单元测试、legacy 回归测试 \\
+		\texttt{outputs/} & 各方案的逐时明细 CSV、指标 JSON、官方结果 Excel 与验证报告 \\
+		\texttt{MODEL\_AUDIT\_V2.md} & 模型审计报告（含全部对照实验数值与归因结论）\\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\section*{附录 B\quad 源程序代码}
+\addcontentsline{toc}{section}{附录 B\quad 源程序代码}
+
+全部代码使用 Python 3.12 编写，线性规划由 SciPy 的 HiGHS 求解器求解，运行方式为
+\texttt{python -m solve.<模块名>}。以下按调用顺序列出完整可运行源码。
+
+\subsection*{B.1\quad 物理参数与口径定义（params.py）}
+\lstinputlisting[style=Python]{code/params.py}
+
+\subsection*{B.2\quad 数据读取与时间对齐（io\_data.py）}
+\lstinputlisting[style=Python]{code/io_data.py}
+
+\subsection*{B.3\quad 公共线性规划内核（lp\_core.py）}
+\lstinputlisting[style=Python]{code/lp_core.py}
+
+\subsection*{B.4\quad 光伏日前预测与风险定价（forecast.py）}
+\lstinputlisting[style=Python]{code/forecast.py}
+
+\subsection*{B.5\quad 因果负载预测（load\_forecast.py）}
+\lstinputlisting[style=Python]{code/load_forecast.py}
+
+\subsection*{B.6\quad 因果电价预测（price\_forecast.py）}
+\lstinputlisting[style=Python]{code/price_forecast.py}
+
+\subsection*{B.7\quad 实时储能反馈与执行（settle.py）}
+\lstinputlisting[style=Python]{code/settle.py}
+
+\subsection*{B.8\quad 问题一求解（q1.py）}
+\lstinputlisting[style=Python]{code/q1.py}
+
+\subsection*{B.9\quad 问题二求解（q2.py）}
+\lstinputlisting[style=Python]{code/q2.py}
+
+\subsection*{B.10\quad 问题三求解（q3.py）}
+\lstinputlisting[style=Python]{code/q3.py}
+
+\subsection*{B.11\quad 问题四求解（q4.py）}
+\lstinputlisting[style=Python]{code/q4.py}
+
+\subsection*{B.12\quad 官方结果文件导出（export.py）}
+\lstinputlisting[style=Python]{code/export.py}
+
+\subsection*{B.13\quad 模型审计与消融实验总控（ablation.py）}
+\lstinputlisting[style=Python]{code/ablation.py}
+
+\subsection*{B.14\quad 未来信息泄漏 mutation 测试（test\_causality.py）}
+\lstinputlisting[style=Python]{code/test_causality.py}
+
+\subsection*{B.15\quad 结算口径单元测试（test\_settlement.py）}
+\lstinputlisting[style=Python]{code/test_settlement.py}
+
+\subsection*{B.16\quad legacy 结果回归测试（test\_regression.py）}
+\lstinputlisting[style=Python]{code/test_regression.py}

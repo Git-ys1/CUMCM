@@ -1,0 +1,18 @@
+\maketitle%与上面的\title对应
+\thispagestyle{plain}%摘要专用页显示页码 1，并与后续正文连续编号
+\begin{abstract}%摘要+摘要+摘要+摘要+摘要
+
+	本文以\textbf{信息集边界}为主线，把微网电力调控的四个问题统一到同一个母线侧线性规划内核上：母线能量平衡、储能状态转移 $S_{t}=S_{t-1}+\eta_c C_t-H_t/\eta_d$、容量与功率限值、弃光上界等物理约束四问共享，各问之间只改变\textbf{可用信息}与\textbf{结算口径}；每期计划都以上一时段实际测得的储电量为初值重新优化，因而各期方案互不相同。
+
+	\textbf{问题一}为确定性日前调度。以全天购电费最小为目标、首末储电量均为 $6000$ kWh 为闭环约束建立线性规划，并用“费用—吞吐量—弃光量”三层词典序目标消除退化最优解。最优全天购电量 \QoneEnergy\ kWh，购电费 \QoneCost\ 元，较无储能基准的 \QoneNoStorage\ 元节省 \QoneSave\ 元（\QoneSavePct\%）。
+
+	\textbf{问题二}中负载与光伏逐日变化，缺口按电价的 $5$ 倍紧急购电。本文将 $5$ 倍电价严格推导为 $4:1$ 的非对称损失，并由报童模型证明最优光伏点预测应取\textbf{预测分布的 $0.2$ 分位数}（数值实验验证其最优性），据此构造只使用历史观测的滚动在线选型因果预测器，并设计“先撤充电、再增放电、最后紧急购电”的 $10$ min 实时储能反馈。$2$ 月至 $12$ 月总费用 \QtwoTotal\ 元，紧急购电 \QtwoEmergency\ kWh。单因素对照表明：把当天真实负载当作 $0{:}00$ 已知输入会低估费用 \DeltaLoad\ 元（\DeltaLoadPct\%），风险边际与实时反馈则分别节省 \DeltaPvRisk\ 元与 \DeltaFeedback\ 元。
+
+	\textbf{问题三}在 $0{:}00$、$6{:}00$、$12{:}00$、$18{:}00$ 做 $24$ h 滚动优化、只执行下一 $6$ h 块并只继承储电量。为真正回答“是否需要引入其他时刻预报”，以\textbf{可用预报节点集合}为唯一消融变量：仅 $0{:}00$ 时费用 \QthreeSzero\ 元，依次加入 $6{:}00$、$12{:}00$、$18{:}00$ 后降至 \QthreeSone、\QthreeStwo、\QthreeSthree\ 元，增量价值 \QthreeVsix、\QthreeVtwelve、\QthreeVeighteen\ 元，累计节省 \QthreeVtotal\ 元，$6{:}00$ 预报价值最大。两种结算口径\textbf{分别完整重新优化}，结论一致。
+
+	\textbf{问题四}把固定电价替换为附件 4 的波动电价。为界定电价信息边界，引入因果电价预测，得 Q4-2 为 \QfourTwoPerfect\ 元（价格完全已知）与 \QfourTwoCausal\ 元（因果），Q4-3 为 \QfourThreePerfect\ 元与 \QfourThreeCausal\ 元；电价信息的理想化价值仅 \QfourPriceValueTwo\ 元（$0.42\%$）与 \QfourPriceValueThree\ 元（$0.93\%$），远小于负载信息被完全掌握所造成的 \DeltaLoad\ 元偏差，说明\textbf{信息价值高度不对称，预测投入应优先投向负载与光伏}。动态电价下滚动调整仍节省 \QfourRollCausal\ 元，其价值方向不随价格机制改变。
+
+	本文建立物理残差、未来信息泄漏 mutation 测试、结算口径单元测试与 legacy 回归测试四级验证体系，全部通过，最大母线平衡残差低于 $10^{-12}$ kWh。
+
+	\keywords{微网经济调度；线性规划；滚动时域优化；报童模型；分位数预测；信息集因果性}
+\end{abstract}
