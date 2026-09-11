@@ -1,0 +1,16 @@
+{
+  "delivery_days": 334,
+  "plan_shape": [
+    334,
+    144
+  ],
+  "adjust_shape": [
+    334,
+    144
+  ],
+  "storage_rows": 2004,
+  "emergency_rows": 448,
+  "max_plan_roundtrip_diff": 4.547473508864641e-13,
+  "max_adjust_roundtrip_diff": 4.547473508864641e-13,
+  "passed": true
+}

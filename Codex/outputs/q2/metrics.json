@@ -36,5 +36,6 @@
   "forecast_mae_kw": 198.28308993900117,
   "days_with_emergency": 87,
   "ending_soc_kwh": 10800.0,
-  "passed": true
+  "passed": true,
+  "xlsx_passed": true
 }

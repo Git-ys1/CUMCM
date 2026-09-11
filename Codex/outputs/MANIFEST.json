@@ -1,0 +1,626 @@
+{
+  "generated_at": "2026-09-11T10:21:40.660013+08:00",
+  "authority_root": "F:\\AcademicHub\\000资料相关\\数模\\26国赛\\Codex",
+  "main": {
+    "q1": "q1",
+    "q2": "q2_fixed_online",
+    "q3": "q3_main_linear_calibrated",
+    "q4_2": "q4_2_dynamic",
+    "q4_3": "q4_3_dynamic"
+  },
+  "variants": {
+    "q1": {
+      "relative_path": "q1",
+      "parameters": {
+        "question": 1
+      },
+      "metrics": {
+        "cost_yuan": 35126.94859928964,
+        "primary_cost_yuan": 35126.94858928963,
+        "primary_cost_gap_yuan": 1.0000010661315173e-05,
+        "grid_energy_kwh": 59482.69897574796,
+        "charge_energy_kwh": 20740.66601270855,
+        "discharge_energy_kwh": 16799.939470293924,
+        "curtailment_energy_kwh": 0.0,
+        "no_storage_cost_yuan": 48052.046590846665,
+        "savings_yuan": 12925.097991557028,
+        "savings_percent": 26.898121742059377,
+        "initial_soc_kwh": 6000.0,
+        "terminal_soc_kwh": 6000.0,
+        "min_soc_kwh": 1200.0,
+        "max_soc_kwh": 10800.0,
+        "max_balance_residual": 1.4921397450962104e-13,
+        "max_soc_residual": 9.094947017729282e-13,
+        "max_simultaneous_charge_discharge": 0.0,
+        "solver_status": 0,
+        "solver_message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "iterations": 485,
+        "solve_seconds": 0.07851269999810029,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "environment.json": {
+          "bytes": 238,
+          "sha256": "b8d0e63917df97a475d9ddffe7d29d033bd596e2a17bab277ec248b187e3636e"
+        },
+        "metrics.json": {
+          "bytes": 899,
+          "sha256": "c6f92c784ed4ee750e29236e1271edf38b94a20e22f99cf0a55d83014ad69591"
+        },
+        "result1.xlsx": {
+          "bytes": 8868,
+          "sha256": "36642d6cfca8239cd568136a58d40c85063e480d41d46bc1838b111bee771be2"
+        },
+        "solution.csv": {
+          "bytes": 11851,
+          "sha256": "886179c36a8d8460f3b95494e0239026459be46a2a88f96decb642b1e1bae1c5"
+        },
+        "xlsx_verification.json": {
+          "bytes": 91,
+          "sha256": "f42c426cfe51f4985bbe36647fc0654f4186c7cb8349a3f87870a0d32d786e94"
+        }
+      }
+    },
+    "q2_fixed_online": {
+      "relative_path": "q2",
+      "parameters": {
+        "question": 2,
+        "price": "attachment1",
+        "forecast": "strictly_online"
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "terminal_policy": "planned S_144 equals actual S_0 of the day",
+        "max_balance_residual": 2.0463630789890885e-12,
+        "max_soc_residual": 0.0,
+        "max_day_boundary_soc_gap": 0.0,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 0.0,
+        "information_set": "Attachment 1 price + Attachment 2 prior/current observations; Attachment 3 unused",
+        "forecast_selection_counts": {
+          "persistence_q80": 7,
+          "mean14_q90": 3,
+          "mean14_q85": 7,
+          "mean14_q80": 28,
+          "mean30_q80": 9,
+          "weighted30_q80": 46,
+          "weighted14_q80": 36,
+          "weighted30_q85": 17,
+          "weighted14_q85": 45,
+          "mean30_q90": 41,
+          "weighted30_q90": 12,
+          "mean7_q85": 46,
+          "mean7_q80": 57,
+          "mean30_q85": 1,
+          "mean30_q95": 10
+        },
+        "plan_purchase_cost_yuan": 12879013.246821154,
+        "emergency_cost_yuan": 397952.7543495147,
+        "total_cost_yuan": 13276966.001170669,
+        "plan_purchase_energy_kwh": 21177992.778834306,
+        "emergency_energy_kwh": 61482.52131720588,
+        "curtailment_energy_kwh": 2001437.3234166687,
+        "forecast_mae_kw": 198.28308993900117,
+        "days_with_emergency": 87,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 41843,
+          "sha256": "7e76460c39a895da14fcb8cc525d5b34322148975e1d05b95d2a4ed361282304"
+        },
+        "forecast_log.csv": {
+          "bytes": 50236,
+          "sha256": "c65c7793bf82b2760525bfdd98417cbd2dcf04471cb4a105b44251570b7ead00"
+        },
+        "metrics.json": {
+          "bytes": 1286,
+          "sha256": "3387a9e8399f5d0d158e3367a5cf0ed6b80b1d4cace39b1df9472fd6158b184c"
+        },
+        "result2.xlsx": {
+          "bytes": 482268,
+          "sha256": "c3e9b03883e4521f864adc220faa214aa3a9f4e7add0b56da7f7ffb6e9464d21"
+        },
+        "solution.csv": {
+          "bytes": 4974134,
+          "sha256": "f7c74e4ef034df8853ddb2263fbab25ce1817883950e9c4ac9c32e9d4c2e1143"
+        },
+        "xlsx_verification.json": {
+          "bytes": 653,
+          "sha256": "ab3ff398c42d848c5912bf045a530f0fd872b67b4add1bb6fdcdde7b1c761a45"
+        }
+      }
+    },
+    "q3_main_linear_calibrated": {
+      "relative_path": "q3",
+      "parameters": {
+        "question": 3,
+        "downscale": "linear",
+        "calibration": true,
+        "price": "attachment1"
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "downscale_method": "linear",
+        "max_balance_residual": 2.0463630789890885e-12,
+        "max_soc_residual": 3.637978807091713e-12,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 4.475494347012168e-06,
+        "information_set": "Attachment 3 forecasts plus issue-specific calibration from earlier days; actual PV used only after block execution",
+        "replacement_settlement": "0.5*Gp + 0.5*Ga + max(Ga-Gp,0)",
+        "cross_midnight": "24h optimize, execute current 6h block only; carry SOC only",
+        "baseline_purchase_cost_yuan": 12643386.662566897,
+        "adjusted_settlement_cost_yuan": 13037789.217350448,
+        "emergency_cost_yuan": 10335.733411522195,
+        "total_cost_yuan": 13048124.95076197,
+        "additive_interpretation_total_yuan": 13442926.35815694,
+        "adjusted_purchase_energy_kwh": 20749300.951479867,
+        "emergency_energy_kwh": 2194.7677982339296,
+        "curtailment_energy_kwh": 1496536.9820083426,
+        "up_adjustment_energy_kwh": 550644.7529086944,
+        "down_adjustment_energy_kwh": 651817.7903963814,
+        "direction_reversal_slots": 5295,
+        "max_linearization_gap": 1.4551915228366852e-11,
+        "executed_block_forecast_mae_kw": 152.52976513202762,
+        "days_with_emergency": 36,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 56854,
+          "sha256": "2c0a93578fb8bacc5fafacc57d53d8fdd3a8706cb4d8a407ddfac85173fce046"
+        },
+        "environment.json": {
+          "bytes": 247,
+          "sha256": "f19d1f738d6a67640672ac88902b4bf6dd8512eaab697eedf948397476f6dc75"
+        },
+        "metrics.json": {
+          "bytes": 1361,
+          "sha256": "593b67eec0ec3f402bd389d31cbe55563736adcad3a092cc340f5a9f49e16f33"
+        },
+        "metrics_raw_official.json": {
+          "bytes": 1326,
+          "sha256": "9ca8d345118ab3711a21d6076172f171c5804c0f634e513d9333d6cb2160e934"
+        },
+        "result3.xlsx": {
+          "bytes": 842070,
+          "sha256": "32108eb84ef140cb9f38b26320fab3c289c4608bb94237b347b9d50bc985dd35"
+        },
+        "solution.csv": {
+          "bytes": 6773583,
+          "sha256": "eea7635eac1c7772f5d49953e19cc92f07b6d5a929fe2dcf042f1812fa06b51a"
+        },
+        "xlsx_verification.json": {
+          "bytes": 296,
+          "sha256": "b0820a3d27f2bb99efd25fc0fb299a23acf8336321efd78f46ffd69107dbb424"
+        }
+      }
+    },
+    "q3_raw_step": {
+      "relative_path": "q3/variants/raw_step",
+      "parameters": {
+        "question": 3,
+        "downscale": "step",
+        "calibration": false,
+        "price": "attachment1"
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "downscale_method": "step",
+        "calibration_enabled": false,
+        "price_source": "attachment1",
+        "max_balance_residual": 2.0463630789890885e-12,
+        "max_soc_residual": 0.0,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 4.4751558152460125e-06,
+        "information_set": "raw Attachment 3 forecasts; actual PV used only after block execution",
+        "replacement_settlement": "0.5*Gp + 0.5*Ga + max(Ga-Gp,0)",
+        "cross_midnight": "24h optimize, execute current 6h block only; carry SOC only",
+        "baseline_purchase_cost_yuan": 12608946.57796001,
+        "adjusted_settlement_cost_yuan": 13155226.68396418,
+        "emergency_cost_yuan": 2150039.784275094,
+        "total_cost_yuan": 15305266.468239274,
+        "additive_interpretation_total_yuan": 15520081.424955873,
+        "adjusted_purchase_energy_kwh": 20808065.8963291,
+        "emergency_energy_kwh": 439689.8057322229,
+        "curtailment_energy_kwh": 1957664.1256054358,
+        "up_adjustment_energy_kwh": 696825.4770353549,
+        "down_adjustment_energy_kwh": 353298.81665492465,
+        "direction_reversal_slots": 4054,
+        "max_linearization_gap": 1.4551915228366852e-11,
+        "executed_block_forecast_mae_kw": 300.64982063165337,
+        "days_with_emergency": 288,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 59909,
+          "sha256": "b7faa0807211434c375dd3a164ca441645778a969388bfa242ad76e25a454b07"
+        },
+        "environment.json": {
+          "bytes": 247,
+          "sha256": "f19d1f738d6a67640672ac88902b4bf6dd8512eaab697eedf948397476f6dc75"
+        },
+        "metrics.json": {
+          "bytes": 1361,
+          "sha256": "4934b60d2f7af6e87398bd6823089d440d2121264ac41c4327bffea89b88c936"
+        },
+        "result3.xlsx": {
+          "bytes": 808940,
+          "sha256": "d3027fe556f84e686b60ac591caec24748f9301a2ba58f61a618f39530fd582f"
+        },
+        "solution.csv": {
+          "bytes": 6660818,
+          "sha256": "434c1b63a2dc9aa4f3cc49027aa0cec4d9eba8c65eb0adbb35dff6a3494e7e0f"
+        },
+        "xlsx_verification.json": {
+          "bytes": 296,
+          "sha256": "ded743d492f947738bf4c5587dce7d75f1221fca75de9d1d908059906375d231"
+        }
+      }
+    },
+    "q3_calibrated_step": {
+      "relative_path": "q3/variants/calibrated_step",
+      "parameters": {
+        "question": 3,
+        "downscale": "step",
+        "calibration": true,
+        "price": "attachment1"
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "downscale_method": "step",
+        "calibration_enabled": true,
+        "price_source": "attachment1",
+        "max_balance_residual": 2.0463630789890885e-12,
+        "max_soc_residual": 0.0,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 4.475142536497745e-06,
+        "information_set": "Attachment 3 forecasts plus issue-specific calibration from earlier days; actual PV used only after block execution",
+        "replacement_settlement": "0.5*Gp + 0.5*Ga + max(Ga-Gp,0)",
+        "cross_midnight": "24h optimize, execute current 6h block only; carry SOC only",
+        "baseline_purchase_cost_yuan": 13541914.98460105,
+        "adjusted_settlement_cost_yuan": 14264891.719148856,
+        "emergency_cost_yuan": 9685.695413408439,
+        "total_cost_yuan": 14274577.414562264,
+        "additive_interpretation_total_yuan": 15140857.728952192,
+        "adjusted_purchase_energy_kwh": 21797672.77185697,
+        "emergency_energy_kwh": 1751.9699495644345,
+        "curtailment_energy_kwh": 2583390.239173972,
+        "up_adjustment_energy_kwh": 1131426.8527997914,
+        "down_adjustment_energy_kwh": 1301502.7703738792,
+        "direction_reversal_slots": 6067,
+        "max_linearization_gap": 1.4551915228366852e-11,
+        "executed_block_forecast_mae_kw": 315.49013329008653,
+        "days_with_emergency": 34,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 56811,
+          "sha256": "c043922eafd35824dced6a704d8f3a2d06bc715b75a0bccfea6b43bd85edbdad"
+        },
+        "environment.json": {
+          "bytes": 247,
+          "sha256": "f19d1f738d6a67640672ac88902b4bf6dd8512eaab697eedf948397476f6dc75"
+        },
+        "metrics.json": {
+          "bytes": 1407,
+          "sha256": "1b049122f02bdd0bd69cfef3cbe81cbbcf0aa9a9ca035932263168bc3729041b"
+        },
+        "result3.xlsx": {
+          "bytes": 827499,
+          "sha256": "af5838a5bd39a84a65683bb2c4a4af25def7595ffdaa4c3b820611ee6fb17fa4"
+        },
+        "solution.csv": {
+          "bytes": 6771603,
+          "sha256": "ee3db7bbd9db3f42e10e6f2a97acc1555bd2206edd8a57334932cdef19b3c94a"
+        },
+        "xlsx_verification.json": {
+          "bytes": 296,
+          "sha256": "6159c34ed84e8e053cdbcc737b3c59106f12800ef1b2c33f18fccafffab288c5"
+        }
+      }
+    },
+    "q4_2_dynamic": {
+      "relative_path": "q4-2",
+      "parameters": {
+        "question": "4-2",
+        "price": "attachment4",
+        "forecast": "strictly_online"
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "terminal_policy": "planned S_144 equals actual S_0 of the day",
+        "max_balance_residual": 2.0463630789890885e-12,
+        "max_soc_residual": 0.0,
+        "max_day_boundary_soc_gap": 0.0,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 0.0,
+        "information_set": "Attachment 4 prices + Attachment 2 prior/current observations; Attachment 3 unused",
+        "price_source": "attachment4",
+        "forecast_selection_counts": {
+          "persistence_q80": 7,
+          "mean14_q90": 5,
+          "mean14_q85": 9,
+          "mean14_q80": 22,
+          "mean30_q80": 9,
+          "weighted30_q80": 46,
+          "weighted14_q80": 26,
+          "weighted30_q85": 17,
+          "weighted14_q85": 52,
+          "mean30_q85": 4,
+          "weighted30_q90": 11,
+          "mean30_q90": 38,
+          "mean7_q85": 50,
+          "mean7_q90": 3,
+          "mean7_q80": 49,
+          "mean30_q95": 17
+        },
+        "plan_purchase_cost_yuan": 13556031.012695592,
+        "emergency_cost_yuan": 393780.65134954493,
+        "total_cost_yuan": 13949811.664045136,
+        "plan_purchase_energy_kwh": 21305969.983975638,
+        "emergency_energy_kwh": 58068.964398265976,
+        "curtailment_energy_kwh": 2035066.247905406,
+        "forecast_mae_kw": 201.9377418168572,
+        "days_with_emergency": 81,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 41132,
+          "sha256": "913a48425d0826672ad234f5686d2bd6520eb0b23995c0ee3107885345b8bb03"
+        },
+        "environment.json": {
+          "bytes": 253,
+          "sha256": "9d9110eddd577189eabeef043403a31c4fc212627c501384aa3796164c362fff"
+        },
+        "forecast_log.csv": {
+          "bytes": 50221,
+          "sha256": "902e48f6b874ef97a9cbad55b017aa572976fd5b4f1a31c2e343961420851e7e"
+        },
+        "metrics.json": {
+          "bytes": 1342,
+          "sha256": "3ef3ec55663d68640bf1626a0d8ec590a34ab0cd6e8587df9377a581c937d09e"
+        },
+        "result4-2.xlsx": {
+          "bytes": 486840,
+          "sha256": "003d58a7903aa5ecc45ed34f642d39eb11bf6184e8d7ea8ec00cf18adddcb023"
+        },
+        "solution.csv": {
+          "bytes": 5006427,
+          "sha256": "269bd791ecf1b875af070fbfcac7147b60ec88c0730de1082dd3eb814f5d8e56"
+        },
+        "xlsx_verification.json": {
+          "bytes": 227,
+          "sha256": "13198d6453002e2ec1d28a066ccf51513041d0c55764bf68e282f8d65d205042"
+        }
+      }
+    },
+    "q4_3_dynamic": {
+      "relative_path": "q4-3",
+      "parameters": {
+        "question": "4-3",
+        "price": "attachment4",
+        "downscale": "linear",
+        "calibration": true
+      },
+      "metrics": {
+        "days_simulated": 365,
+        "warmup_days": 31,
+        "delivery_days": 334,
+        "downscale_method": "linear",
+        "calibration_enabled": true,
+        "price_source": "attachment4",
+        "max_balance_residual": 1.9326762412674725e-12,
+        "max_soc_residual": 3.637978807091713e-12,
+        "min_soc": 1200.0,
+        "max_soc": 10800.0,
+        "max_simultaneous_charge_discharge": 4.4804847142918e-06,
+        "information_set": "Attachment 3 forecasts plus issue-specific calibration from earlier days; actual PV used only after block execution",
+        "replacement_settlement": "0.5*Gp + 0.5*Ga + max(Ga-Gp,0)",
+        "cross_midnight": "24h optimize, execute current 6h block only; carry SOC only",
+        "baseline_purchase_cost_yuan": 13283976.615003232,
+        "adjusted_settlement_cost_yuan": 13722049.559909606,
+        "emergency_cost_yuan": 12850.443539482381,
+        "total_cost_yuan": 13734900.003449088,
+        "additive_interpretation_total_yuan": 14142936.256426949,
+        "adjusted_purchase_energy_kwh": 20847299.656141855,
+        "emergency_energy_kwh": 2533.5195804142113,
+        "curtailment_energy_kwh": 1504736.8259641395,
+        "up_adjustment_energy_kwh": 557314.4122412415,
+        "down_adjustment_energy_kwh": 648418.9339507719,
+        "direction_reversal_slots": 5166,
+        "max_linearization_gap": 1.4551915228366852e-11,
+        "executed_block_forecast_mae_kw": 152.7610709486063,
+        "days_with_emergency": 38,
+        "ending_soc_kwh": 10800.0,
+        "passed": true,
+        "xlsx_passed": true
+      },
+      "files": {
+        "daily_metrics.csv": {
+          "bytes": 56453,
+          "sha256": "b41b15188ef3c0aa43a132688d11bcb050ba233d0cb1588f3c92ef97c18b5eae"
+        },
+        "environment.json": {
+          "bytes": 247,
+          "sha256": "f19d1f738d6a67640672ac88902b4bf6dd8512eaab697eedf948397476f6dc75"
+        },
+        "metrics.json": {
+          "bytes": 1426,
+          "sha256": "48bc373dae1b2df2ef1aeae6a3c709810ed54fcdd146a94aaef5df8f4325ac99"
+        },
+        "result4-3.xlsx": {
+          "bytes": 846548,
+          "sha256": "04257bc76a7389d51ba3def280cac965b71ca8c8892d69cf1f0e1b0b18f94946"
+        },
+        "solution.csv": {
+          "bytes": 6799614,
+          "sha256": "bdd9d927fcb89be44070013a5c9f67d9ecaca83ad5169eecab3406ac5fa2649d"
+        },
+        "xlsx_verification.json": {
+          "bytes": 296,
+          "sha256": "ee36d2227e44fa5798d54127f49852e68e5cf69917ad58db11cb2be671329b71"
+        }
+      }
+    }
+  },
+  "source_files": {
+    "solve\\__init__.py": {
+      "bytes": 48,
+      "sha256": "522b3bed684fd1de558bb4fe831ce52e453e4dc0991db4a2f44877f28d086690"
+    },
+    "solve\\build_manifest.py": {
+      "bytes": 3301,
+      "sha256": "a4bc15b1e85d0410b35123e816b62f5b54753564db72fd550314dd88ffb75deb"
+    },
+    "solve\\export.py": {
+      "bytes": 10152,
+      "sha256": "423a2b424cc0c02ae642038c822348c6479c822b1c7d0c27943633b8642c1608"
+    },
+    "solve\\forecast.py": {
+      "bytes": 3927,
+      "sha256": "23625fb01b4d1882a2974d8f3c32f9e2ccb6d57104ad6ea14eb6eea224ec1c50"
+    },
+    "solve\\io_data.py": {
+      "bytes": 4849,
+      "sha256": "656e5e9855874cdc413d336f0e441423e57774ce6047a681064fdac05dba79de"
+    },
+    "solve\\lp_core.py": {
+      "bytes": 7784,
+      "sha256": "6510d79358900e7f9ab106ed297db26c4a4bf9f7fb375cd654135e89d285bff5"
+    },
+    "solve\\official_forecast.py": {
+      "bytes": 2549,
+      "sha256": "ef5d7c14d5455ffd9eacec4100252237c13ef16742d58d0a3c49b45deddccf99"
+    },
+    "solve\\paper_tables.py": {
+      "bytes": 4348,
+      "sha256": "fdda059352a7361579abb16087965b323b86c69541e3340e8f7dbd991db2e46d"
+    },
+    "solve\\plot_results.py": {
+      "bytes": 5547,
+      "sha256": "bdfa0d073dc3817c7f4099072225f2039d890771c2bbf4e7faf4b773018ceb68"
+    },
+    "solve\\q1.py": {
+      "bytes": 3805,
+      "sha256": "7da72ec6ac3df63181a67a8a958c5d71994eceb3c0ce0ebfe3ec1ca09063dd31"
+    },
+    "solve\\q2.py": {
+      "bytes": 9325,
+      "sha256": "35afa988f7cb38886eba8b1daf47e9092368b46c126f6f7510be07052f6a7386"
+    },
+    "solve\\q3.py": {
+      "bytes": 13169,
+      "sha256": "adc3e20fddb9e93895b4ce153b390bcd2b8bb059b99440f1eb635cdf18f66630"
+    },
+    "solve\\q4.py": {
+      "bytes": 1971,
+      "sha256": "4dd9b4fbfbe178962c5d8b101286c22d68f75cc987a2381e45773904df6d6742"
+    },
+    "solve\\settle.py": {
+      "bytes": 1950,
+      "sha256": "2697f9eba4c809d8d1918dcff09b961b6e2d2eb7e204a738b81eb42c9a7c1936"
+    },
+    "solve\\validate_all.py": {
+      "bytes": 5901,
+      "sha256": "c88976647d15130d398424305bc33fc36c9605c5caaf7986bb6e733f30b4f09e"
+    },
+    "solve\\validate_q2.py": {
+      "bytes": 4056,
+      "sha256": "309f1e1769c449fbadcdcca4450a406f99a4427c4cd1324587830735c5744ba3"
+    },
+    "reports\\ANALYSIS_MODELING_REPORT.md": {
+      "bytes": 3938,
+      "sha256": "239b67d5d7203eda11a043e5cfc9d580148e0fe6b46322a0a017dd52a3d0afc6"
+    },
+    "reports\\DECISION_LOG.md": {
+      "bytes": 8241,
+      "sha256": "a89e2fc74b4f059340fdda9a16cc007a57ac85c94453776cf422d6b1c0a4af6c"
+    },
+    "reports\\PAPER_TABLES.md": {
+      "bytes": 13114,
+      "sha256": "49cb7472abdf6e4f17b7682daf6a4421777524953a6dc66bdaa6fd561dba0ac6"
+    },
+    "reports\\RESULTS_REPORT.md": {
+      "bytes": 2680,
+      "sha256": "1fc2312352efed9cbc1cdb6b630ece28649ad95b9d2ebc33b13c9c915fc1b5ea"
+    },
+    "tests\\test_q2_q3.py": {
+      "bytes": 3126,
+      "sha256": "2b111dae57cbb577c0031407140dc2a0e2aa21f79e45eb57e665c5908ecda99a"
+    },
+    "README.md": {
+      "bytes": 1191,
+      "sha256": "43af5c874c68feca6639f392276f1580e4ba9f030b841791c292fd66f38986a4"
+    },
+    "requirements.txt": {
+      "bytes": 66,
+      "sha256": "ea688cf0da2b05a7d5450666fcffbbcc5ed2359d2a01c31748a9c9775ade19fa"
+    },
+    "run_all.ps1": {
+      "bytes": 652,
+      "sha256": "decc4f09f6d4028e8f82387d575d60a2b3112f6331a549c2c979f9007908bcb0"
+    }
+  },
+  "figures": {
+    "figures\\comparison\\annual_cost_comparison.pdf": {
+      "bytes": 19767,
+      "sha256": "d8865fbab728199e745ce6b1ed9ed238e1b1c78c34f09a3395afb67bd7661f61"
+    },
+    "figures\\comparison\\daily_cost_timeseries.pdf": {
+      "bytes": 29595,
+      "sha256": "33b072108a1f81e9190be36b9a0f1601f8fa2d6924a95fa0d2e13a8dcaf025d3"
+    },
+    "figures\\comparison\\emergency_energy_comparison.pdf": {
+      "bytes": 21804,
+      "sha256": "119772c209f2f761d75c3ec6ac140a5ca79785da622a47063e17f7253a025f86"
+    },
+    "figures\\comparison\\q3_variant_comparison.pdf": {
+      "bytes": 25738,
+      "sha256": "f081b818cee3e38497ad65e3f1d9e717895437cff1d636e51d305891bee5cdd0"
+    },
+    "figures\\q1\\q1_dispatch.pdf": {
+      "bytes": 31064,
+      "sha256": "8d6f7769ed6c368c1fe0ad4b2c67933d4fbcf80a4298347a110e056b47c232bc"
+    }
+  },
+  "governance_outputs": {
+    "verification_summary.json": {
+      "bytes": 5244,
+      "sha256": "17a54634c72d398f71aa9dbd46962cdd5f6db1fcfb1cf262ec3de1d7c6fbeb25"
+    },
+    "q4_comparison.json": {
+      "bytes": 567,
+      "sha256": "e9b08cf01a3d6093995452c663d961810fc97280b7577b5f75f0d500164cdc90"
+    }
+  }
+}

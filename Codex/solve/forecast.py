@@ -49,14 +49,16 @@ class OnlinePVForecaster:
         method,q_text=selected.rsplit("_q",1)
         return ForecastDecision(d,selected,method,int(q_text)/100.0,margins[selected],hist,d,
                                 candidates[selected].copy(),candidates,bases,margins)
-    def observe(self,decision:ForecastDecision,actual_kw:np.ndarray)->dict[str,float]:
+    def observe(self,decision:ForecastDecision,actual_kw:np.ndarray,price:np.ndarray|None=None)->dict[str,float]:
         actual=np.asarray(actual_kw,dtype=float)
         if actual.shape!=(144,) or decision.day_index!=len(self.actual_history):
             raise ValueError("forecast observation out of sequence")
+        score_price=self.price if price is None else np.asarray(price,dtype=float)
+        if score_price.shape!=(144,): raise ValueError("score price must contain 144 slots")
         result={}
         for name,forecast in decision.candidates.items():
             error=forecast-actual
-            score=float(np.sum(self.price*(4*np.maximum(error,0)+np.maximum(-error,0)))*DT_HOURS)
+            score=float(np.sum(score_price*(4*np.maximum(error,0)+np.maximum(-error,0)))*DT_HOURS)
             self.score_days[name].append(score); result[name]=score
         for method,base in decision.bases.items():
             mask=(actual>1e-9)|(base>1e-9)

@@ -1,0 +1,14 @@
+{
+  "q4_2_total_cost_yuan": 13949811.664045136,
+  "q4_3_total_cost_yuan": 13734900.003449088,
+  "rolling_value_under_dynamic_price_yuan": 214911.66059604846,
+  "rolling_value_under_dynamic_price_percent": 1.5406061800100952,
+  "q2_fixed_price_total_yuan": 13276966.001170669,
+  "q3_fixed_price_total_yuan": 13048124.95076197,
+  "rolling_value_under_fixed_price_yuan": 228841.05040869862,
+  "q4_2_emergency_energy_kwh": 58068.964398265976,
+  "q4_3_emergency_energy_kwh": 2533.5195804142113,
+  "q4_2_passed": true,
+  "q4_3_passed": true,
+  "passed": true
+}

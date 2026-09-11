@@ -1,0 +1,10 @@
+{
+  "delivery_days": 334,
+  "plan_rows": 334,
+  "plan_slots": 144,
+  "storage_rows": 2004,
+  "emergency_rows": 361,
+  "max_plan_roundtrip_diff": 4.547473508864641e-13,
+  "last_terminal_soc": 10800.0,
+  "passed": true
+}

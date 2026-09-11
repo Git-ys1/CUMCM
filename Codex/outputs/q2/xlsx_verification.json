@@ -1,0 +1,20 @@
+{
+  "sheet_names_preserved": true,
+  "solution_rows": 48096,
+  "plan_shape": [
+    334,
+    144
+  ],
+  "storage_rows": 2004,
+  "max_plan_diff": 4.547473508864641e-13,
+  "max_plan_total_diff": 7.275957614183426e-12,
+  "max_plan_cost_diff": 7.275957614183426e-12,
+  "max_storage_charge_diff": 5.4569682106375694e-12,
+  "max_storage_discharge_diff": 9.094947017729282e-13,
+  "max_storage_initial_soc_diff": 5.4569682106375694e-12,
+  "max_storage_terminal_soc_diff": 5.4569682106375694e-12,
+  "emergency_sheet_total_kwh": 61482.52131720587,
+  "emergency_csv_total_kwh": 61482.52131720587,
+  "emergency_total_diff": 0.0,
+  "passed": true
+}
