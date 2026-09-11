@@ -11,7 +11,7 @@ import numpy as np
 import scipy
 
 from .export import export_result2
-from .forecast import OnlinePVForecaster
+from .forecast import QUANTILES, OnlinePVForecaster
 from .io_data import DEFAULT_DATA_ROOT, DT_HOURS, read_attachment1, read_attachment2, template_path
 from .load_forecast import OnlineLoadForecaster
 from .lp_core import solve_dispatch
@@ -176,8 +176,7 @@ def run_q2(
         verify_rows.append(_verify_day(record, storage))
 
         # ---- 日志留痕 -----------------------------------------------------
-        forecast_rows.append(
-            {
+        forecast_row = {
                 "day_index": d,
                 "date": annual.dates[d].isoformat(),
                 "history_days_used": pv_decision.history_days_used,
@@ -190,7 +189,7 @@ def run_q2(
                 "pv_forecast_rmse_kw": float(np.sqrt(np.mean((pv_decision.forecast_kw - annual.pv_kw[d]) ** 2))),
                 "pv_daily_energy_error_kwh": float(np.sum(pv_decision.forecast_kw - annual.pv_kw[d]) * DT_HOURS),
             }
-        )
+        forecast_rows.append(forecast_row)
         load_rows.append(load_forecaster.log_row(load_decision, annual.load_kw[d], annual.dates[d].isoformat()))
         if price_decision is not None:
             price_rows.append(
@@ -198,7 +197,15 @@ def run_q2(
             )
 
         # ---- 观测回填（严格在决策之后） -----------------------------------
-        selector.observe(pv_decision, annual.pv_kw[d], price=np.asarray(price_plan, dtype=float))
+        candidate_scores = selector.observe(
+            pv_decision, annual.pv_kw[d], price=np.asarray(price_plan, dtype=float)
+        )
+        if pv_risk_mode == "asymmetric":
+            # 固定当日已选基方法，仅比较残差 Q0.80--Q0.95，形成可审计的样本外
+            # 风险代理。Q0.80(base-actual) 对应光伏输出的 0.20 分位点。
+            for quantile in QUANTILES:
+                name = OnlinePVForecaster._name(pv_decision.method, quantile)
+                forecast_row[f"risk_q{int(100 * quantile):02d}_yuan"] = candidate_scores[name]
         load_forecaster.observe_block(load_decision, annual.load_kw[d])
         load_forecaster.commit_day(annual.load_kw[d], d)
         if price_decision is not None:
@@ -287,13 +294,30 @@ def run_q2(
                 "runtime_seconds": float(sum(r["plan"].solve_seconds for r in delivery)),
             }
         )
+        if pv_risk_mode == "asymmetric":
+            metrics["pv_residual_quantile_evaluation"] = {
+                f"Q{quantile:.2f}": {
+                    "output_quantile": 1.0 - quantile,
+                    "sample_out_risk_proxy_yuan": float(
+                        sum(row[f"risk_q{int(100 * quantile):02d}_yuan"] for row in forecast_rows[31:])
+                    ),
+                    "selected_days": int(
+                        sum(abs(float(row["quantile"]) - quantile) < 1e-12 for row in forecast_rows[31:])
+                    ),
+                }
+                for quantile in QUANTILES
+            }
+    # 阈值说明：能量残差用 1e-7 kWh，同时充放电量用 1e-5 kWh。后者是数值噪声
+    # （约 1e-6 kWh）与真实的线性松弛退化（80~824 kWh）之间的分界，两者相差 7 个
+    # 数量级，因此该阈值既能滤掉浮点噪声、又不会放过真正的"边充边放"伪解。
+    # （统一为与 q3.py 相同的阈值，避免同一份代码里出现两套判据。）
     metrics["passed"] = bool(
         max_balance < 1e-7
         and max_soc_res < 1e-7
         and continuity < 1e-9
         and min_soc >= storage.soc_min - 1e-7
         and max_soc <= storage.soc_max + 1e-7
-        and max_sim < 1e-7
+        and max_sim < 1e-5
     )
 
     if write_outputs:

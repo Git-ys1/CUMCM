@@ -107,12 +107,12 @@ class OnlinePVForecaster:
             scores = {n: float(np.mean(self.score_days[n][-self.score_window :])) for n in eligible}
             selected = min(scores, key=lambda n: (scores[n], n))
             hist = scores[selected]
-        if selected in margins:
-            method = selected
-            q = 0.0
-        else:
+        if self.risk_mode == "asymmetric":
             method, q_text = selected.rsplit("_q", 1)
             q = int(q_text) / 100.0
+        else:
+            method = selected
+            q = 0.0
         return ForecastDecision(
             d,
             selected,

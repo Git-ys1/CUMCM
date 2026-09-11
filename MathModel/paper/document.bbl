@@ -1,0 +1,128 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax\else
+  \urlstyle{same}\fi
+\expandafter\ifx\csname href\endcsname\relax
+  \def\doi{\begingroup \urlstyle{same}\Url}
+  \def\cstr{\begingroup \urlstyle{same}\Url}
+\else
+  \def\doi#1{\href{https://doi.org/#1}{\nolinkurl{#1}}}
+  \def\cstr#1{\href{https://cstr.cn/#1}{\nolinkurl{#1}}}
+\fi
+
+\bibitem[Wu et~al.(2014)Wu，Liu，and Ding]{wu2014dynamic}
+Wu Hongbin，Liu Xingyue，Ding Ming.
+\newblock Dynamic economic dispatch of a microgrid：mathematical models and
+  solution algorithm\allowbreak[J/OL].
+\newblock International Journal of Electrical Power \& Energy
+  Systems，2014，63：336-346.
+\newblock \url{http://dx.doi.org/10.1016/j.ijepes.2014.06.002}.
+
+\bibitem[Nemati et~al.(2018)Nemati，Braun，and
+  Tenbohlen]{nemati2018optimization}
+Nemati M，Braun M，Tenbohlen S.
+\newblock Optimization of unit commitment and economic dispatch in microgrids
+  based on genetic algorithm and mixed integer linear
+  programming\allowbreak[J/OL].
+\newblock Applied Energy，2018，210：944-963.
+\newblock \url{http://dx.doi.org/10.1016/j.apenergy.2017.07.007}.
+
+\bibitem[Wu et~al.(2016)Wu，Zeng，Zhang，and Zhou]{wu2016solution}
+Wu Zhi，Zeng Pingliang，Zhang X-P，et~al.
+\newblock A solution to the chance-constrained two-stage stochastic program for
+  unit commitment with wind energy integration\allowbreak[J/OL].
+\newblock IEEE Transactions on Power Systems，2016，31\allowbreak
+  （6）：4185-4196.
+\newblock \url{http://dx.doi.org/10.1109/tpwrs.2015.2513395}.
+
+\bibitem[孙硕 et~al.(2025)孙硕 and 杨仕友]{sun2025distributionally}
+孙硕，杨仕友.
+\newblock
+  考虑光伏出力不确定性的分布鲁棒优化调度方法\allowbreak[J/OL].
+\newblock 激光与光电子学进展，2025，62\allowbreak （9）：0925001.
+\newblock \url{http://dx.doi.org/10.3788/lop241935}.
+
+\bibitem[Zhang et~al.(2018)Zhang，Fu，Zhu，Bao，and Liu]{zhang2018robust}
+Zhang Yan，Fu Lijun，Zhu Wanlu，et~al.
+\newblock Robust model predictive control for optimal energy management of
+  island microgrids with uncertainties\allowbreak[J/OL].
+\newblock Energy，2018，164：1229-1241.
+\newblock \url{http://dx.doi.org/10.1016/j.energy.2018.08.200}.
+
+\bibitem[Elkazaz et~al.(2020)Elkazaz，Sumner，and Thomas]{elkazaz2020energy}
+Elkazaz M，Sumner M，Thomas D.
+\newblock Energy management system for hybrid {PV}-wind-battery microgrid using
+  convex programming，model predictive and rolling horizon predictive control
+  with experimental validation\allowbreak[J/OL].
+\newblock International Journal of Electrical Power \& Energy
+  Systems，2020，115：105483.
+\newblock \url{http://dx.doi.org/10.1016/j.ijepes.2019.105483}.
+
+\bibitem[Silva et~al.(2020)Silva，Aoki，and Lambert-Torres]{silva2020optimal}
+Silva V~A，Aoki A~R，Lambert-Torres G.
+\newblock Optimal day-ahead scheduling of microgrids with battery energy
+  storage system\allowbreak[J/OL].
+\newblock Energies，2020，13\allowbreak （19）：5188.
+\newblock \url{http://dx.doi.org/10.3390/en13195188}.
+
+\bibitem[Luo
+  et~al.(2020)Luo，Abdulkareem，Rezvani，Miveh，Samad，Aljojo，and
+  Pazhoohesh]{luo2020optimal}
+Luo Liang，Abdulkareem S~S，Rezvani A，et~al.
+\newblock Optimal scheduling of a renewable based microgrid considering
+  photovoltaic system and battery energy storage under
+  uncertainty\allowbreak[J/OL].
+\newblock Journal of Energy Storage，2020，28：101306.
+\newblock \url{http://dx.doi.org/10.1016/j.est.2020.101306}.
+
+\bibitem[Maheshwari et~al.(2020)Maheshwari，Paterakis，Santarelli，and
+  Gibescu]{maheshwari2020optimizing}
+Maheshwari A，Paterakis N~G，Santarelli M，et~al.
+\newblock Optimizing the operation of energy storage using a non-linear
+  lithium-ion battery degradation model\allowbreak[J/OL].
+\newblock Applied Energy，2020，261：114360.
+\newblock \url{http://dx.doi.org/10.1016/j.apenergy.2019.114360}.
+
+\bibitem[Qin et~al.(2011)Qin，Wang，Vakharia，Chen，and
+  Seref]{qin2011newsvendor}
+Qin Yan，Wang Ruoxuan，Vakharia A~J，et~al.
+\newblock The newsvendor problem：review and directions for future
+  research\allowbreak[J/OL].
+\newblock European Journal of Operational Research，2011，213\allowbreak
+  （2）：361-374.
+\newblock \url{http://dx.doi.org/10.1016/j.ejor.2010.11.024}.
+
+\bibitem[Polat et~al.(2024)Polat，G{\"u}ler，and
+  Uluku{\c{s}}]{polat2024renewable}
+Polat E，G{\"u}ler M~G，Uluku{\c{s}} M~Y.
+\newblock Renewable {GenCo} bidding strategy using newsvendor-based neural
+  networks：an example from turkish electricity market\allowbreak[J/OL].
+\newblock Electric Power Systems Research，2024，231：110301.
+\newblock \url{http://dx.doi.org/10.1016/j.epsr.2024.110301}.
+
+\bibitem[Markovics et~al.(2022)Markovics and Mayer]{markovics2022comparison}
+Markovics D，Mayer M~J.
+\newblock Comparison of machine learning methods for photovoltaic power
+  forecasting based on numerical weather prediction\allowbreak[J/OL].
+\newblock Renewable and Sustainable Energy Reviews，2022，161：112364.
+\newblock \url{http://dx.doi.org/10.1016/j.rser.2022.112364}.
+
+\bibitem[Wang et~al.(2015)Wang，Zhang，Ding，Xydis，Wang，and
+  {\O}stergaard]{wang2015review}
+Wang Qi，Zhang Chunyu，Ding Yi，et~al.
+\newblock Review of real-time electricity markets for integrating distributed
+  energy resources and demand response\allowbreak[J/OL].
+\newblock Applied Energy，2015，138：695-706.
+\newblock \url{http://dx.doi.org/10.1016/j.apenergy.2014.10.048}.
+
+\bibitem[刘继春
+  et~al.(2018)刘继春，周春燕，高红均，郭焱林，and
+  朱雨薇]{liu2018dayahead}
+刘继春，周春燕，高红均，et~al.
+\newblock
+  考虑氢能-天然气混合储能的电-气综合能源微网日前经济调度优化\allowbreak[J/OL].
+\newblock 电网技术，2018，42\allowbreak （1）：170-178.
+\newblock \url{https://doi.org/10.13335/j.1000-3673.pst.2017.0966}.
+
+\end{thebibliography}

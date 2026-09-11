@@ -161,7 +161,9 @@ Just choose `xelatex', no `pdflatex' or `latex' and so on.}
 \graphicspath{{figures/}{figure/}{pictures/}%
   {picture/}{pic/}{pics/}{image/}{images/}}
 % 图表标题
-\DeclareCaptionFont{song}{\songti}
+% 正文主字体已由 ctex 的 Windows 字体集配置为宋体，并映射黑体粗体。
+% 沿用主字体族可避免 \songti 别名缺少粗体字形时发生字体替代。
+\DeclareCaptionFont{song}{\rmfamily}
 \DeclareCaptionFont{minusfour}{\zihao{-4}}
 \captionsetup[figure]{%
 	format=hang,   % 标题从第二行开始都有缩进, 应该和 justification=raggedright 的效果一样.

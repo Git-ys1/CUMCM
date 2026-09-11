@@ -5,6 +5,7 @@
 \usepackage{tabularx} % 支持自动调整宽度的表格
 \usepackage{afterpage} % 控制内容在下一页显示
 \usepackage{longtable} % 支持跨页长表格
+\usepackage{multirow} % 指定日期结果表中的跨行日期
 
 \usepackage[numbers,sort&compress]{natbib} % 参考文献排序与压缩显示
 
@@ -38,9 +39,9 @@
 \lstdefinestyle{Python}{
 	language        =   Python, % 语言设为Python
 	basicstyle      =   \zihao{-5}\ttfamily\color{black}, % 基本风格，小五号，等宽字体，黑色
-	keywordstyle    =   \color{blue}\bfseries\itshape, % 关键字风格，蓝色加粗斜体
+	keywordstyle    =   \color{blue}\bfseries, % 关键字风格，蓝色加粗
 	stringstyle     =   \color{magenta}, % 字符串风格，洋红色
-	commentstyle    =   \color{red}\itshape, % 注释风格，红色斜体
+	commentstyle    =   \color{red}, % 注释风格，红色
 }
 
 % MATLAB 代码样式

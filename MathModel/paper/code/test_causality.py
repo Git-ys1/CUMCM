@@ -53,6 +53,7 @@ class CausalityTestBase(unittest.TestCase):
 
     @staticmethod
     def _run_q3(root: Path, **kwargs):
+        kwargs.setdefault("settlement_mode", "replacement")
         return run_q3(data_root=root, max_days=DAYS, write_outputs=False, load_mode="causal", **kwargs)
 
 

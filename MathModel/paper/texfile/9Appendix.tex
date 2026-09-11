@@ -5,7 +5,7 @@
 \end{center}
 
 \section*{附录 A\quad 支撑材料文件列表}
-\addcontentsline{toc}{section}{附录 A\quad 支撑材料文件列表}
+\addcontentsline{toc}{section}{附录 A 支撑材料文件列表}
 
 \begin{table}[htbp]
 	\caption{支撑材料文件清单}
@@ -15,25 +15,22 @@
 		\toprule
 		文件 & 说明 \\
 		\midrule
-		result1.xlsx & 问题一结果：计划购电量（$144$ 个 $10$ min 时段）与储能分时段充放电量、首末储电量 \\
-		result2.xlsx & 问题二结果：2025.2.1--12.31 逐日计划购电量、储能充放电量、紧急购电时间段与电量 \\
-		result3.xlsx & 问题三结果：逐日计划购电量、调整购电量、最终充放电量、紧急购电量 \\
-		result4-2.xlsx & 问题四对应问题二的结果（波动电价）\\
-		result4-3.xlsx & 问题四对应问题三的结果（波动电价）\\
+		\texttt{README.md} & 支撑材料目录、运行环境与唯一复现命令 \\
+		\texttt{\_\_init\_\_.py} & Python 包标记，保证从项目根目录稳定导入 \\
 		AI工具使用详情.pdf & AI 工具名称、版本、使用环节与人工核验说明 \\
-		\texttt{solve/} & 全部求解源码：数据读取、线性规划内核、因果预测、结算与消融实验 \\
-		\texttt{tests/} & 因果性 mutation 测试、结算口径单元测试、legacy 回归测试 \\
-		\texttt{outputs/} & 各方案的逐时明细 CSV、指标 JSON、官方结果 Excel 与验证报告 \\
-		\texttt{MODEL\_AUDIT\_V2.md} & 模型审计报告（含全部对照实验数值与归因结论）\\
+		\texttt{results/} & 五个最终工作簿：\texttt{result1.xlsx}、\texttt{result2.xlsx}、\texttt{result3.xlsx}、\texttt{result4-2.xlsx}、\texttt{result4-3.xlsx} \\
+		\texttt{solve/} & 全部求解、验证、制表与绘图 Python 源码 \\
+		\texttt{tests/} & 信息泄漏、计划持续性、结算、主结果和历史配置回归测试 \\
+		\texttt{reports/MODEL\_AUDIT\_V4.md} & V4 对照实验、采用口径与数值审计报告 \\
+		\texttt{reports/model\_audit\_v4\_raw.json} & 审计报告对应的机器可读原始指标 \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
 
 \section*{附录 B\quad 源程序代码}
-\addcontentsline{toc}{section}{附录 B\quad 源程序代码}
+\addcontentsline{toc}{section}{附录 B 源程序代码}
 
-全部代码使用 Python 3.12 编写，线性规划由 SciPy 的 HiGHS 求解器求解，运行方式为
-\texttt{python -m solve.<模块名>}。以下按调用顺序列出完整可运行源码。
+全部代码使用 Python 3.12 编写，线性规划和混合整数线性规划均由 SciPy 调用 HiGHS 求解。项目根目录的唯一测试命令为 \texttt{python -m pytest MathModel/tests -q --import-mode=importlib}；各问可用 \texttt{python -m MathModel.solve.<模块名>} 复现。以下按调用关系列出完整源码。
 
 \subsection*{B.1\quad 物理参数与口径定义（params.py）}
 \lstinputlisting[style=Python]{code/params.py}
@@ -74,11 +71,53 @@
 \subsection*{B.13\quad 模型审计与消融实验总控（ablation.py）}
 \lstinputlisting[style=Python]{code/ablation.py}
 
-\subsection*{B.14\quad 未来信息泄漏 mutation 测试（test\_causality.py）}
+\subsection*{B.14\quad 官方光伏预报处理（official\_forecast.py）}
+\lstinputlisting[style=Python]{code/official_forecast.py}
+
+\subsection*{B.15\quad 指定日期论文表格生成（paper\_tables.py）}
+\lstinputlisting[style=Python]{code/paper_tables.py}
+
+\subsection*{B.16\quad 问题二结果验证（validate\_q2.py）}
+\lstinputlisting[style=Python]{code/validate_q2.py}
+
+\subsection*{B.17\quad 全部方案物理验证（validate\_all.py）}
+\lstinputlisting[style=Python]{code/validate_all.py}
+
+\subsection*{B.18\quad 复现清单生成（build\_manifest.py）}
+\lstinputlisting[style=Python]{code/build_manifest.py}
+
+\subsection*{B.19\quad 科研绘图公共样式（plot\_style.py）}
+\lstinputlisting[style=Python]{code/plot_style.py}
+
+\subsection*{B.20\quad 数据总览绘图（fig\_data.py）}
+\lstinputlisting[style=Python]{code/fig_data.py}
+
+\subsection*{B.21\quad 问题一绘图（fig\_q1.py）}
+\lstinputlisting[style=Python]{code/fig_q1.py}
+
+\subsection*{B.22\quad 结果与消融绘图（fig\_results.py）}
+\lstinputlisting[style=Python]{code/fig_results.py}
+
+\subsection*{B.23\quad 技术路线图生成（fig\_route.py）}
+\lstinputlisting[style=Python]{code/fig_route.py}
+
+\subsection*{B.24\quad 绘图总控（plot\_results.py）}
+\lstinputlisting[style=Python]{code/plot_results.py}
+
+\subsection*{B.25\quad mutation 测试辅助函数（mutate.py）}
+\lstinputlisting[style=Python]{code/mutate.py}
+
+\subsection*{B.26\quad 未来信息泄漏 mutation 测试（test\_causality.py）}
 \lstinputlisting[style=Python]{code/test_causality.py}
 
-\subsection*{B.15\quad 结算口径单元测试（test\_settlement.py）}
+\subsection*{B.27\quad 主结果与计划持续性测试（test\_q2\_q3.py）}
+\lstinputlisting[style=Python]{code/test_q2_q3.py}
+
+\subsection*{B.28\quad 论文数值与提交口径一致性测试（test\_paper\_consistency.py）}
+\lstinputlisting[style=Python]{code/test_paper_consistency.py}
+
+\subsection*{B.29\quad 结算口径单元测试（test\_settlement.py）}
 \lstinputlisting[style=Python]{code/test_settlement.py}
 
-\subsection*{B.16\quad legacy 结果回归测试（test\_regression.py）}
+\subsection*{B.30\quad 历史配置回归测试（test\_regression.py）}
 \lstinputlisting[style=Python]{code/test_regression.py}

@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from time import perf_counter
 
 import numpy as np
-from scipy.optimize import linprog
+from scipy.optimize import Bounds, LinearConstraint, linprog, milp
 
 from .io_data import DT_HOURS
 from .params import DEFAULT_STORAGE, ENERGY_LIMIT, StorageParams
@@ -51,6 +51,28 @@ def _solve(c, a_eq, b_eq, bounds, a_ub=None, b_ub=None):
     )
 
 
+def _solve_milp(c, a_eq, b_eq, bounds, integrality, a_ub=None, b_ub=None):
+    """用 HiGHS MILP 求解带充放电互斥的调整模型。"""
+    lower = np.asarray([(-np.inf if lo is None else lo) for lo, _ in bounds], dtype=float)
+    upper = np.asarray([(np.inf if hi is None else hi) for _, hi in bounds], dtype=float)
+    constraints = [LinearConstraint(np.asarray(a_eq), np.asarray(b_eq), np.asarray(b_eq))]
+    if a_ub is not None and len(a_ub):
+        constraints.append(
+            LinearConstraint(
+                np.asarray(a_ub, dtype=float),
+                np.full(len(b_ub), -np.inf, dtype=float),
+                np.asarray(b_ub, dtype=float),
+            )
+        )
+    return milp(
+        np.asarray(c, dtype=float),
+        integrality=np.asarray(integrality, dtype=int),
+        bounds=Bounds(lower, upper),
+        constraints=constraints,
+        options={"presolve": True, "mip_rel_gap": 1e-10},
+    )
+
+
 # 词典序层间松弛沿用 legacy 公式：绝对 1e-5 与相对 1e-10 取大者。
 # 该公式使后序层只能在"同一个最优解"内部换一个顶点，不会移动日调度结果；
 # 由于微网是带状态反馈的滚动系统，日调度的一丝变化会沿 334 天放大，
@@ -67,8 +89,8 @@ def _lexicographic(objectives, a_eq, b_eq, bounds, extra_rows=None, extra_rhs=No
     """依次求解 objectives；后一层在前一层最优值的容差带内继续优化。
 
     数值退化（大规模最优面上的容差冲突）会让后序层被过紧的界判为不可行。
-    此时按三级逐级退让：① 原界 → ② 容差放大 100 倍 → ③ 只保留**最后一条**界。
-    第 ③ 级是刻意这样设计的：最后一条界来自第二层（吞吐量）目标，而"消除同时
+    此时按三级逐级退让：(1) 原界 → (2) 容差放大 100 倍 → (3) 只保留**最后一条**界。
+    第 (3) 级是刻意这样设计的：最后一条界来自第二层（吞吐量）目标，而"消除同时
     充放"正是靠这一层实现的；若把它也丢掉，最优面上的退化解（C=H=大值，母线
     平衡不变但储电量缓慢下降）就会重新出现。
 
@@ -108,6 +130,31 @@ def _lexicographic(objectives, a_eq, b_eq, bounds, extra_rows=None, extra_rhs=No
         rows.append(np.asarray(c, dtype=float))
         rhs.append(value + _lexicographic_slack(value, slack_factor))
     return x, result, degraded, values
+
+
+def _milp_lexicographic(objectives, a_eq, b_eq, bounds, integrality, extra_rows=None, extra_rhs=None):
+    """MILP 的三层词典序求解；每一层均保留前序目标的最优容差带。"""
+    rows = [np.asarray(r, dtype=float) for r in (extra_rows or [])]
+    rhs = [float(v) for v in (extra_rhs or [])]
+    values: list[float] = []
+    result = None
+    for index, objective in enumerate(objectives):
+        result = _solve_milp(
+            objective,
+            a_eq,
+            b_eq,
+            bounds,
+            integrality,
+            np.asarray(rows) if rows else None,
+            np.asarray(rhs) if rhs else None,
+        )
+        if not result.success:
+            raise RuntimeError(f"lexicographic MILP stage {index} failed: {result.message}")
+        value = float(np.dot(objective, result.x))
+        values.append(value)
+        rows.append(np.asarray(objective, dtype=float))
+        rhs.append(value + _lexicographic_slack(value, 10.0))
+    return result.x, result, values
 
 
 def _validate(load_kw, pv_kw, price, storage: StorageParams, soc_initial, soc_terminal):
@@ -265,7 +312,12 @@ def solve_adjustment_dispatch(
     g, ch, dis, soc, spill = _slices(t)
     inc = slice(5 * t, 6 * t)
     dec = slice(6 * t, 7 * t)
-    n = 7 * t
+    # 题面字面口径（additive）作为主口径时，连续 LP 的高维最优面可能出现
+    # C_t>0、H_t>0 的内部耗散伪解。为使主结果严格满足 C_t H_t=0，
+    # additive 模式增加二元变量 z_t；replacement 保留原 LP 作为敏感性对照。
+    use_milp = settlement_mode == "additive"
+    z = slice(7 * t, 8 * t) if use_milp else slice(7 * t, 7 * t)
+    n = 8 * t if use_milp else 7 * t
 
     masked = np.flatnonzero(mask)
     a_eq = np.zeros((2 * t + (soc_terminal is not None) + len(masked), n))
@@ -285,6 +337,7 @@ def solve_adjustment_dispatch(
         + [(0, float(x) * DT_HOURS) for x in pv_kw]
         + [((0, None) if flag else (0, 0)) for flag in mask]
         + [((0, None) if flag else (0, 0)) for flag in mask]
+        + ([(0, 1)] * t if use_milp else [])
     )
 
     # 等式约束：Ga - inc + dec = Gp（仅对允许调整的时段生效）
@@ -315,20 +368,52 @@ def solve_adjustment_dispatch(
     throughput_c = np.zeros(n)
     throughput_c[ch] = 1
     throughput_c[dis] = 1
+    throughput_c[inc] = 1
+    throughput_c[dec] = 1
     spill_c = np.zeros(n)
     spill_c[spill] = 1
     started = perf_counter()
-    # additive 口径下 Ga 本身不进目标，最优面维度远高于 replacement 口径，
-    # 因此给它更宽的层间容差，避免后序层被过紧的界判为不可行而触发退让。
-    x, tertiary, fell_back, values = _lexicographic(
-        [primary_c, throughput_c, spill_c],
-        a_eq,
-        b_eq,
-        bounds,
-        adjustment_rows,
-        adjustment_rhs,
-        slack_factor=1.0 if settlement_mode == "replacement" else 100.0,
-    )
+    if use_milp:
+        # C_t <= Ebar*z_t, H_t <= Ebar*(1-z_t) 精确表达充放电互斥。
+        mutual_rows = np.zeros((2 * t, n))
+        mutual_rhs = np.zeros(2 * t)
+        for i in range(t):
+            mutual_rows[2 * i, ch.start + i] = 1.0
+            mutual_rows[2 * i, z.start + i] = -limit
+            mutual_rows[2 * i + 1, dis.start + i] = 1.0
+            mutual_rows[2 * i + 1, z.start + i] = limit
+            mutual_rhs[2 * i + 1] = limit
+        integrality = np.zeros(n, dtype=int)
+        integrality[z] = 1
+        # 二元互斥已从可行域中彻底排除“边充边放”，因此主费用目标一次求解即可；
+        # replacement 的连续 LP 仍保留三层词典序以选择稳定顶点。
+        tertiary = _solve_milp(
+            primary_c,
+            a_eq,
+            b_eq,
+            bounds,
+            integrality,
+            mutual_rows,
+            mutual_rhs,
+        )
+        if not tertiary.success:
+            raise RuntimeError(f"adjustment MILP failed: {tertiary.message}")
+        x = tertiary.x
+        values = [
+            float(np.dot(primary_c, x)),
+            float(np.dot(throughput_c, x)),
+            float(np.dot(spill_c, x)),
+        ]
+        fell_back = False
+    else:
+        x, tertiary, fell_back, values = _lexicographic(
+            [primary_c, throughput_c, spill_c],
+            a_eq,
+            b_eq,
+            bounds,
+            adjustment_rows,
+            adjustment_rhs,
+        )
     primary_value = values[0]
     adjusted = x[g].copy()
     increase_vec = x[inc].copy()
@@ -349,9 +434,13 @@ def solve_adjustment_dispatch(
         float(x[ch].sum() + x[dis].sum()),
         int(tertiary.status),
         str(tertiary.message),
-        int(getattr(tertiary, "nit", -1)),
+        int(getattr(tertiary, "nit", getattr(tertiary, "mip_node_count", -1)) or 0),
         perf_counter() - started,
-        np.asarray(tertiary.eqlin.marginals, dtype=float),
+        (
+            np.zeros(a_eq.shape[0], dtype=float)
+            if use_milp
+            else np.asarray(tertiary.eqlin.marginals, dtype=float)
+        ),
     )
     return AdjustmentDispatchResult(
         dispatch,

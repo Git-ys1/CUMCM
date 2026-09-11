@@ -66,6 +66,40 @@ def _slice_dispatch(result: DispatchResult, start: int, stop: int) -> DispatchRe
     )
 
 
+def _replace_dispatch_tail(current: DispatchResult, horizon: DispatchResult, start: int) -> DispatchResult:
+    """把 ``horizon`` 的首段写入当前日计划的 ``start:144``。
+
+    该函数是节点消融的关键：若后续节点未启用，最近一次有效计划仍保留在
+    ``current`` 中并继续执行，而不是回退到 0:00 基准计划。
+    """
+    count = 144 - start
+
+    def merged(name: str) -> np.ndarray:
+        values = np.asarray(getattr(current, name), dtype=float).copy()
+        values[start:] = np.asarray(getattr(horizon, name), dtype=float)[:count]
+        return values
+
+    charge = merged("charge")
+    discharge = merged("discharge")
+    curtail = merged("curtail")
+    return DispatchResult(
+        merged("grid"),
+        charge,
+        discharge,
+        merged("soc"),
+        curtail,
+        horizon.objective,
+        horizon.primary_objective,
+        float(curtail.sum()),
+        float(charge.sum() + discharge.sum()),
+        horizon.status,
+        horizon.message,
+        horizon.nit,
+        horizon.solve_seconds,
+        horizon.equality_marginals.copy(),
+    )
+
+
 def _reversal_count(revisions: np.ndarray) -> int:
     count = 0
     for slot in range(144):
@@ -89,7 +123,8 @@ def run_q3(
     downscale: str = "linear",
     calibrate: bool = True,
     update_nodes: tuple[int, ...] = ALL_NODES,
-    settlement_mode: str = "replacement",
+    pv_update_nodes: tuple[int, ...] | None = None,
+    settlement_mode: str = "additive",
     load_mode: str = "causal",
     price_mode: str = "perfect",
     realtime_feedback: bool = True,
@@ -104,8 +139,9 @@ def run_q3(
 ) -> dict:
     """问题三（及问题四对应问题三）多节点滚动调度。
 
-    update_nodes 控制"允许在哪些预报时刻更新购电策略"，是本题"是否需要引入其他时刻
-    预报"的消融变量：
+    update_nodes 控制"允许在哪些时刻重新优化购电策略"；pv_update_nodes 控制这些
+    决策时刻是否使用新发布的官方光伏预报。常规 S0--S3 令二者相同；负载刷新
+    对照令 update_nodes=ALL_NODES、pv_update_nodes=(0,)，从而冻结 0:00 光伏预报：
         S0 = (0,)              仅 0:00 预报
         S1 = (0, 36)           +6:00
         S2 = (0, 36, 72)       +12:00
@@ -122,6 +158,9 @@ def run_q3(
     nodes = tuple(sorted(int(n) for n in update_nodes))
     if not nodes or nodes[0] != 0 or any(n not in ALL_NODES for n in nodes):
         raise ValueError(f"update_nodes must be a prefix of {ALL_NODES}, got {update_nodes}")
+    pv_nodes = nodes if pv_update_nodes is None else tuple(sorted(int(n) for n in pv_update_nodes))
+    if not pv_nodes or pv_nodes[0] != 0 or any(n not in nodes for n in pv_nodes):
+        raise ValueError(f"pv_update_nodes must contain 0 and be a subset of update_nodes, got {pv_nodes}")
 
     typical = read_attachment1(data_root)
     annual = read_attachment2(data_root)
@@ -161,6 +200,9 @@ def run_q3(
         baseline = solve_dispatch(
             load0, base_pv, price0, soc_initial=initial, soc_terminal=soc_terminal, storage=storage
         )
+        active_plan = baseline
+        active_pv_day = np.asarray(base_pv, dtype=float).copy()
+        active_source_node = 0
 
         adjusted = np.zeros(144)
         charge = np.zeros(144)
@@ -172,6 +214,7 @@ def run_q3(
         dec_acc = np.zeros(144)
         revisions = np.full((4, 144), np.nan)
         revisions[0] = baseline.grid
+        plan_source_nodes = np.zeros(144, dtype=int)
         block_forecast_mae: list[float] = []
         calibration_margins: list[float] = []
         calibration_quantiles: list = []
@@ -191,9 +234,15 @@ def run_q3(
                 block_inc = np.zeros(BLOCK)
                 block_dec = np.zeros(BLOCK)
             elif node in nodes:
-                raw_horizon = hourly_to_ten_min(forecasts.hourly_kw[d, node_index], downscale)
-                calibration = calibrator.calibrate(node_index, raw_horizon)
-                forecast_horizon = calibration.forecast_kw if calibrate else raw_horizon
+                if node in pv_nodes:
+                    raw_horizon = hourly_to_ten_min(forecasts.hourly_kw[d, node_index], downscale)
+                    calibration = calibrator.calibrate(node_index, raw_horizon)
+                    forecast_horizon = calibration.forecast_kw if calibrate else raw_horizon
+                else:
+                    # 负载刷新对照：允许重优化，但不引入该节点的新光伏预报。
+                    # 当日剩余部分沿用最近一次可用预报，跨午夜部分用附件 1 典型日先验补齐。
+                    calibration = None
+                    forecast_horizon = np.r_[active_pv_day[node:], typical.pv_kw[:node]]
                 if load_mode == "perfect":
                     load_horizon = _horizon(annual.load_kw, d, node, typical.load_kw)
                 else:
@@ -226,17 +275,25 @@ def run_q3(
                     storage=storage,
                 )
                 horizon_plan = rolling.dispatch
-                block_plan = _slice_dispatch(horizon_plan, 0, BLOCK)
-                revisions[node_index, node:] = horizon_plan.grid[: 144 - node]
-                block_forecast = forecast_horizon[:BLOCK]
-                block_inc = rolling.increase[:BLOCK]
-                block_dec = rolling.decrease[:BLOCK]
+                active_plan = _replace_dispatch_tail(active_plan, horizon_plan, node)
+                active_pv_day[node:] = forecast_horizon[: 144 - node]
+                active_source_node = node
+                block_plan = _slice_dispatch(active_plan, node, block_stop)
+                revisions[node_index, node:] = active_plan.grid[node:]
+                block_forecast = active_pv_day[node:block_stop]
+                base_block = baseline.grid[node:block_stop]
+                block_inc = np.maximum(block_plan.grid - base_block, 0.0)
+                block_dec = np.maximum(base_block - block_plan.grid, 0.0)
             else:
-                # 该时刻没有新预报，沿用 0:00 基准计划，不产生调整
-                block_plan = _slice_dispatch(baseline, node, block_stop)
-                block_forecast = base_pv[node:block_stop]
-                block_inc = np.zeros(BLOCK)
-                block_dec = np.zeros(BLOCK)
+                # 没有新决策时，最近一次有效计划持续生效。
+                calibration = None
+                block_plan = _slice_dispatch(active_plan, node, block_stop)
+                block_forecast = active_pv_day[node:block_stop]
+                base_block = baseline.grid[node:block_stop]
+                block_inc = np.maximum(block_plan.grid - base_block, 0.0)
+                block_dec = np.maximum(base_block - block_plan.grid, 0.0)
+
+            plan_source_nodes[node:block_stop] = active_source_node
 
             execution = execute_plan(
                 block_plan,
@@ -255,7 +312,7 @@ def run_q3(
             inc_acc[node:block_stop] = block_inc
             dec_acc[node:block_stop] = block_dec
 
-            if node_index == 0 or node in nodes:
+            if calibration is not None:
                 calibrator.observe(calibration, annual.pv_kw[d, node:block_stop], prices[d, node:block_stop])
                 calibration_margins.append(calibration.margin_kw if calibrate else 0.0)
                 calibration_quantiles.append(calibration.quantile if calibrate else None)
@@ -294,6 +351,7 @@ def run_q3(
             "actual_pv_kw": annual.pv_kw[d],
             "load_plan_kw": load_plan_day,
             "revisions": revisions,
+            "plan_source_nodes": plan_source_nodes.copy(),
             "baseline_cost": float(np.dot(prices[d], gp)),
             "settlement_cost": settlement,
             "emergency_cost": emergency_cost,
@@ -340,6 +398,7 @@ def run_q3(
         "calibration_enabled": calibrate,
         "update_nodes": list(nodes),
         "update_nodes_label": "S" + str(len(nodes) - 1),
+        "pv_update_nodes": list(pv_nodes),
         "settlement_mode": settlement_mode,
         "load_mode": load_mode,
         "price_mode": price_mode,
@@ -357,7 +416,7 @@ def run_q3(
             if calibrate
             else "raw Attachment 3 forecasts"
         )
-        + "; actual PV used only after block execution",
+        + f"; newly issued forecasts used at nodes {list(pv_nodes)}; actual PV used only after block execution",
         "price_information": (
             "Attachment 4 same-day true price curve (perfect-information benchmark)"
             if price_mode == "perfect"
@@ -378,6 +437,7 @@ def run_q3(
                 "total_cost_yuan": float(sum(r["total_cost"] for r in delivery)),
                 "baseline_purchase_cost_yuan": float(sum(r["baseline_cost"] for r in delivery)),
                 "adjustment_settlement_cost_yuan": float(sum(r["settlement_cost"] for r in delivery)),
+                "adjustment_cost_yuan": float(sum(r["adjustment_cost_yuan"] for r in delivery)),
                 "emergency_cost_yuan": float(sum(r["emergency_cost"] for r in delivery)),
                 "plan_purchase_energy_kwh": float(sum(r["baseline_plan"].grid.sum() for r in delivery)),
                 "adjusted_purchase_energy_kwh": float(sum(r["adjusted_grid"].sum() for r in delivery)),
@@ -481,7 +541,11 @@ def run_q3(
             "platform": platform.platform(),
             "numpy": np.__version__,
             "scipy": scipy.__version__,
-            "algorithm": f"HiGHS LP, {settlement_mode} settlement with explicit (inc, dec) split",
+            "algorithm": (
+                "HiGHS MILP with binary charge/discharge exclusivity and explicit (inc, dec) split"
+                if settlement_mode == "additive"
+                else "HiGHS LP with explicit (inc, dec) split"
+            ),
             "case_tag": tag,
         }
         (out_dir / "environment.json").write_text(json.dumps(env, ensure_ascii=False, indent=2), encoding="utf-8")

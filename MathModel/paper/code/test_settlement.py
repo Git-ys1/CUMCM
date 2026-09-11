@@ -2,7 +2,7 @@
 
 replacement：C = p[min(Gp,Ga) + 0.5(Gp-Ga)^+ + 1.5(Ga-Gp)^+]
 additive   ：C = p·Gp + 0.5p(Gp-Ga)^+ + 1.5p(Ga-Gp)^+
-同时验证 LP 线性化目标与直接回代公式一致（gap < 1e-7）。
+同时验证优化目标与直接回代公式一致（gap < 1e-7）；additive 使用互斥 MILP。
 """
 from __future__ import annotations
 
@@ -52,8 +52,8 @@ def _case(seed: int, t: int = 24, mask_all: bool = True):
     return load, pv, price, baseline, mask
 
 
-def _lp_objective(result, price, baseline, mode: str) -> float:
-    """LP 侧线性化目标（只统计允许调整的时段）。"""
+def _model_objective(result, price, baseline, mode: str) -> float:
+    """模型侧分段线性目标（只统计允许调整的时段）。"""
     mask = result.adjustment_mask
     p = price[mask]
     if mode == "replacement":
@@ -62,7 +62,7 @@ def _lp_objective(result, price, baseline, mode: str) -> float:
 
 
 class LinearizationTest(unittest.TestCase):
-    """两种口径下 LP 线性化目标与按题意直接回代的差异必须 < 1e-7。"""
+    """两种口径下模型目标与按题意直接回代的差异必须 < 1e-7。"""
 
     def _gap(self, mode: str, seed: int) -> float:
         load, pv, price, baseline, mask = _case(seed)
@@ -71,7 +71,7 @@ class LinearizationTest(unittest.TestCase):
             soc_initial=6000.0, soc_terminal=6000.0, settlement_mode=mode,
         )
         direct = settlement_cost(baseline, result.dispatch.grid, price, mode)
-        return abs(direct - _lp_objective(result, price, baseline, mode))
+        return abs(direct - _model_objective(result, price, baseline, mode))
 
     def test_replacement_linearization(self):
         for seed in range(5):
@@ -96,7 +96,7 @@ class LinearizationTest(unittest.TestCase):
             cross_replacement = settlement_cost(baseline, additive.dispatch.grid, price, "replacement")
             best_additive = settlement_cost(baseline, additive.dispatch.grid, price, "additive")
             cross_additive = settlement_cost(baseline, replacement.dispatch.grid, price, "additive")
-            # 容差取 LP 求解精度量级（主目标容差 max(1e-5, 1e-10|F|)）
+            # 容差取 HiGHS 求解精度量级。
             tol_r = 1e-6 * max(1.0, abs(best_replacement))
             tol_a = 1e-6 * max(1.0, abs(best_additive))
             self.assertLessEqual(best_replacement, cross_replacement + tol_r, f"seed={seed}")

@@ -1,6 +1,6 @@
-"""模型审计实验总控：Q2 原因拆解 / Q3 预报时点消融与结算口径 / Q4 价格信息边界 / P1 敏感性。
+"""V4 模型审计总控：Q2 原因拆解 / Q3 节点消融与结算口径 / Q4 价格边界 / 敏感性。
 
-所有变体产物统一写入 MathModel/outputs/variants/model_audit_v2/，不覆盖任何既有结果。
+所有变体产物统一写入 MathModel/outputs/variants/model_audit_v4/，不覆盖 V3 结果。
 """
 from __future__ import annotations
 
@@ -12,11 +12,12 @@ import numpy as np
 
 from .io_data import DEFAULT_DATA_ROOT, read_attachment1, read_attachment4
 from .params import DEFAULT_STORAGE, EFFICIENCY_VARIANTS
+from .q1 import run_q1
 from .q2 import run_q2
 from .q3 import run_q3
 
 ROOT = Path(__file__).resolve().parents[1]
-VARIANTS = ROOT / "outputs" / "variants" / "model_audit_v2"
+VARIANTS = ROOT / "outputs" / "variants" / "model_audit_v4"
 
 # Q2 原因拆解：只改变一个因素
 Q2_CASES = {
@@ -26,12 +27,19 @@ Q2_CASES = {
     "D_causalload_risk_nofeedback": dict(load_mode="causal", pv_risk_mode="asymmetric", realtime_feedback=False),
 }
 
-Q3_CASES = {
+Q3_MAIN_CASES = {
     "S0_0": dict(update_nodes=(0,)),
     "S1_0_6": dict(update_nodes=(0, 36)),
     "S2_0_6_12": dict(update_nodes=(0, 36, 72)),
     "S3_0_6_12_18": dict(update_nodes=(0, 36, 72, 108)),
 }
+Q3_CONTROL_CASES = {
+    # 三个成对控制臂：先只加入该节点的负载刷新，再加入同节点新光伏预报。
+    "C1_load6": dict(update_nodes=(0, 36), pv_update_nodes=(0,)),
+    "C2_load12": dict(update_nodes=(0, 36, 72), pv_update_nodes=(0, 36)),
+    "C3_load18": dict(update_nodes=(0, 36, 72, 108), pv_update_nodes=(0, 36, 72)),
+}
+Q3_CASES = {**Q3_MAIN_CASES, **Q3_CONTROL_CASES}
 
 Q4_CASES = {
     "q42_perfect_price": ("q2", dict(price_mode="perfect")),
@@ -81,7 +89,7 @@ def run_q2_ablation(*, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT)
 
 
 def run_q3_ablation(
-    *, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT, settlement_mode: str = "replacement"
+    *, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT, settlement_mode: str = "additive"
 ) -> dict:
     # 两种结算口径的输出必须分目录，否则后跑的一轮会覆盖前一轮的
     # metrics.json 与官方 result3.xlsx，导致论文与提交文件口径不一致。
@@ -109,6 +117,39 @@ def run_q3_ablation(
         summary[name] = metrics
         print(f"[Q3-{settlement_mode}] {name}: total={metrics.get('total_cost_yuan')}")
     _dump(out / "summary.json", summary)
+    return summary
+
+
+def run_q3_controls(
+    *, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT, settlement_mode: str = "additive"
+) -> dict:
+    """只补跑成对控制臂，并合并进既有 summary.json。"""
+    out = VARIANTS / f"q3_{settlement_mode}"
+    summary_path = out / "summary.json"
+    summary = json.loads(summary_path.read_text(encoding="utf-8")) if summary_path.exists() else {}
+    for name, kwargs in Q3_CONTROL_CASES.items():
+        started = time.perf_counter()
+        result = run_q3(
+            data_root=data_root,
+            max_days=max_days,
+            output_dir=out / name,
+            template_name="result3.xlsx",
+            write_outputs=True,
+            settlement_mode=settlement_mode,
+            tag=name,
+            **kwargs,
+        )
+        metrics = result["metrics"]
+        metrics["wall_seconds"] = time.perf_counter() - started
+        (out / name / "metrics.json").write_text(
+            json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        (out / name / "by_season.csv").write_text(
+            _season_table(result["records"]), encoding="utf-8-sig"
+        )
+        summary[name] = metrics
+        print(f"[Q3-{settlement_mode}-control] {name}: total={metrics.get('total_cost_yuan')}")
+    _dump(summary_path, summary)
     return summary
 
 
@@ -164,7 +205,7 @@ def run_q4_ablation(*, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT)
                 template_name="result4-3.xlsx",
                 write_outputs=True,
                 load_mode="causal",
-                settlement_mode="replacement",
+                settlement_mode="additive",
                 update_nodes=(0, 36, 72, 108),
                 tag=name,
                 **kwargs,
@@ -239,3 +280,17 @@ def run_sensitivity(*, max_days: int = 365, data_root: Path = DEFAULT_DATA_ROOT)
 def _dump(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, default=str), encoding="utf-8")
+
+
+def main() -> None:
+    """按 V4 采用顺序重跑全部年度对照；该过程耗时较长。"""
+    run_q1()
+    run_q2_ablation()
+    run_q3_ablation(settlement_mode="additive")
+    run_q3_ablation(settlement_mode="replacement")
+    run_q4_ablation()
+    run_sensitivity()
+
+
+if __name__ == "__main__":
+    main()
