@@ -1,0 +1,555 @@
+\newpage
+\section{数据预处理}
+
+四个问题虽然使用的附件不同，但最终都要在同一条 $10$ min 时间轴上完成能量平衡。为避免时间错位和单位混用，首先统一数据口径。附件1包含典型日 $144$ 个时段的电价、负载和光伏预测；附件2给出2025年全年每天 $144$ 个时段的实际负载与光伏功率；附件3在每天 $0{:}00$、$6{:}00$、$12{:}00$、$18{:}00$ 发布未来 $24$ h 的整点光伏预报；附件4给出全年 $10$ min 分辨率的实时电价。各附件按原列顺序与结果模板逐项对应，不再人为平移时间标签。
+
+附件中的负载和光伏以 kW 给出，而题目要求填写的购电量、充放电量均为 kWh，因此所有功率在进入能量平衡前统一乘以 $\Delta t=1/6$ h。经完整性检查，所用数据均为有限值，负载与光伏非负、电价为正，附件2与附件3的日期一一对应。全年负载电量约为 $40.52\times10^6$ kWh，光伏电量约为 $20.25\times10^6$ kWh；其中 $19.27\%$ 的时段存在光伏功率高于负载的现象，且有 $241$ 个时段的富余功率超过储能最大充电功率 $5000$ kW。这意味着“多余电量如何处理”不是边缘情况，模型必须显式允许弃光。
+
+在建立模型前，先从原始数据判断储能可能发挥作用的时段。图~\ref{fig:data-overview} 汇总了典型日电价与源荷曲线、全年负载和光伏的季节分布以及实时电价的日内变化。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/data_overview.pdf}
+    \caption{附件数据总览}
+    \label{fig:data-overview}
+\end{figure}
+
+由图~\ref{fig:data-overview}(a) 可见，典型日光伏主要集中在白天，而较高电价同时出现在早晚峰段，二者并不完全重合；因此储能可以把低价时段或光伏富余时段的电量转移到高价时段使用。图~\ref{fig:data-overview}(b)(c) 进一步表明，夏季负载和光伏均较高，冬季则表现为负载抬升而光伏衰减，说明同一套调度策略在不同季节面对的主要矛盾并不相同。附件4的实时电价还存在明显日际波动，不能简单用附件1的典型日电价替代。
+
+为了把“光伏多不多”转化为更直接的调度量，定义净负荷为负载减去光伏。图~\ref{fig:netload-season} 给出了净负荷和光伏渗透率的季节分布。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/netload_season.pdf}
+    \caption{净负荷与光伏渗透的季节特征}
+    \label{fig:netload-season}
+\end{figure}
+
+图~\ref{fig:netload-season} 显示，春、秋两季中午有较多时段净负荷为负，即光伏在当时超过小区负载；夏季 $6\sim8$ 月光伏渗透率中位数接近 $1$，储能的主要任务是吸收中午富余并为傍晚保留能量；冬季净负荷整体上移，调度重点则更多转向利用电价峰谷差。相关性复算得到净负荷与负载、光伏的相关系数分别为 $\CorrNetLoad$ 和 $\CorrNetPv$，可见全年净负荷变化更受光伏波动影响。这一数据特征为后文设置弃光变量、风险光伏预测和滚动更新提供了直接依据。
+
+\section{模型的建立与求解}
+
+\subsection{公共物理模型}
+
+四个问题的费用和信息条件不同，但电能在微网中的流动方式不变。为使后续比较只反映“信息”和“结算”的变化，先固定一套公共物理约束，再在各问中单独给出相应目标函数。
+
+以第 $d$ 天第 $t$ 个 $10$ min 时段为决策单元。$G^p_{d,t}$ 表示 $0{:}00$ 制定的计划购电量，$G^a_{d,t}$ 表示执行前最后一次有效调整后的购电量；$C_{d,t}$、$H_{d,t}$ 分别表示母线侧充、放电量，$W_{d,t}$ 为弃光电量，$E_{d,t}$ 为紧急购电量，$S_{d,t}$ 为时段末储电量。
+
+\subsubsection{母线能量平衡}
+
+任一时段内，外网购电、光伏发电、储能放电和紧急购电共同构成电力来源；小区负载、储能充电以及无法利用的光伏构成电力去向。将功率统一换算为时段电量后，有
+
+\begin{equation}
+    G_{d,t}+P_{d,t}\Delta t+H_{d,t}+E_{d,t}
+    =L_{d,t}\Delta t+C_{d,t}+W_{d,t},
+    \qquad \forall d,t .
+    \label{eq:balance}
+\end{equation}
+
+式~\eqref{eq:balance} 用等式而不是“供电不少于负荷”的不等式，是因为当光伏和购电共同形成富余时，多出的电必须有明确去向。若储能已达到容量或充电功率上限，则这部分能量只能进入 $W_{d,t}$，即弃光；这也保证模型不会凭空消失或产生电量。
+
+\subsubsection{储能状态递推与运行边界}
+
+储能把不同时间段耦合起来。按母线侧定义充、放电量后，充入电池的有效电量为 $\eta_c C_{d,t}$，为了向母线送出 $H_{d,t}$ 则需从电池内部取出 $H_{d,t}/\eta_d$，故状态递推为
+
+\begin{equation}
+    S_{d,t}=S_{d,t-1}+\eta_c C_{d,t}-\frac{H_{d,t}}{\eta_d},
+    \qquad S_{d,0}=S^{\mathrm{init}}_d .
+    \label{eq:soc}
+\end{equation}
+
+式~\eqref{eq:soc} 是后续所有滚动优化的状态连接式。每到一个新的决策节点，已经执行的历史不再重算，只把当时实际测得的 $S$ 作为下一次优化的初始状态。因此，新计划不仅受到新预报影响，也受到此前真实充放电结果的约束。
+
+根据题目给出的安全储电范围和最大充放电功率，有
+
+\begin{equation}
+    1200\le S_{d,t}\le10800,
+    \qquad \forall d,t ,
+    \label{eq:soc-bound}
+\end{equation}
+
+以及
+
+\begin{equation}
+    0\le C_{d,t}\le\bar E,\qquad
+    0\le H_{d,t}\le\bar E,
+    \qquad \bar E=5000\Delta t=833.33\ \text{kWh}.
+    \label{eq:power}
+\end{equation}
+
+式~\eqref{eq:soc-bound} 防止过充过放，式~\eqref{eq:power} 则把 $5000$ kW 的功率限制正确换算到 $10$ min 时段。题目没有给出反向售电机制，因此外网购电和紧急购电均保持非负：
+
+\begin{equation}
+    G^{p}_{d,t}\ge0,\qquad G^{a}_{d,t}\ge0,\qquad E_{d,t}\ge0 .
+    \label{eq:nonneg}
+\end{equation}
+
+弃光只能来自当期光伏，因此还需满足
+
+\begin{equation}
+    0\le W_{d,t}\le P_{d,t}\Delta t .
+    \label{eq:curtail}
+\end{equation}
+
+问题一明确要求日初与日末储电量相同，且本题初始值为 $6000$ kWh，故
+
+\begin{equation}
+    S_{d,144}=S_{d,0}=6000\ \text{kWh}.
+    \label{eq:terminal-q1}
+\end{equation}
+
+问题二、三没有这一硬性要求。主模型仍在计划层采用“计划终端储电量等于当日实际初始储电量”的日循环策略，以避免有限时域模型在日末通过放空电池获得虚假的短期收益；其影响在灵敏度分析中单独检验。
+
+\subsubsection{决策信息边界}
+
+除了满足物理约束，计划还必须在现实时间顺序下可实施。记 $\mathcal I_{d,\tau}$ 为第 $d$ 天节点 $\tau\in\{0,6,12,18\}$ 已经获得的信息，则节点 $\tau$ 生成的未来计划只能由这些信息决定：
+
+\begin{equation}
+    X_{d,t}^{(\tau)}\in\sigma(\mathcal I_{d,\tau}),
+    \qquad t\ge6\tau+1 .
+    \label{eq:causality}
+\end{equation}
+
+式~\eqref{eq:causality} 的含义是：如果两个数据世界在决策节点之前完全相同，那么该节点给出的计划也必须相同，不能因为后来发生的真实负载或光伏不同而提前改变。为使这一抽象条件与具体求解过程对应，表~\ref{tab:information-set} 列出各节点可使用的信息和真正执行的时段。
+
+\begin{table}[htbp]
+    \caption{滚动节点的信息集与执行区间}
+    \label{tab:information-set}
+    \centering
+    \zihao{-5}
+    \begin{tabularx}{0.96\textwidth}{c X c}
+        \toprule
+        节点 & 可使用的信息 $\mathcal I_{d,\tau}$ & 当次执行区间 \\
+        \midrule
+        0:00 & 前一日及更早实际负载、光伏、价格；0:00 发布的光伏预报；当日初始储电量 & 0:00--6:00 \\
+        6:00 & 加入 0:00--6:00 已实现观测、6:00 光伏预报及实测储电量 & 6:00--12:00 \\
+        12:00 & 加入 6:00--12:00 已实现观测、12:00 光伏预报及实测储电量 & 12:00--18:00 \\
+        18:00 & 加入 12:00--18:00 已实现观测、18:00 光伏预报及实测储电量 & 18:00--24:00 \\
+        \bottomrule
+    \end{tabularx}
+\end{table}
+
+表~\ref{tab:information-set} 将“看得远、执行近”的滚动原则具体化：每次可以利用当前信息规划较长的未来，但在下一次新信息到来前只执行最近一段。这样既能让储能考虑后续高价时段，又避免把尚未实现的数据提前用于计划。
+
+若需要严格禁止同一时段同时充、放电，引入二元变量 $z_{d,t}$：
+
+\begin{equation}
+    0\le C_{d,t}\le\bar E z_{d,t},\qquad
+    0\le H_{d,t}\le\bar E(1-z_{d,t}),
+    \qquad z_{d,t}\in\{0,1\}.
+    \label{eq:mutual-exclusive}
+\end{equation}
+
+由式~\eqref{eq:mutual-exclusive}，一个时段只能处于充电或放电一侧，从而排除连续模型可能出现的“边充边放”数值退化。采用该约束时模型为混合整数线性规划；不需要整数互斥时则为线性规划。
+
+\subsection{问题一：确定性日前调度}
+
+\subsubsection{模型建立}
+
+问题一中当天电价、负载与光伏预测均在 $0{:}00$ 已知，因此不需要引入紧急购电和调整交易。模型要做的只是：在满足负载和储能边界的前提下，把外网购电尽量安排在便宜时段，并利用光伏降低购电需求。目标函数为
+
+\begin{equation}
+    \min\ F_1=\sum_{t=1}^{144}\pi_t G_t .
+    \label{eq:q1-objective}
+\end{equation}
+
+式~\eqref{eq:q1-objective} 与公共约束式~\eqref{eq:balance}--\eqref{eq:curtail}、首末储电量约束式~\eqref{eq:terminal-q1} 共同构成问题一的确定性线性规划。由于只最小化费用时可能存在多组等价最优解，实际求解再依次最小化储能吞吐量和弃光量，使输出方案具有更清晰的物理意义。
+
+\subsubsection{求解结果与调度解释}
+
+求解得到全天计划购电量 \QoneEnergy\ kWh，购电费 \QoneCost\ 元；储能全天充电 \QoneCharge\ kWh、放电 \QoneDischarge\ kWh，日初与日末均为 $6000$ kWh，并实现零弃光。作为对照，若完全禁用储能，购电费为 \QoneNoStorage\ 元，因此储能使典型日费用降低 \QoneSave\ 元，即 \QoneSavePct\%。
+
+为与题面要求直接对应，表~\ref{tab:q1-result} 给出六个指定时段及全天购电结果，表~\ref{tab:q1-storage} 汇总六个 $4$ h 时段的储能充放电量。二者分别回答“从外网买了多少电”和“这些电在日内如何通过储能转移”。
+
+\begin{table}[htbp]
+    \caption{问题一指定时段购电量及全天购电量与购电费}
+    \label{tab:q1-result}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{cc|cc|cc}
+        \toprule
+        时间段 & 购电量/kWh & 时间段 & 购电量/kWh & 时间段 & 购电量/kWh \\
+        \midrule
+        10:00--10:10 & \QoneSlotTen & 12:00--12:10 & \QoneSlotTwelve & 14:00--14:10 & \QoneSlotFourteen \\
+        16:00--16:10 & \QoneSlotSixteen & 18:00--18:10 & \QoneSlotEighteen & 20:00--20:10 & \QoneSlotTwenty \\
+        \midrule
+        全天购电量/kWh & \QoneEnergy & 全天购电费/元 & \QoneCost & \multicolumn{2}{c}{} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+表~\ref{tab:q1-result} 中 $10{:}00$、$14{:}00$ 和 $20{:}00$ 三个指定时段的外网购电量为零，而其他指定时段仍保留一定购电。仅从购电量本身还无法判断这些负荷由何处补足，因此进一步查看同一天的储能充放电结果。
+
+\begin{table}[htbp]
+    \caption{问题一储能分时段充放电量与首末储电量}
+    \label{tab:q1-storage}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{c c c | c c c}
+        \toprule
+        时间段 & 充电量/kWh & 放电量/kWh & 时间段 & 充电量/kWh & 放电量/kWh \\
+        \midrule
+        0:00--4:00 & \QoneChBlockOne & \QoneDisBlockOne & 12:00--16:00 & \QoneChBlockFour & \QoneDisBlockFour \\
+        4:00--8:00 & \QoneChBlockTwo & \QoneDisBlockTwo & 16:00--20:00 & \QoneChBlockFive & \QoneDisBlockFive \\
+        8:00--12:00 & \QoneChBlockThree & \QoneDisBlockThree & 20:00--24:00 & \QoneChBlockSix & \QoneDisBlockSix \\
+        \midrule
+        \multicolumn{3}{c|}{0:00 储电量/kWh \quad 6000.00} & \multicolumn{3}{c}{24:00 储电量/kWh \quad 6000.00} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+表中若干高价时段购电量显著下降，并不是负载消失，而是此前储存的低价电或光伏电在这些时段释放。为观察这种“时间搬移”如何发生，图~\ref{fig:q1-dispatch} 同时给出购电、充放电与储电量曲线。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/q1_dispatch.pdf}
+    \caption{问题一购电量、储能充放电与储电量曲线}
+    \label{fig:q1-dispatch}
+\end{figure}
+
+由图~\ref{fig:q1-dispatch} 可见，储能在凌晨低价段和中午光伏较多时吸收电量，在早间、午后和傍晚较高电价时段放电；整个过程中储电量始终位于 $1200\sim10800$ kWh 安全范围内，并最终回到 $6000$ kWh。由此可见，问题一的节省主要来自“低价充、高价放”和“光伏先存后用”两种机制，而不是减少负载供电。完整 $144$ 时段结果见 \texttt{result1.xlsx}。
+
+\subsection{问题二：历史信息下的风险购电与实时储能反馈}
+
+\subsubsection{信息边界与两阶段决策结构}
+
+问题二每天仍在 $0{:}00$ 制定全天计划，但附件2给出的是实际负载和实际光伏，而非专门的日前预报。若直接把当天完整真实曲线送入优化器，相当于赋予模型理想信息。为保证主策略在最严格信息条件下仍可执行，本文只使用 $0{:}00$ 之前已经发生的历史数据预测当天源荷；同时保留“全天计划负荷已知”的方案作为信息价值基准。
+
+从决策逻辑看，问题二包含两个阶段：第一阶段在 $0{:}00$ 决定全天计划购电量 $G^p$；第二阶段在真实源荷逐时实现后，由储能和紧急购电处理计划偏差。对应的期望费用结构为
+
+\begin{equation}
+    \min_{G^p}\ \mathbb E\!\left[\sum_t\pi_tG^p_t+\sum_t5\pi_tE_t\right].
+    \label{eq:q2-two-stage}
+\end{equation}
+
+式~\eqref{eq:q2-two-stage} 表明，提前多买电会增加正常购电费，提前买少又可能在执行阶段承担 $5$ 倍紧急价格，二者之间存在直接权衡。由于有限历史难以稳定估计完整的负载--光伏联合概率分布，数值求解不显式建立大规模情景树，而采用逐日因果确定性等价：先用历史得到当天预测，再求解一条全天计划，最后用真实数据逐时执行并结算。
+
+\subsubsection{光伏预测的非对称风险修正}
+
+如果紧急购电仍按正常价格计费，追求平均预测误差较小即可；但本题紧急电价为正常价格的 $5$ 倍，使“光伏预测过高”和“光伏预测过低”产生完全不同的经济后果。设预测误差为 $\hat P-P$。若高估光伏 $\delta$，原本应以 $\pi$ 提前购买的电量可能被迫以 $5\pi$ 紧急购买，额外损失约为 $4\pi\delta$；若低估同样的 $\delta$，最坏只是多支付正常计划电费 $\pi\delta$。因此单时段损失可写成
+
+\begin{equation}
+    \ell(\hat P-P)=4\pi(\hat P-P)^++\pi(P-\hat P)^+ .
+    \label{eq:asymmetric-loss}
+\end{equation}
+
+式~\eqref{eq:asymmetric-loss} 给出了 $4{:}1$ 的非对称代价。若暂时忽略储能跨期耦合，把问题看成单时段报童模型，则最优光伏点预测满足
+
+\begin{equation}
+    F(\hat P^\star)=\frac{1}{4+1}=0.2,
+    \qquad \hat P^\star=F^{-1}(0.2).
+    \label{eq:newsvendor}
+\end{equation}
+
+这里的 $0.2$ 分位不是全年模型的全局最优证明，而是一个清晰的风险基准：在紧急电价远高于计划电价时，调度应有意识地防止高估光伏。全年还存在负载误差、SOC耦合、功率边界和实时补救，因此本文只把这一结论用于构造候选安全边际，再通过历史样本在线选择。
+
+设第 $m$ 个基础预测器给出的光伏预测为 $B^m_{d,t}$，定义历史残差
+
+\begin{equation}
+    R^m_{d,t}=B^m_{d,t}-P_{d,t}.
+    \label{eq:pv-residual}
+\end{equation}
+
+若要把基础预测向较保守的光伏低分位移动，则从基预测中减去残差的高分位：
+
+\begin{equation}
+    \hat P^{(m,q)}_{d,t}=\max\left\{0,\ B^m_{d,t}-Q_q(\mathcal R_m)\right\},
+    \qquad \alpha=1-q.
+    \label{eq:pv-forecast}
+\end{equation}
+
+因此，光伏输出 $0.2$ 分位对应残差 $0.8$ 分位。为避免把单时段理论机械推广到全年，实际在 $q=0.80,0.85,0.90,0.95$ 与多个基础预测器之间滚动选择。评价候选时仍采用与经济损失一致的非对称代理：
+
+\begin{equation}
+    J_m=\sum_{d'\in\mathcal W}\sum_t\pi_{d',t}\left[
+    4(\hat P^{(m)}_{d',t}-P_{d',t})^+
+    +(P_{d',t}-\hat P^{(m)}_{d',t})^+\right]\Delta t .
+    \label{eq:pv-score}
+\end{equation}
+
+其中 $\mathcal W$ 为过去 $30$ 天。每天只用已经实现的历史误差选择次日模型，不用次日真实值反选参数。四个分位候选的累计代理费用和被选天数分别为：$q=0.80$ 时 \PvQuantEightyScore 元、\PvQuantEightyDays 天；$q=0.85$ 时 \PvQuantEightyFiveScore 元、\PvQuantEightyFiveDays 天；$q=0.90$ 时 \PvQuantNinetyScore 元、\PvQuantNinetyDays 天；$q=0.95$ 时 \PvQuantNinetyFiveScore 元、\PvQuantNinetyFiveDays 天。负载预测采用持续法、$7/14/30$ 日均值、线性加权均值和同星期均值等候选，并以历史平均绝对误差选择。
+
+\subsubsection{实际执行：购电计划锁定，储能实时缓冲}
+
+在线计划解决的是“每天 $0{:}00$ 应承诺多少外网购电”，而储能解决的是“真实运行偏离计划后怎样在微网内部补偿”。两者必须分开：问题二中 $G^p$ 一旦制定，日内不再修改；但当前真实光伏、负载和储电量已经发生后，可以改变当期储能动作。
+
+当真实供电不足时，首先减少原计划充电；若仍有缺口，在储电量和放电功率允许范围内增加放电；只有储能仍不能补足的部分才计为 $E_t$，按 $5\pi_t$ 紧急购买。若真实光伏高于预期，则先减少原计划放电，再增加充电，储能仍无法吸收的部分记为弃光。这个执行规则只使用当前和过去已经发生的信息，因此不会把问题三的未来预报能力提前带入问题二。
+
+\subsubsection{求解结果与原因拆解}
+
+主方案在2025年2月1日至12月31日共 $334$ 天的总费用为 \QtwoTotal\ 元，其中计划购电费 \QtwoPlan\ 元、紧急购电费 \QtwoEmergencyCost\ 元；全年紧急购电量为 \QtwoEmergency\ kWh，弃光量为 \QtwoCurtail\ kWh。负载与光伏预测的平均绝对误差分别为 \QtwoMae\ kW 和 \QtwoPvMae\ kW。
+
+单独给出一个全年费用并不能说明策略为什么有效。为区分信息条件、风险边际和储能反馈的作用，固定其他设置，只改变一个因素，构造表~\ref{tab:q2-ablation} 中的四组方案。A组把当天负荷视为提前已知，用来表示理想信息基准；B组为正式主方案；C组取消光伏安全下修，仅使用点预测；D组保留预测方式但关闭实时储能反馈。
+
+\begin{table}[htbp]
+    \caption{问题二单因素对照实验}
+    \label{tab:q2-ablation}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{c c c c r r r}
+        \toprule
+        方案 & 负载信息 & 光伏预测 & 实时反馈 & 总费用/元 & 紧急购电/kWh & 弃光/kWh \\
+        \midrule
+        A & 理想信息 & 风险边际 & 开 & \QtwoLegacy & \QtwoAEmergency & \QtwoACurtail \\
+        B & 因果 & 风险边际 & 开 & \QtwoTotal & \QtwoEmergency & \QtwoCurtail \\
+        C & 因果 & 点预测 & 开 & \QtwoPoint & \QtwoCEmergency & \QtwoCCurtail \\
+        D & 因果 & 风险边际 & 关 & \QtwoNoFeedback & \QtwoDEmergency & \QtwoDCurtail \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+表~\ref{tab:q2-ablation} 已能看出三种机制的方向，但为了同时观察费用和电量变化，图~\ref{fig:q2-attribution} 将各组结果进一步拆成计划费、紧急费以及相对主方案的增量。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/q2_attribution.pdf}
+    \caption{问题二费用构成与原因拆解}
+    \label{fig:q2-attribution}
+\end{figure}
+
+三个关键差额为
+
+\begin{equation}
+    \begin{aligned}
+        \Delta C_{\text{load}}&=C_B-C_A=\DeltaLoad\ \text{元},\\
+        \Delta C_{\text{PVrisk}}&=C_C-C_B=\DeltaPvRisk\ \text{元},\\
+        \Delta C_{\text{feedback}}&=C_D-C_B=\DeltaFeedback\ \text{元}.
+    \end{aligned}
+    \label{eq:q2-decomposition}
+\end{equation}
+
+式~\eqref{eq:q2-decomposition} 表明，严格历史信息口径相对“全天计划负荷已知”基准增加 \DeltaLoad\ 元，占主方案费用的 \DeltaLoadPct\%；这不是计算误差，而是两种信息条件之间的价值差。取消光伏风险边际后，费用增加 \DeltaPvRisk\ 元，说明在 $5$ 倍紧急电价下适度保守能够用较便宜的全天计划电量替代昂贵缺口；关闭实时反馈后费用增加 \DeltaFeedback\ 元，且紧急购电由 \QtwoEmergency\ kWh 增至 \QtwoDEmergency\ kWh，说明储能确实承担了日内偏差缓冲功能。题面要求的四个指定日期结果见表~\ref{tab:q2-required-purchase}--\ref{tab:q2-required-emergency}，完整逐时结果见 \texttt{result2.xlsx}。
+
+\input{generated/q2_required_tables}
+
+上述指定日期表把全年费用结论落实到题目要求的具体时段，并同时保留全天计划、储能状态和紧急购电三类信息。它们与全年统计的关系是：前者用于回答“某一天具体怎么调度”，后者用于判断“这种策略在全年是否值得”。两类结果由同一逐时方案生成，因此可以与 \texttt{result2.xlsx} 逐项核对。
+
+\subsection{问题三：多时刻预报下的滚动购电调整}
+
+\subsubsection{滚动决策结构}
+
+问题三首次允许在日内修改外网购电计划。这里需要区分“重新计算未来方案”和“真正执行方案”：$0{:}00$ 必须先给出覆盖全天的基准计划；后续节点虽然可以重新规划较长的剩余时域，但在下一次新预报到来前只执行最近 $6$ h。因此，模型遵循“看得远、执行近、状态连续”的滚动结构。
+
+具体而言，$0{:}00$ 根据当时预报生成全天计划 $G^p$ 并执行至 $6{:}00$；到 $6{:}00$ 后，以新的光伏预报和实测储电量重新优化尚未执行部分，并执行 $6{:}00$--$12{:}00$；$12{:}00$、$18{:}00$ 同理。若某个节点在对照实验中被关闭，则继续沿用最近一次已经生效的计划，而不是退回日初方案。这个规则保证不同更新策略之间的唯一差别确实是“是否使用该节点的新信息”。
+
+附件3为整点预报，而调度间隔为 $10$ min，因此需要降尺度。为确定插值方法，比较线性插值与阶梯保持在真正会被执行的 $6$ h 区间上的误差，结果见图~\ref{fig:forecast-diagnosis}。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/forecast_diagnosis.pdf}
+    \caption{附件3预报误差诊断与降尺度对比}
+    \label{fig:forecast-diagnosis}
+\end{figure}
+
+图~\ref{fig:forecast-diagnosis} 显示，线性插值的平均绝对误差为 $110.22$ kW，明显低于阶梯保持的 $294.37$ kW，因此后续统一采用线性插值。与此同时，不同发布时间的预报误差并不相同。为防止某一发布节点长期存在系统性高估，本文对 $0{:}00$、$6{:}00$、$12{:}00$、$18{:}00$ 分别维护最近 $30$ 天已执行区间的历史残差，并沿用问题二的非对称费用代理在线选择风险边际。这样，新预报既改变预测中心，也允许用该节点自己的历史偏差校正当前决策。
+
+\subsubsection{调整购电的结算模型}
+\label{sec:settlement}
+
+设 $G^p_t$ 为 $0{:}00$ 基准计划，$G^a_t$ 为该时段执行前最后一次有效调整后的购电量。定义向上调整量 $u_t=(G^a_t-G^p_t)^+$、向下调整量 $v_t=(G^p_t-G^a_t)^+$。本文主模型采用题面“计划购电费用、调整相关费用和紧急购电费用”并列相加的解释，因此单时段调整结算写为
+
+\begin{equation}
+    C_t^{\text{add}}=\pi_tG^p_t+0.5\pi_tv_t+1.5\pi_tu_t .
+    \label{eq:settle-add}
+\end{equation}
+
+式~\eqref{eq:settle-add} 中，日初计划费首先按 $G^p_t$ 计入；若日内需要增购，超出部分按 $1.5\pi_t$ 计费；若向下调整，则减少部分另计 $0.5\pi_t$ 的违约费用。考虑题面文字也存在“保留部分按原价、取消部分按50\%结算”的另一种理解，本文同步建立差额结算对照：
+
+\begin{equation}
+    C_t^{\text{rep}}=\pi_t\left[\min(G^p_t,G^a_t)+0.5v_t+1.5u_t\right].
+    \label{eq:settle-rep}
+\end{equation}
+
+两种解释在向上调整时一致，在向下调整时不同。例如 $G^p=900$、$G^a=700$、$\pi=1$ 时，式~\eqref{eq:settle-add} 的费用为 $1000$，式~\eqref{eq:settle-rep} 为 $800$。由于结算规则会反过来改变最优购电与储能动作，二者必须分别重新优化，而不能对同一条调度曲线事后换算。
+
+为在线性模型中精确表示调整方向，引入 $u_t,v_t\ge0$ 并满足
+
+\begin{equation}
+    G^a_t-G^p_t=u_t-v_t .
+    \label{eq:adjust-split}
+\end{equation}
+
+式~\eqref{eq:adjust-split} 将调整后的购电量与上下调量直接联系。主模型同时采用式~\eqref{eq:mutual-exclusive} 的充放电互斥约束，防止通过无意义的同时充放电耗散储能状态。
+
+\subsubsection{“其他预报是否需要”的对照设计}
+
+题目要求分析是否应引入 $6{:}00$、$12{:}00$、$18{:}00$ 的新预报。若只比较“有更新”和“无更新”两种方案，无法判断哪个节点真正有价值，因此构造逐步嵌套的四组策略：
+
+\begin{equation}
+    \begin{aligned}
+        S_0&=\{0{:}00\}, & S_1&=\{0{:}00,6{:}00\},\\
+        S_2&=\{0{:}00,6{:}00,12{:}00\}, &
+        S_3&=\{0{:}00,6{:}00,12{:}00,18{:}00\}.
+    \end{aligned}
+    \label{eq:q3-nodes}
+\end{equation}
+
+四组使用相同的预测器、终端策略、储能反馈和结算方式；当某节点关闭时，最近一次有效计划继续执行。于是从 $S_{k-1}$ 到 $S_k$ 的费用下降可以解释为新增该决策节点后的边际收益：
+
+\begin{equation}
+    V_6=C_{S_0}-C_{S_1},\qquad
+    V_{12}=C_{S_1}-C_{S_2},\qquad
+    V_{18}=C_{S_2}-C_{S_3},\qquad
+    V_{\text{total}}=C_{S_0}-C_{S_3}.
+    \label{eq:q3-value}
+\end{equation}
+
+不过，节点更新时不仅获得新的光伏预报，也获得截至当前时刻已经实现的负载信息。因此，式~\eqref{eq:q3-value} 衡量的是\textbf{整个决策更新节点的综合价值}。为单独观察官方光伏预报的贡献，再设置配对控制组 $C_k$：允许使用新增负载观测重优化，但暂时冻结光伏预报为上一有效节点版本。由此定义
+
+\begin{equation}
+    V^L_{\tau}=C_{S_{k-1}}-C_{C_k},\qquad
+    V^P_{\tau}=C_{C_k}-C_{S_k},\qquad \tau\in\{6,12,18\}.
+    \label{eq:q3-paired-value}
+\end{equation}
+
+两项之和等于对应节点的综合价值。需要说明的是，这是一种“先更新负载、再更新光伏”的顺序分解；由于两类信息与储能决策存在交互，若交换顺序，单项贡献可能变化，因此不把它解释为唯一的因果归因。
+
+\subsubsection{全年结果与节点价值}
+
+表~\ref{tab:q3-ablation} 给出四组更新策略的全年费用、紧急购电以及调整电量。该表直接回答“更新一次究竟省了多少钱”，图~\ref{fig:q3-value} 则进一步观察这些收益在不同季节是否稳定出现。
+
+\begin{table}[htbp]
+    \caption{问题三决策更新节点消融结果（主结算口径）}
+    \label{tab:q3-ablation}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{c l r r r r r}
+        \toprule
+        方案 & 可用更新节点 & 总费用/元 & 增量价值/元 & 累计价值/元 & 紧急购电/kWh & 调整电量（上/下）/kWh \\
+        \midrule
+        $S_0$ & 0:00 & \QthreeSzero & --- & 0.00 & \QthreeSzeroEm & \QthreeSzeroUp/\QthreeSzeroDown \\
+        $S_1$ & $+$6:00 & \QthreeSone & \QthreeVsix & \QthreeVsix & \QthreeSoneEm & \QthreeSoneUp/\QthreeSoneDown \\
+        $S_2$ & $+$12:00 & \QthreeStwo & \QthreeVtwelve & \QthreeVtwelveCum & \QthreeStwoEm & \QthreeStwoUp/\QthreeStwoDown \\
+        $S_3$ & $+$18:00 & \QthreeSthree & \QthreeVeighteen & \QthreeVtotal & \QthreeEmergency & \QthreeUp/\QthreeDown \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+表~\ref{tab:q3-ablation} 首先给出一个直接事实：每增加一个可用的日内更新节点，全年总费用都继续下降，而且紧急购电总体随滚动更新显著减少。这说明新信息并非只改变纸面上的未来计划，而是实质上减少了高价补救购电。为了判断这种收益是否集中在少数月份，进一步把节点收益按季节展开，如图~\ref{fig:q3-value} 所示。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/q3_forecast_value.pdf}
+    \caption{决策更新节点的增量价值与季节分解}
+    \label{fig:q3-value}
+\end{figure}
+
+由表~\ref{tab:q3-ablation} 可见，随着日内信息逐步加入，费用从 \QthreeSzero\ 元依次降至 \QthreeSone、\QthreeStwo、\QthreeSthree\ 元，同时紧急购电由 \QthreeSzeroEm\ kWh 大幅下降到 \QthreeEmergency\ kWh。各节点的边际价值为
+
+\begin{equation}
+    \begin{aligned}
+        V_6&=\QthreeVsix\ \text{元}, & V_{12}&=\QthreeVtwelve\ \text{元},\\
+        V_{18}&=\QthreeVeighteen\ \text{元}, & V_{\text{total}}&=\QthreeVtotal\ \text{元}.
+    \end{aligned}
+    \label{eq:q3-value-result}
+\end{equation}
+
+因此，在题目没有设置预报获取成本和调整操作固定成本的条件下，三个新增节点都带来正收益，应当使用 $6{:}00$、$12{:}00$、$18{:}00$ 的更新。其中 $6{:}00$ 的价值最大，说明越早修正全天计划，能够影响的剩余时段越长；$18{:}00$ 的综合收益仍为正，但其纯光伏预报配对增量只有 \QthreePvEighteen\ 元，若实际部署存在固定操作成本，则该节点需要额外进行成本--收益比较。
+
+为避免把上述总收益全部归因于附件3，表~\ref{tab:q3-paired} 给出“先负载、后光伏”路径下的配对增量分解。
+
+\begin{table}[htbp]
+    \caption{节点价值的负载刷新与光伏预报配对分解}
+    \label{tab:q3-paired}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{c r r r r}
+        \toprule
+        节点 & 控制组费用/元 & 负载刷新贡献/元 & 光伏刷新贡献/元 & 两项合计/元 \\
+        \midrule
+        6:00  & \QthreeControlSix & \QthreeLoadSix & \QthreePvSix & \QthreeVsix \\
+        12:00 & \QthreeControlTwelve & \QthreeLoadTwelve & \QthreePvTwelve & \QthreeVtwelve \\
+        18:00 & \QthreeControlEighteen & \QthreeLoadEighteen & \QthreePvEighteen & \QthreeVeighteen \\
+        \midrule
+        合计 & --- & \QthreeLoadTotal & \QthreePvTotal & \QthreeVtotal \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+在这一给定顺序下，已实现负载信息贡献 \QthreeLoadTotal\ 元，新光伏预报贡献 \QthreePvTotal\ 元。两者共同说明：日内滚动的价值既来自“预报变新”，也来自“系统状态和已发生负载变得更清楚”。因此本文将 $S_0\to S_3$ 的 \QthreeVtotal\ 元称为决策更新的综合价值，而把 \QthreePvTotal\ 元称为该顺序下的光伏刷新增量。
+
+主方案全年总费用可回代为
+
+\begin{equation}
+    \QthreeBaseline+\QthreeAdjustCost+\QthreeEmergencyCost
+    =\QthreeSthree\ \text{元},
+    \label{eq:q3-cost-decomposition}
+\end{equation}
+
+其中三项分别为日初计划购电费、日内调整相关费用和紧急购电费。调整费用中，向下违约部分为 \QthreeDownCost\ 元，向上增购部分为 \QthreeUpCost\ 元。另一种差额结算口径独立重新优化后的 $S_3$ 费用为 \QthreeRepTotal\ 元；两种解释的绝对数值不同，但“增加日内决策节点能够降低全年费用”的方向一致。
+
+按题目要求，四个指定日期的计划/调整购电量、储能运行和紧急购电结果列于表~\ref{tab:q3-required-purchase}--\ref{tab:q3-required-emergency}，完整逐时结果见 \texttt{result3.xlsx}。
+
+\input{generated/q3_required_tables}
+
+指定日期结果进一步把“滚动更新”落实为可检查的计划变化：表中同时保留 $0{:}00$ 基准购电量、最终有效调整量、储能分段动作和紧急购电，从而能够追踪一条全天计划如何在新预报到达后逐段演化。仅凭这些离散时段仍不容易看清源荷与储能之间的连续作用，因此下面选取一个典型日展示完整运行过程。
+
+\subsubsection{典型日运行机理}
+
+全年统计给出了“策略有效”的结论，但还需要说明费用为什么会下降。选取2025年6月21日作为典型高辐照日，图~\ref{fig:dispatch-0621} 同时展示源荷、购电计划、储能状态以及弃光/紧急购电，从一个完整日内过程观察各变量如何相互作用。
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/dispatch_20250621.pdf}
+    \caption{典型日调度过程（2025-06-21）}
+    \label{fig:dispatch-0621}
+\end{figure}
+
+该日光伏峰值超过 $8$ MW，而小区负载约为 $3.8$ MW。图~\ref{fig:dispatch-0621}(a)(c) 显示，储能在上午快速充电并达到 $10.8$ MWh 的安全上限；此后即使仍有大量光伏，也无法继续全部吸收，于是图~\ref{fig:dispatch-0621}(d) 出现超过 $4500$ kW 的弃光峰值。另一方面，傍晚光伏迅速衰减而负载仍处于较高水平，储能开始持续放电。
+
+图~\ref{fig:dispatch-0621}(b) 中，$0{:}00$ 基准计划与最终调整计划总体形态一致，但在傍晚时段出现较明显的上下调。这说明日初预报已经抓住了当天“中午富余、傍晚缺电”的主要结构，后续预报的作用更多是修正剩余量级并重新安排储能释放节奏。该典型日揭示了一个重要限制：即使预测完全准确，储能容量和功率上限仍可能使“正午弃光”和“傍晚高价购电”同时出现。因此，提高预测精度能够减少偏差损失，但不能代替储能容量约束本身。
+
+\subsection{问题四：波动电价下的重算}
+
+\subsubsection{模型迁移}
+
+问题四不改变前述源荷预测、储能反馈和滚动执行机制，只把典型日电价 $\pi_t$ 替换为附件4的逐日实时电价 $\pi_{d,t}$。由于附件4正是题目指定的输入，正式结果直接使用其给定价格；另外再构造“只能利用历史价格预测未来价格”的因果扩展，用来衡量真实交易中价格发布受限可能造成的机会成本。
+
+波动价格改变的是每一度电在不同时刻的经济价值，而不是能量守恒关系。当价格谷值更低、峰值更高时，储能会更积极地把电量从低价时段转移到高价时段；但由于不能反向售电，且储能容量和功率有限，价格信息再完整也不能无限套利。
+
+\subsubsection{结果与价格信息价值}
+
+为同时区分“问题二/问题三的决策方式”和“价格是否提前可知”，表~\ref{tab:q4-result} 给出四组年度结果。
+
+\begin{table}[htbp]
+    \caption{问题四波动电价下的四组结果}
+    \label{tab:q4-result}
+    \centering
+    \zihao{-5}
+    \begin{tabular}{l l r r r}
+        \toprule
+        方案 & 价格信息 & 总费用/元 & 紧急购电/kWh & 弃光/kWh \\
+        \midrule
+        Q4-2 & 基准（附件4） & \QfourTwoPerfect & \QfourTwoPerfectEm & \QfourTwoPerfectCurtail \\
+        Q4-2 & 因果预测 & \QfourTwoCausal & \QfourTwoCausalEm & \QfourTwoCausalCurtail \\
+        Q4-3 & 基准（附件4） & \QfourThreePerfect & \QfourThreePerfectEm & \QfourThreePerfectCurtail \\
+        Q4-3 & 因果预测 & \QfourThreeCausal & \QfourThreeCausalEm & \QfourThreeCausalCurtail \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+在两种决策结构下，直接使用附件4完整价格相对于因果价格预测所节省的费用分别为
+
+\begin{equation}
+    V_{\text{price},Q2}=\QfourPriceValueTwo\ \text{元}\ (\QfourPricePctTwo\%),\qquad
+    V_{\text{price},Q3}=\QfourPriceValueThree\ \text{元}\ (\QfourPricePctThree\%).
+    \label{eq:q4-price-value}
+\end{equation}
+
+式~\eqref{eq:q4-price-value} 衡量的是“未来价格信息受限”造成的机会成本，而不是对题面主结果的修正。两个比例均不足 $1\%$，说明在本数据下，历史价格已经能抓住相当稳定的日内结构；同时，储能的容量、功率以及禁止售电共同限制了进一步利用价格信息的空间。相比之下，问题二中负荷信息边界造成的费用差为 \DeltaLoad\ 元，明显更大，因此若从实际系统改进角度排序，提升源荷信息质量比继续提高价格预知精度更重要。
+
+最后比较波动电价下“只在 $0{:}00$ 决策”与“允许日内滚动调整”的差异：
+
+\begin{equation}
+    C_{Q4\text{-}2}^{\text{perfect}}-C_{Q4\text{-}3}^{\text{perfect}}=\QfourRollPerfect\ \text{元},\qquad
+    C_{Q4\text{-}2}^{\text{causal}}-C_{Q4\text{-}3}^{\text{causal}}=\QfourRollCausal\ \text{元}.
+    \label{eq:q4-roll-value}
+\end{equation}
+
+两项均为正，说明即使电价从固定典型日变为逐日波动，日内更新仍能通过修正未来购电和储能安排降低总费用。因果价格扩展中，$0{:}00$、$6{:}00$、$12{:}00$、$18{:}00$ 的价格 MAE 分别为 \QfourPriceMaeZero、\QfourPriceMaeSix、\QfourPriceMaeTwelve、\QfourPriceMaeEighteen\ 元/kWh，误差并不随发布时间单调下降，这也说明价格的可预测性与光伏预报“越临近越准”的机制不同。
+
+题面指定日期的完整重算结果列于表~\ref{tab:q42-required-purchase}--\ref{tab:q43-required-emergency}，并分别写入 \texttt{result4-2.xlsx} 与 \texttt{result4-3.xlsx}。
+
+\input{generated/q4_required_tables}
+
+这些指定日期表说明，问题四并不是把问题二、三的费用乘上一个新的价格系数，而是在新的逐时价格下重新决定何时购电、何时充放电以及何时接受调整成本。因而，表中的购电与储能轨迹本身也会随价格曲线改变；这正是问题四需要独立重算而不能沿用固定电价方案的原因。
