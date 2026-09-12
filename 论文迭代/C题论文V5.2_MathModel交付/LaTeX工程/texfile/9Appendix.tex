@@ -1,0 +1,124 @@
+\newpage
+\appendix
+\begin{center}
+	{\zihao{4}\bfseries 附录}
+\end{center}
+
+\section*{附录 A\quad 支撑材料文件列表}
+\addcontentsline{toc}{section}{附录 A 支撑材料文件列表}
+
+\begin{table}[htbp]
+	\caption{支撑材料文件清单}
+	\centering
+	\zihao{-5}
+	\begin{tabularx}{0.96\textwidth}{l X}
+		\toprule
+		文件 & 说明 \\
+		\midrule
+		\texttt{README.md} & 支撑材料目录、运行环境与唯一复现命令 \\
+		\texttt{\_\_init\_\_.py} & Python 包标记，保证从项目根目录稳定导入 \\
+		AI工具使用详情.pdf & AI 工具名称、版本、使用环节与人工核验说明 \\
+		\texttt{results/} & 题面要求的五个最终结果工作簿，文件名与附件 5 一致 \\
+		\texttt{solve/} & 求解、报告生成、结果验证、制表与绘图 Python 源码 \\
+		\texttt{tests/} & 信息集因果性、计划持续性、结算、主结果和历史配置回归测试 \\
+		\texttt{tools/} & 代码同步、LaTeX 检查、论文编译、支撑材料打包与交付脚本 \\
+		\texttt{paper/} & LaTeX 源码、参考文献、数值宏、矢量图、附录代码副本及编译后的论文 \\
+		\texttt{reports/} & \texttt{MODEL\_AUDIT.md}、\texttt{model\_audit\_raw.json} 与文献核验记录 \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\section*{附录 B\quad 源程序代码}
+\addcontentsline{toc}{section}{附录 B 源程序代码}
+
+全部代码使用 Python 3.12 编写，线性规划和混合整数线性规划均由 SciPy 调用 HiGHS 求解。项目根目录的唯一测试命令为 \texttt{python -m pytest MathModel/tests -q --import-mode=importlib}；各问可用 \texttt{python -m MathModel.solve.<模块名>} 复现。以下按调用关系列出建模求解、验证与绘图的核心源码。为压缩篇幅，仅论文代码副本删除注释和文档字符串，本地源码不变。审计报告生成脚本 \texttt{report.py} 位于支撑材料的 \texttt{solve/} 目录；编译、检查和打包脚本位于 \texttt{tools/} 目录，均不改变模型求解逻辑。
+
+\subsection*{B.1\quad 物理参数与口径定义（params.py）}
+\lstinputlisting[style=Python]{code/params.py}
+
+\subsection*{B.2\quad 数据读取与时间对齐（io\_data.py）}
+\lstinputlisting[style=Python]{code/io_data.py}
+
+\subsection*{B.3\quad 公共线性规划内核（lp\_core.py）}
+\lstinputlisting[style=Python]{code/lp_core.py}
+
+\subsection*{B.4\quad 光伏日前预测与风险定价（forecast.py）}
+\lstinputlisting[style=Python]{code/forecast.py}
+
+\subsection*{B.5\quad 因果负载预测（load\_forecast.py）}
+\lstinputlisting[style=Python]{code/load_forecast.py}
+
+\subsection*{B.6\quad 因果电价预测（price\_forecast.py）}
+\lstinputlisting[style=Python]{code/price_forecast.py}
+
+\subsection*{B.7\quad 实时储能反馈与执行（settle.py）}
+\lstinputlisting[style=Python]{code/settle.py}
+
+\subsection*{B.8\quad 问题一求解（q1.py）}
+\lstinputlisting[style=Python]{code/q1.py}
+
+\subsection*{B.9\quad 问题二求解（q2.py）}
+\lstinputlisting[style=Python]{code/q2.py}
+
+\subsection*{B.10\quad 问题三求解（q3.py）}
+\lstinputlisting[style=Python]{code/q3.py}
+
+\subsection*{B.11\quad 问题四求解（q4.py）}
+\lstinputlisting[style=Python]{code/q4.py}
+
+\subsection*{B.12\quad 官方结果文件导出（export.py）}
+\lstinputlisting[style=Python]{code/export.py}
+
+\subsection*{B.13\quad 模型审计与消融实验总控（ablation.py）}
+\lstinputlisting[style=Python]{code/ablation.py}
+
+\subsection*{B.14\quad 官方光伏预报处理（official\_forecast.py）}
+\lstinputlisting[style=Python]{code/official_forecast.py}
+
+\subsection*{B.15\quad 指定日期论文表格生成（paper\_tables.py）}
+\lstinputlisting[style=Python]{code/paper_tables.py}
+
+\subsection*{B.16\quad 问题二结果验证（validate\_q2.py）}
+\lstinputlisting[style=Python]{code/validate_q2.py}
+
+\subsection*{B.17\quad 全部方案物理验证（validate\_all.py）}
+\lstinputlisting[style=Python]{code/validate_all.py}
+
+\subsection*{B.18\quad 复现清单生成（build\_manifest.py）}
+\lstinputlisting[style=Python]{code/build_manifest.py}
+
+\subsection*{B.19\quad 科研绘图公共样式（plot\_style.py）}
+\lstinputlisting[style=Python]{code/plot_style.py}
+
+\subsection*{B.20\quad 数据总览绘图（fig\_data.py）}
+\lstinputlisting[style=Python]{code/fig_data.py}
+
+\subsection*{B.21\quad 问题一绘图（fig\_q1.py）}
+\lstinputlisting[style=Python]{code/fig_q1.py}
+
+\subsection*{B.22\quad 结果与消融绘图（fig\_results.py）}
+\lstinputlisting[style=Python]{code/fig_results.py}
+
+\subsection*{B.23\quad 技术路线图生成（fig\_route.py）}
+\lstinputlisting[style=Python]{code/fig_route.py}
+
+\subsection*{B.24\quad 绘图总控（plot\_results.py）}
+\lstinputlisting[style=Python]{code/plot_results.py}
+
+\subsection*{B.25\quad mutation 测试辅助函数（mutate.py）}
+\lstinputlisting[style=Python]{code/mutate.py}
+
+\subsection*{B.26\quad 未来信息泄漏 mutation 测试（test\_causality.py）}
+\lstinputlisting[style=Python]{code/test_causality.py}
+
+\subsection*{B.27\quad 主结果与计划持续性测试（test\_q2\_q3.py）}
+\lstinputlisting[style=Python]{code/test_q2_q3.py}
+
+\subsection*{B.28\quad 论文数值与提交口径一致性测试（test\_paper\_consistency.py）}
+\lstinputlisting[style=Python]{code/test_paper_consistency.py}
+
+\subsection*{B.29\quad 结算口径单元测试（test\_settlement.py）}
+\lstinputlisting[style=Python]{code/test_settlement.py}
+
+\subsection*{B.30\quad 历史配置回归测试（test\_regression.py）}
+\lstinputlisting[style=Python]{code/test_regression.py}

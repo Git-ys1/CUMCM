@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 国奖 C 题论文交叉验证审计报告 · BZD数模社</title>
+<style>
+  :root{
+    --bg:#1b1b1f; --panel:#25252b; --panel2:#2d2d34; --line:#3a3a44;
+    --txt:#e8e8ee; --sub:#a8a8b6; --accent:#4aa3ff;
+    --red:#e74c3c; --redbg:rgba(231,76,60,.14);
+    --orange:#e67e22; --orangebg:rgba(230,126,34,.14);
+    --yellow:#f0b429; --yellowbg:rgba(240,180,41,.13);
+    --green:#2fbf71; --greenbg:rgba(47,191,113,.13);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.7;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:36px 22px 80px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.3px}
+  h2{font-size:20px;margin:38px 0 14px;padding-left:11px;border-left:4px solid var(--accent)}
+  h3{font-size:16px;margin:24px 0 10px;color:#d6d6e2}
+  .meta{color:var(--sub);font-size:13px;line-height:1.9;border-bottom:1px solid var(--line);padding-bottom:16px}
+  .meta b{color:#cfd6e4;font-weight:600}
+  .banner{border-radius:12px;padding:18px 20px;margin:22px 0;border:1px solid var(--line);
+    background:linear-gradient(135deg,var(--panel2),var(--panel))}
+  .banner.red{border-left:5px solid var(--red);background:var(--redbg)}
+  .banner.orange{border-left:5px solid var(--orange);background:var(--orangebg)}
+  .banner.green{border-left:5px solid var(--green);background:var(--greenbg)}
+  .banner .big{font-size:17px;font-weight:700;margin-bottom:6px}
+  .banner small{color:var(--sub)}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px;background:var(--panel);
+    border-radius:10px;overflow:hidden}
+  th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--panel2);color:#cdd6e6;font-weight:600;font-size:13px}
+  tr:last-child td{border-bottom:none}
+  td.num{text-align:center;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .chip{display:inline-block;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+  .c-green{background:var(--greenbg);color:#5be09a;border:1px solid rgba(47,191,113,.4)}
+  .c-yellow{background:var(--yellowbg);color:#ffd166;border:1px solid rgba(240,180,41,.4)}
+  .c-orange{background:var(--orangebg);color:#ffa657;border:1px solid rgba(230,126,34,.45)}
+  .c-red{background:var(--redbg);color:#ff8a7a;border:1px solid rgba(231,76,60,.45)}
+  .ok{color:#5be09a;font-weight:700}
+  .bad{color:#ff8a7a;font-weight:700}
+  .warn{color:#ffd166;font-weight:700}
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .card .t{font-size:13px;color:var(--sub);margin-bottom:6px}
+  .card .v{font-size:22px;font-weight:800}
+  .card .s{font-size:12.5px;color:var(--sub);margin-top:4px}
+  ul{margin:8px 0 8px 2px;padding-left:20px}
+  li{margin:5px 0}
+  .foot{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--sub);font-size:12.5px}
+  code{background:#111114;padding:1px 6px;border-radius:5px;color:#ffd166;font-size:12.5px}
+  .kpi{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+  .kpi span{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>2025 国奖 C 题论文 · 交叉验证审计报告</h1>
+  <div class="meta">
+    <b>技能：</b>bzd-paper-aigc-auditor v2.2（两层 9 维 + 一票否决 + 收严阈值）<br>
+    <b>审阅要求来源：</b>《V4 的 AI 痕迹审计与可更改性评估》《V4 审阅总结（V4.1 小修工单）》《V5 重构与模型复核指导书》《V5 逻辑框架调整策略》<br>
+    <b>审计对象：</b>2025C_01_NIPT-c023（122p）、2025C_02_NIPT-C132（62p）<br>
+    <b>日期：</b>2026-09-12 ｜ <b>审计人：</b>WorkBuddy（论文审阅角色）<br>
+    <b>数据前提：</b>两篇均<b>扫描件·无文字层</b>，采用分层视觉抽样（约 15 页/篇）；结构/模型/体例/文风结论稳健，语言密度为抽样估计
+  </div>
+
+  <div class="banner red">
+    <div class="big">核心发现：我们的审阅"方向正确，但严格用力错位"</div>
+    有判别力的<b>语言层 + 事实层硬判据</b>（连接词密度、被动句、拔高词密度、引文真实、数值一致、对话痕迹）——<span class="ok">合理</span>；
+    而被当作 P0"硬伤"的<b>术语统一、模型简洁、编号体例、附录长度</b>——<b>恰是国奖论文同样不满足的项</b>，属"把 house style 当通用标准"，<span class="bad">过严/错位</span>。
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="t">2025C_01（c023）AI 风险分</div><div class="v" style="color:#ffd166">15.2</div><div class="s">🟡 中低（贴近 🟢）· 未触发否决</div></div>
+    <div class="card"><div class="t">2025C_02（C132）AI 风险分</div><div class="v" style="color:#ffa657">32.3</div><div class="s">🟠 中风险 · 未触发否决</div></div>
+    <div class="card"><div class="t">我方 V4（对照）</div><div class="v" style="color:#5be09a">13.6</div><div class="s">🟢 低风险 · 比国奖 C132 更干净</div></div>
+  </div>
+
+  <h2>一、两篇论文速览（抽样实证）</h2>
+  <table>
+    <tr><th style="width:16%"></th><th>2025C_01（c023）</th><th>2025C_02（C132）</th></tr>
+    <tr><td><b>标题</b></td><td>基于<b>混合效应模型</b>的 NIPT 时点优化与胎儿异常判定</td><td>基于<b>统计建模与元学习</b>的 NIPT 检测决策优化与异常识别</td></tr>
+    <tr><td><b>四问编号</b></td><td class="bad">"问题 1 / 2 / 3 / 4"（阿拉伯数字+句点）</td><td class="ok">"问题一：/ 二：/ 三：/ 四："（中文数字+全角冒号）</td></tr>
+    <tr><td><b>核心方法</b></td><td>LMM+logit、t/正态零分布、BH 多重检验、FDR、动态规划、Z 值判定、贝叶斯(PyMC)</td><td>LMM+REML、GPR、<b>遗传算法</b>、<b>生存分析</b>、<b>MLP+LSTM+DeepHit</b>、<b>LightGBM+Optuna 堆叠集成</b></td></tr>
+    <tr><td><b>篇幅</b></td><td>正文紧凑，<b>代码附录约占 3/4</b></td><td>正文较足，附录含代码 + GAMS 清单</td></tr>
+    <tr><td><b>引文</b></td><td>编号 [1]–[9]，正文规范</td><td>正文引 <b>Wang(2013)、Ashoor(2012)</b> 等真实文献</td></tr>
+    <tr><td><b>官方水印</b></td><td colspan="2">中国大学生在线 dxs.moe.gov.cn（+红色防伪章）→ 确认为官方优秀论文</td></tr>
+  </table>
+  <p style="color:#a8a8b6;font-size:13.5px">→ 两篇<b>都获奖</b>，却文风、体例、模型新旧<b>截然不同</b>：说明获奖标准是"<b>建模正确 + 论证清楚 + 结果可信</b>"，而非统一的文风/体例/模型新旧。</p>
+
+  <h2>二、第一层 9 维评分（抽样估计）</h2>
+  <table>
+    <tr><th>维度（权重）</th><th class="num">c023</th><th class="num">C132</th><th>关键证据</th></tr>
+    <tr><td>1 高频连接词 (20%)</td><td class="num"><span class="chip c-green">95</span></td><td class="num"><span class="chip c-green">80</span></td><td>抽样密度 &lt;3% / 5–8%，均无堆砌</td></tr>
+    <tr><td>2 排比/同构 (12%)</td><td class="num"><span class="chip c-green">70</span></td><td class="num"><span class="chip c-yellow">60</span></td><td>C132 各问分析高度同构</td></tr>
+    <tr><td>3 拔高/修饰词 (12%)</td><td class="num"><span class="chip c-green">75</span></td><td class="num"><span class="chip c-yellow">58</span></td><td>C132 含自证式句"…为临床决策提供科学依据"</td></tr>
+    <tr><td>4 被动句 (9%)</td><td class="num"><span class="chip c-green">92</span></td><td class="num"><span class="chip c-green">88</span></td><td>均以主动叙述为主</td></tr>
+    <tr><td>5 段落规律 (6%)</td><td class="num"><span class="chip c-green">80</span></td><td class="num"><span class="chip c-green">70</span></td><td>C132 三段式偏规律</td></tr>
+    <tr><td>6 文本复杂度 (1%)</td><td class="num"><span class="chip c-yellow">65</span></td><td class="num"><span class="chip c-yellow">65</span></td><td>无文字层，TTR 不可计算，中性</td></tr>
+    <tr><td>7 引文验证 (15%)</td><td class="num"><span class="chip c-green">82</span></td><td class="num"><span class="chip c-green">82</span></td><td>引文真实规范；扫描件无法逐条核 DOI</td></tr>
+    <tr><td>8 数值一致性 (15%)</td><td class="num"><span class="chip c-green">85</span></td><td class="num"><span class="chip c-green">80</span></td><td>抽样未见矛盾</td></tr>
+    <tr><td>9 术语一致性 (10%)</td><td class="num"><span class="chip c-yellow">75</span></td><td class="num"><span class="chip c-yellow">55</span></td><td>均<b>缩写+全称并存</b>（FF／全称；LMM／全称）</td></tr>
+    <tr><td colspan="2"><b>第一层风险分</b></td><td class="num"><b>17.3 / 27.3</b></td><td>质量分 82.68 / 72.73</td></tr>
+  </table>
+
+  <h2>三、第二层 建模逻辑审查</h2>
+  <table>
+    <tr><th>检查项</th><th class="num">c023</th><th class="num">C132</th><th>说明</th></tr>
+    <tr><td>2.1 模型常用性</td><td class="num"><span class="chip c-green">92</span></td><td class="num"><span class="chip c-orange">58</span></td><td>C132 用 LSTM/DeepHit/GA/LightGBM（models-zh 判 🔴/🟠）</td></tr>
+    <tr><td>2.2 复杂度 vs 收益</td><td class="num"><span class="chip c-green">85</span></td><td class="num"><span class="chip c-yellow">62</span></td><td>C132 小数据量上叠深度生存网络，有过度嫌疑</td></tr>
+    <tr><td>2.3 华而不实识别</td><td class="num"><span class="chip c-green">85</span></td><td class="num"><span class="chip c-yellow">58</span></td><td>C132 模型堆砌（Pattern 1/5）</td></tr>
+    <tr><td>2.4 三问法</td><td class="num"><span class="chip c-green">85</span></td><td class="num"><span class="chip c-green">70</span></td><td>C132 的生存框架/集成可辩护</td></tr>
+    <tr><td>2.5 建模路径风格</td><td class="num"><span class="chip c-green">88</span></td><td class="num"><span class="chip c-yellow">65</span></td><td>C132 偏 AI 式复杂化倾向</td></tr>
+    <tr><td><b>第二层风险分</b></td><td class="num"><b>13.0</b></td><td class="num"><b>37.4</b></td><td></td></tr>
+  </table>
+
+  <h2>四、交叉验证矩阵（核心）</h2>
+  <p style="color:#a8a8b6;font-size:13.5px">把我们的每一类审阅要求，逐条放到 2025 两篇国奖论文上实测 → 判其合理性。</p>
+  <table>
+    <tr><th>#</th><th>我们的审阅要求</th><th>国奖论文实测</th><th class="num">判决</th></tr>
+    <tr><td>1</td><td><b>U1</b> 问题重述须"问题一："、禁"问题 1."（<b>列为 P0</b>）</td><td>c023 用"问题 1"（会被判错）；C132 用"问题一："</td><td class="num"><span class="chip c-red">过严</span></td></tr>
+    <tr><td>2</td><td><b>U2</b> 顶格须有标题 / 无标题则缩进</td><td>两篇均无该错配</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>3</td><td><b>U3</b> 措辞 AI 味（生硬短句/自证式）</td><td>C132 偶有"…为临床决策提供科学依据"</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>4</td><td><b>U4</b> 论文/代码禁版本号 V3/V4</td><td>两篇均无</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>5</td><td><b>V5§13</b> "口径"降频</td><td>抽样未见"口径"泛用</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>6</td><td><b>dim9</b> 核心术语 ≥3 种表述 → 25 分 🟠</td><td>两篇均<b>缩写+全称并存</b>，皆触发</td><td class="num"><span class="chip c-red">过严</span></td></tr>
+    <tr><td>7</td><td><b>第二层</b>/models-zh 判 LSTM·GA·集成 = 🔴</td><td>C132（国奖）大量使用</td><td class="num"><span class="chip c-red">错位</span></td></tr>
+    <tr><td>8</td><td><b>dim7</b> 引文 L1–L3 验证</td><td>两篇引文真实规范</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>9</td><td><b>dim8</b> 数值一致 / 来源可追溯</td><td>两篇自洽</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>10</td><td><b>dim1/4</b> 连接词密度 / 被动句</td><td>两篇均干净</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+    <tr><td>11</td><td><b>V5§16</b> 删"工程报告化"内容（附 121 页代码）</td><td>c023 代码附录约 3/4 篇幅，照样国奖</td><td class="num"><span class="chip c-yellow">合理非硬伤</span></td></tr>
+    <tr><td>12</td><td><b>V5§1/§25</b> 读者视角叙事、去对话痕迹</td><td>两篇均独立自洽</td><td class="num"><span class="chip c-green">合理</span></td></tr>
+  </table>
+
+  <h2>五、结论：合理性的分项判决</h2>
+  <div class="banner green">
+    <div class="big">✅ 合理 · 应保留（甚至加重）</div>
+    <ul>
+      <li><b>语言层密度型判据</b>：连接词密度、被动句占比、拔高词（看是否跟数据）——获奖论文都干净，指标有效。</li>
+      <li><b>事实层</b>：引文真实性、数值一致性、参数来源可追溯——获奖必需品 + AI 露馅点，判别力最强。</li>
+      <li><b>"口径"泛用降频 / 去工程术语 / 去对话痕迹</b>：V4 的"口径×50、mutation、legacy"确属不自然文风。</li>
+      <li><b>U4 禁版本号、U2 排版规范、V5 读者视角叙事重建</b>。</li>
+    </ul>
+  </div>
+  <div class="banner orange">
+    <div class="big">❌ 过严 / 错位 · 应放宽或降级</div>
+    <ul>
+      <li><b>dim9 术语一致性严格阈值</b>：优秀论文普遍"缩写+全称"并存 → 改为"<b>同语境不混淆</b>"。</li>
+      <li><b>"AI 高频模型=高风险"启发式 / "华而不实"担忧</b>：国奖论文用 LSTM/GA/集成 → 删去按模型名自动定罪。</li>
+      <li><b>U1 编号体例作 P0</b>：属团队偏好，两种写法都获奖 → 降为"建议统一"。</li>
+      <li><b>附录长度 / 工程报告化</b>：可优化，不致命 → 降为"建议"。</li>
+    </ul>
+  </div>
+
+  <div class="banner red">
+    <div class="big">🎯 元结论</div>
+    获奖标准 = <b>建模正确 + 论证清楚 + 结果可信</b>，不是"文风统一 / 模型朴素 / 体例一致"。<br>
+    我方 V4 的 AI 风险分 <b>13.6</b> 已<b>低于/持平 2025 国奖论文</b>——说明四轮审阅中"去 AI 味"的焦虑<b>相对过度</b>；真正该投入的是 <b>V5 的叙事框架重建</b>（A 级），而非继续抠术语与格式。
+  </div>
+
+  <h2>六、对 V5 的落地建议（按优先级）</h2>
+  <div class="kpi">
+    <span>P0 · 叙事框架重建（读者视角 / Q1→Q4 递进 / 去对话痕迹）</span>
+    <span>P0 · 事实层自查（引文 / 数值 / 溯源）</span>
+    <span>P1 · "口径"替换 + 清理 mutation/legacy/版本号</span>
+    <span>P1 · dim9 放宽为"同语境不混淆"</span>
+    <span>P2 · 第二层放弃模型名定罪</span>
+    <span>P3 · 附录压缩 / 编号统一（仅建议）</span>
+  </div>
+
+  <h2>七、限制与无法核验项</h2>
+  <ul>
+    <li><b>无文字层</b>：连接词密度、TTR、3-gram 为抽样估计，不作精确分档；精确值须 OCR 后重算。</li>
+    <li><b>引文 L3</b>：仅确认正文引用了真实作者/年份，未逐篇下载原文比对主张。</li>
+    <li><b>第一层分数</b>为指示性（±10），第二层与结构/体例结论稳健。</li>
+    <li>本审计<b>不是作者身份概率</b>，不替代正式 AIGC 检测；结论仅用于校准我方审阅标准的松紧。</li>
+  </ul>
+
+  <div class="foot">
+    由 <code>bzd-paper-aigc-auditor</code> v2.2 方法论执行 ｜ 交叉验证设计：WorkBuddy ｜ 2026-09-12<br>
+    <b>BZD数模社制作</b> · 本页支持打印与下载
+  </div>
+</div>
+</body>
+</html>

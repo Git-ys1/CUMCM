@@ -1,0 +1,33 @@
+\documentclass[12pt,a4paper]{ctexart}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\renewcommand{\arraystretch}{1.5}
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+	{\zihao{2}\bfseries AI工具使用详情}
+\end{center}
+
+\begin{table}[htbp]
+	\centering
+	\caption{AI 工具使用详情}
+	\begin{tabularx}{\textwidth}{>{\bfseries\raggedright\arraybackslash}p{3.6cm}X}
+		\toprule
+		记录项目 & 实际使用记录 \\
+		\midrule
+		工具名称、版本或型号 & MathModel 桌面端内置 AI 助手；模型为 OpenAI GPT-5。 \\
+		使用目的与环节 & 审阅既有模型与论文；辅助修改问题二因果预测记录、问题三叠加结算与滚动节点逻辑、问题四电价口径；补写自动测试、指定日期表格生成器、科研绘图与 LaTeX 排版；检查编译日志和提交包一致性。 \\
+		主要提示与交互过程 & 团队提供赛题附件、既有 LaTeX 工程、求解结果及阶段性审阅意见，明确要求“在原文上定点修改，不从零重写”，并要求按审阅逐项修正、重算、补表和编译。随后把测试失败、求解日志与表格核对结果继续交给工具定位，按“修改—运行—回代—复核”的循环迭代。 \\
+		AI 生成或建议的内容 & 提出并实现 active plan 持续执行、负载刷新／光伏刷新配对控制、叠加结算下充放电互斥 MILP、残差分位符号修正、结果表自动生成及相关文字改写；同时给出代码补丁、测试用例和图表草稿。 \\
+		人工采纳、修改与核验 & 团队逐项核对题面和审阅证据后选择采纳；删除“$0.2$ 分位保证全年全局最优”等过强表述，把附件 4 直用结果定为题面主答案。所有数值均由本地 Python 脚本重算，并通过母线／SOC 回代、费用分解、信息泄漏 mutation、计划持续性、回归测试及 Excel 抽查；LaTeX 经多轮编译检查。 \\
+		未直接采纳的内容 & 未直接采纳未经运行的数值、未经 DOI 核验的文献、与题面结算定义冲突的表述，以及会破坏原论文结构的整篇重写方案。 \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\end{document}
