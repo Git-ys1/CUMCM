@@ -1,0 +1,63 @@
+==> å®‰è£…å®Œæˆ
+BibTeX 0.99e (TeX Live 2026)
+kpathsea version 6.4.2
+TEXLIVE_INSTALL_DONE
+fmt: /f/AcademicHub/texlive/2026/texmf-var/web2c/xetex/xelatex.fmt
+==> 1/5 åŒæ­¥æºç åˆ° paper/code
+[sync] solve/params.py -> paper/code/params.py
+[sync] solve/io_data.py -> paper/code/io_data.py
+[sync] solve/lp_core.py -> paper/code/lp_core.py
+[sync] solve/forecast.py -> paper/code/forecast.py
+[sync] solve/load_forecast.py -> paper/code/load_forecast.py
+[sync] solve/price_forecast.py -> paper/code/price_forecast.py
+[sync] solve/settle.py -> paper/code/settle.py
+[sync] solve/q1.py -> paper/code/q1.py
+[sync] solve/q2.py -> paper/code/q2.py
+[sync] solve/q3.py -> paper/code/q3.py
+[sync] solve/q4.py -> paper/code/q4.py
+[sync] solve/export.py -> paper/code/export.py
+[sync] solve/ablation.py -> paper/code/ablation.py
+[sync] tests/test_causality.py -> paper/code/test_causality.py
+[sync] tests/test_settlement.py -> paper/code/test_settlement.py
+[sync] tests/test_regression.py -> paper/code/test_regression.py
+==> 2/5 ç”Ÿæˆæ•°å€¼å® numbers.tex
+[submit] result1.xlsx ¡û outputs\q1\result1.xlsx
+[submit] result2.xlsx ¡û outputs\variants\model_audit_v2\q2\B_causalload_risk_feedback\result2.xlsx
+[submit] result3.xlsx ¡û outputs\variants\model_audit_v2\q3_replacement\S3_0_6_12_18\result3.xlsx
+[submit] result4-2.xlsx ¡û outputs\variants\model_audit_v2\q4\q42_causal_price\result4-2.xlsx
+[submit] result4-3.xlsx ¡û outputs\variants\model_audit_v2\q4\q43_causal_price\result4-3.xlsx
+[report] ¡ú F:\AcademicHub\000×ÊÁÏÏà¹Ø\ÊýÄ£\26¹úÈü\MathModel\reports\MODEL_AUDIT_V2.md
+[report] ¡ú F:\AcademicHub\000×ÊÁÏÏà¹Ø\ÊýÄ£\26¹úÈü\MathModel\paper\numbers.tex
+==> 3/5 æ£€æŸ¥å®å®šä¹‰å®Œæ•´æ€§
+ºê¼ì²éÍ¨¹ý£ºÂÛÎÄÒýÓÃµÄÈ«²¿×Ô¶¨Òåºê¾ùÒÑÔÚ numbers.tex »òÄ£°åÖÐ¶¨Òå¡£
+==> 4/5 ç¼–è¯‘
+This is BibTeX, Version 0.99e (TeX Live 2026)
+The top-level auxiliary file: document.aux
+I found no \citation commands---while reading file document.aux
+I found no \bibdata command---while reading file document.aux
+I found no \bibstyle command---while reading file document.aux
+(There were 3 error messages)
+==> 5/5 ç»“æžœ
+-rw-r--r-- 1 yusu 197610 6830877 Sep 11 16:28 document.pdf
+  é”™è¯¯è¡Œæ•°: 163
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+! Undefined control sequence.
+WATCH2_DONE

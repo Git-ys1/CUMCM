@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.11)  11 SEP 2026 21:58
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex 2026.9.11)  12 SEP 2026 11:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1448,79 +1448,77 @@ Package fontspec Info:
  [2
 
 ]) (./texfile/3ProblemAnalysis.tex
-[3]) [4] (./texfile/4AssumptionAndSign.tex [5]) (./texfile/5MakeModel.tex
+[3]) (./texfile/4AssumptionAndSign.tex [4] [5]) (./texfile/5MakeModel.tex
 [6]
-File: figures/data_overview.png Graphic file (type bmp)
-<figures/data_overview.png>
-File: figures/netload_season.png Graphic file (type bmp)
-<figures/netload_season.png>
+File: figures/data_overview.pdf Graphic file (type pdf)
+<use figures/data_overview.pdf>
+File: figures/netload_season.pdf Graphic file (type pdf)
+<use figures/netload_season.pdf>
  [7] [8] [9] [10]
-File: figures/q1_dispatch.png Graphic file (type bmp)
-<figures/q1_dispatch.png>
+File: figures/q1_dispatch.pdf Graphic file (type pdf)
+<use figures/q1_dispatch.pdf>
  [11] [12] [13] [14]
-File: figures/q2_attribution.png Graphic file (type bmp)
-<figures/q2_attribution.png>
+File: figures/q2_attribution.pdf Graphic file (type pdf)
+<use figures/q2_attribution.pdf>
  [15]
 (./generated/q2_required_tables.tex) [16]
-File: figures/forecast_diagnosis.png Graphic file (type bmp)
-<figures/forecast_diagnosis.png>
+File: figures/forecast_diagnosis.pdf Graphic file (type pdf)
+<use figures/forecast_diagnosis.pdf>
  [17] [18]
-File: figures/q3_forecast_value.png Graphic file (type bmp)
-<figures/q3_forecast_value.png>
+File: figures/q3_forecast_value.pdf Graphic file (type pdf)
+<use figures/q3_forecast_value.pdf>
  [19]
 (./generated/q3_required_tables.tex) [20] [21]
-File: figures/dispatch_20250621.png Graphic file (type bmp)
-<figures/dispatch_20250621.png>
+File: figures/dispatch_20250621.pdf Graphic file (type pdf)
+<use figures/dispatch_20250621.pdf>
  [22]
-(./generated/q4_required_tables.tex)) (./texfile/6ErrorAnalysis.tex [23]
-[24] [25] [26]
-File: figures/sensitivity.png Graphic file (type bmp)
-<figures/sensitivity.png>
- [27]) [28] (./texfile/7ModelEvaluation.tex [29])
-(./texfile/8AIUsageStatement.tex) (./texfile/8Reference.tex (./document.bbl
-[30])) (./texfile/9Appendix.tex [31]
+(./generated/q4_required_tables.tex [23])) (./texfile/6ErrorAnalysis.tex
+[24] [25] [26] [27]
+File: figures/sensitivity.pdf Graphic file (type pdf)
+<use figures/sensitivity.pdf>
+) [28] (./texfile/7ModelEvaluation.tex [29])
+(./texfile/8AIUsageStatement.tex) [30] (./texfile/8Reference.tex
+(./document.bbl)) (./texfile/9Appendix.tex [31]
 (f:/AcademicHub/texlive/2026/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2025/11/14 1.11b listings language file
 )
 Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
-nput line 36.
+nput line 37.
 
 (./code/params.py
 LaTeX Font Info:    Font shape `TU/lmtt/bx/n' in size <9.03374> not available
-(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 8.
- [32] [33]) (./code/io_data.py [34] [35]) (./code/lp_core.py
-[36] [37] [38] [39] [40] [41] [42] [43] [44] [45]) (./code/forecast.py [46]
-[47] [48]) [49] (./code/load_forecast.py [50] [51] [52] [53] [54])
-(./code/price_forecast.py [55] [56] [57] [58]) (./code/settle.py [59] [60]
-[61]) (./code/q1.py [62] [63]) (./code/q2.py [64] [65] [66] [67] [68] [69]
-[70] [71] [72] [73]) (./code/q3.py [74] [75] [76] [77] [78] [79] [80] [81]
-[82] [83] [84] [85] [86]) (./code/q4.py [87] [88]) (./code/export.py [89]
-[90] [91] [92]) (./code/ablation.py [93] [94] [95] [96] [97] [98] [99])
-(./code/official_forecast.py [100]) (./code/paper_tables.py [101] [102]
-[103] [104]) [105] (./code/validate_q2.py [106]) (./code/validate_all.py
-[107] [108]) [109] (./code/build_manifest.py [110]) (./code/plot_style.py
-[111] [112] [113]) (./code/fig_data.py [114] [115] [116] [117] [118] [119])
-(./code/fig_q1.py [120] [121] [122]) (./code/fig_results.py [123] [124]
-[125] [126] [127] [128] [129] [130] [131] [132] [133]) (./code/fig_route.py
-[134] [135]) (./code/plot_results.py [136] [137]) [138] (./code/mutate.py
-[139]) (./code/test_causality.py [140] [141] [142]) (./code/test_q2_q3.py
-[143] [144]) (./code/test_paper_consistency.py [145])
-(./code/test_settlement.py [146] [147] [148]) (./code/test_regression.py
-[149] [150] [151])) [152] (./document.aux)
+(Font)              Font shape `TU/lmtt/b/n' tried instead on input line 1.
+ [32]) (./code/io_data.py [33] [34]) (./code/lp_core.py
+[35] [36] [37] [38] [39] [40] [41] [42] [43]) (./code/forecast.py [44] [45]
+[46]) (./code/load_forecast.py [47] [48] [49] [50]) (./code/price_forecast.py
+[51] [52] [53]) (./code/settle.py [54] [55] [56]) (./code/q1.py [57]) [58]
+(./code/q2.py [59] [60] [61] [62] [63] [64] [65] [66]) (./code/q3.py [67]
+[68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78]) (./code/q4.py [79]
+[80]) (./code/export.py [81] [82] [83]) [84] (./code/ablation.py [85] [86]
+[87] [88] [89]) (./code/official_forecast.py [90]) [91] (./code/paper_tables.py
+[92] [93] [94]) [95] (./code/validate_q2.py [96]) (./code/validate_all.py
+[97] [98]) [99] (./code/build_manifest.py [100]) (./code/plot_style.py [101]
+[102]) (./code/fig_data.py [103] [104] [105] [106] [107] [108])
+(./code/fig_q1.py [109]) [110] (./code/fig_results.py [111] [112] [113]
+[114] [115] [116] [117] [118] [119]) (./code/fig_route.py [120] [121])
+(./code/plot_results.py [122] [123]) (./code/mutate.py [124])
+(./code/test_causality.py [125] [126] [127]) (./code/test_q2_q3.py [128])
+(./code/test_paper_consistency.py [129]) (./code/test_settlement.py [130]
+[131]) (./code/test_regression.py [132] [133] [134])) [135] (./document.aux)
  ***********
 LaTeX2e <2026-06-01>
 L3 programming layer <2026/08/21>
  ***********
 Package rerunfilecheck Info: File `document.out' has not changed.
-(rerunfilecheck)             Checksum: 76F522FF03C03A1CA47F7B3D1EB1C5C7;6431.
+(rerunfilecheck)             Checksum: 1746228235473ADDEE3E07B59E56D3B7;6407.
  ) 
 Here is how much of TeX's memory you used:
- 28629 strings out of 467745
- 648055 string characters out of 5420410
- 1760756 words of memory out of 5000000
- 57203 multiletter control sequences out of 15000+600000
+ 28563 strings out of 467745
+ 645941 string characters out of 5420410
+ 1817752 words of memory out of 5000000
+ 57138 multiletter control sequences out of 15000+600000
  644312 words of font info for 166 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 108i,12n,125p,579b,2670s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,12n,125p,579b,2666s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on document.pdf (152 pages).
+Output written on document.pdf (135 pages).

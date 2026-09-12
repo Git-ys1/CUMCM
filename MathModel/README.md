@@ -1,13 +1,13 @@
-# MathModel —— C 题论文 V4 复现说明
+# MathModel —— C 题论文复现说明
 
-本目录是在论文 V3 与 `Codex-MathModel/Review/` 两篇审阅意见基础上形成的 V4 独立实现。
-原始 `Codex/` 工程未被修改；求解、审计、制表、绘图、测试和 LaTeX 源码均保存在本目录。
+本目录保存 C 题论文的独立求解、审计、制表、绘图、测试和 LaTeX 工程。
+原始 `Codex/` 工程未被修改；所有结果均可由本目录中的脚本和既有输出追溯。
 
 ## 一句话结论
 
-原问题二结果偏低的**首要原因是把当天真实负载当成了 0:00 已知输入**（未来信息穿越），
-修正为严格因果预测后全年费用由 1327.6 万元升至 **1477.4 万元**，原口径低估
-149.8 万元（占修正结果 10.14%）。问题三按题面采用 additive 结算并加入充放电互斥，
+问题二主模型采用严格历史信息边界，全年费用为 **1477.4 万元**；日前负荷完全已知的
+理想信息基准为 1327.6 万元，两种信息条件相差 149.8 万元（占主模型费用 10.14%）。
+问题三按题面采用 additive 结算并加入充放电互斥，
 0:00、6:00、12:00、18:00 四组费用依次为 1573.1、1451.1、1421.3、1391.7 万元。
 问题四直接使用附件 4 电价的 Q4-2、Q4-3 主结果分别为 1552.4、1459.0 万元。
 
@@ -26,7 +26,7 @@ MathModel/
 │  ├─ q1.py … q4.py            四问主流程
 │  ├─ export.py                官方 result*.xlsx 回填
 │  ├─ ablation.py              全部对照实验总控
-│  ├─ report.py                V4 审计报告、数值宏与提交文件汇总
+│  ├─ report.py                审计报告、数值宏与提交文件汇总
 │  └─ fig_*.py                 各类配图
 ├─ tests/                      验证套件
 │  ├─ test_causality.py        未来信息泄漏 mutation 测试（6 项）
@@ -35,8 +35,8 @@ MathModel/
 │  └─ test_regression.py       legacy 参数组合回归测试
 ├─ outputs/                    结果
 │  ├─ q1/                      问题一
-│  └─ variants/model_audit_v4/ V4 全部对照实验
-├─ reports/MODEL_AUDIT_V4.md   模型审计报告
+│  └─ variants/model_audit/    全部对照实验
+├─ reports/MODEL_AUDIT.md      模型审计报告
 ├─ paper/                      LaTeX 论文（cumcm 模板）
 └─ submit/                     五个官方 result*.xlsx 汇总
 ```
@@ -70,7 +70,7 @@ AutoMM\.venv\Scripts\python.exe -m MathModel.solve.fig_q1
 AutoMM\.venv\Scripts\python.exe -m MathModel.solve.fig_results
 
 # 编译论文
-bash MathModel/tools/build_paper.sh
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File MathModel/tools/build_paper.ps1
 ```
 
 ## 信息集口径（本工程的核心）
@@ -95,4 +95,4 @@ bash MathModel/tools/build_paper.sh
 5 倍紧急电价使单位光伏偏差的损失为 `4π(高估)⁺ + π(低估)⁺`，即 **4:1 非对称损失**。
 单时段报童模型给出光伏输出 **0.2 分位数**（`b/(a+b) = 1/5`）的可解释安全裕度起点；
 它不是含 SOC 耦合的全年模型全局最优性证明。工程把残差定义为 `base-actual`，因此输出 0.2
-分位对应“基预测减去残差 0.8 分位”，并在 0.80/0.85/0.90/0.95 候选中按历史样本外费用在线选择。
+分位对应“基预测减去残差 0.8 分位”，并在 0.80/0.85/0.90/0.95 候选中按历史窗口上的非对称费用代理在线选择。

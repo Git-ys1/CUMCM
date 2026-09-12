@@ -1,0 +1,52 @@
+==> ç­‰å¾… TeX Live å®‰è£…å®Œæˆï¼ˆæ¯ 60 s æ£€æŸ¥ä¸€æ¬¡ï¼‰
+==> å®‰è£…è¿›ç¨‹å·²ç»“æŸï¼Œxelatex å­˜åœ¨ï¼ˆç­‰å¾… 82 åˆ†é’Ÿï¼‰
+-rwxr-xr-x 1 yusu 197610 6144 Sep 11 16:17 /f/AcademicHub/texlive/2026/bin/windows/xelatex.exe
+==> å¼€å§‹ç¼–è¯‘
+==> 1/5 åŒæ­¥æºç åˆ° paper/code
+[sync] solve/params.py -> paper/code/params.py
+[sync] solve/io_data.py -> paper/code/io_data.py
+[sync] solve/lp_core.py -> paper/code/lp_core.py
+[sync] solve/forecast.py -> paper/code/forecast.py
+[sync] solve/load_forecast.py -> paper/code/load_forecast.py
+[sync] solve/price_forecast.py -> paper/code/price_forecast.py
+[sync] solve/settle.py -> paper/code/settle.py
+[sync] solve/q1.py -> paper/code/q1.py
+[sync] solve/q2.py -> paper/code/q2.py
+[sync] solve/q3.py -> paper/code/q3.py
+[sync] solve/q4.py -> paper/code/q4.py
+[sync] solve/export.py -> paper/code/export.py
+[sync] solve/ablation.py -> paper/code/ablation.py
+[sync] tests/test_causality.py -> paper/code/test_causality.py
+[sync] tests/test_settlement.py -> paper/code/test_settlement.py
+[sync] tests/test_regression.py -> paper/code/test_regression.py
+==> 2/5 ç”Ÿæˆæ•°å€¼å® numbers.tex
+[submit] result1.xlsx ¡û outputs\q1\result1.xlsx
+[submit] result2.xlsx ¡û outputs\variants\model_audit_v2\q2\B_causalload_risk_feedback\result2.xlsx
+[submit] result3.xlsx ¡û outputs\variants\model_audit_v2\q3_replacement\S3_0_6_12_18\result3.xlsx
+[submit] result4-2.xlsx ¡û outputs\variants\model_audit_v2\q4\q42_causal_price\result4-2.xlsx
+[submit] result4-3.xlsx ¡û outputs\variants\model_audit_v2\q4\q43_causal_price\result4-3.xlsx
+[report] ¡ú F:\AcademicHub\000×ÊÁÏÏà¹Ø\ÊıÄ£\26¹úÈü\MathModel\reports\MODEL_AUDIT_V2.md
+[report] ¡ú F:\AcademicHub\000×ÊÁÏÏà¹Ø\ÊıÄ£\26¹úÈü\MathModel\paper\numbers.tex
+==> 3/5 æ£€æŸ¥å®å®šä¹‰å®Œæ•´æ€§
+ºê¼ì²éÍ¨¹ı£ºÂÛÎÄÒıÓÃµÄÈ«²¿×Ô¶¨Òåºê¾ùÒÑÔÚ numbers.tex »òÄ£°åÖĞ¶¨Òå¡£
+==> 4/5 ç¼–è¯‘
+I couldn't open file name `document.aux'
+==> 5/5 ç»“æœ
+  [FAIL] æœªç”Ÿæˆ PDF
+This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+ restricted \write18 enabled.
+
+kpathsea: Running mktexfmt xelatex.fmt
+
+The command name is F:\AcademicHub\texlive\2026\bin\windows\mktexfmt
+fmtutil: fmtutil is using the following fmtutil.cnf files (in precedence order):
+fmtutil: fmtutil is using the following fmtutil.cnf file for writing changes:
+fmtutil:   c:/users/yusu/.texlive2026/texmf-config/web2c/fmtutil.cnf
+fmtutil [INFO]: writing formats under c:/users/yusu/.texlive2026/texmf-var/web2c
+fmtutil [INFO]: Did not find entry for byfmt=xelatex skipped
+fmtutil [INFO]: total formats: 0
+fmtutil [INFO]: executable location: f:\AcademicHub\texlive\2026\texmf-dist\scripts\texlive\fmtutil.pl
+fmtutil [INFO]: exiting with status 0
+Running the command F:\AcademicHub\texlive\2026\bin\windows\fmtutil-user.exe
+I can't find the format file `xelatex.fmt'!
+WAIT_AND_BUILD_DONE
